@@ -49,11 +49,6 @@ Development done locally and application (and supporting services) running insid
 See below for full details & pros and cons of each.
 
 ## Pros and Cons of the Options <!-- optional -->
-
-See the diagrams for an illustration of the two options. Both options also assume the following:
-
-
-
 ### Local Development
 
 ### Development done on local workstation and application (and supporting services) running on local workstation
