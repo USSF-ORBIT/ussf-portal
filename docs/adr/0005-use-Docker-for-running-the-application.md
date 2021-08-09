@@ -23,13 +23,13 @@
 
 ### Production Deployment
 
-- Ship a Docker contianer as the artifact to be deployed.
+- Ship a Docker container as the artifact to be deployed.
 - Production server clones local repo and builds locally on production host.
 - Ship zip or tarball to remote host, extract and run locally on remote production host.
 
 ## Decision Outcome
 
-Development done locally and application (and supporting services) running inside a Docker container. As we as shipping a Docker container as the artifact to be deployed to production. After some discussion, we have decided on these options for the following reasons:
+Development done locally and application (and supporting services) running inside a Docker container. And we are shipping a Docker container as the artifact to be deployed to production. After some discussion, we have decided on these options for the following reasons:
 
 ### Local Development
 
@@ -71,7 +71,7 @@ See below for full details & pros and cons of each.
 
 - Nice and tidy. _Everything_ is in the container.
 - As long as everyone is running the same version of container, everyone has the same environment so should have the same experiences.
-- No need to install any applications locally keeping machine more pristine or as pristene as OS X with Docker installed can be.
+- No need to install any applications locally keeping machine more pristine or as pristine as OS X with Docker installed can be.
 
 #### Cons
 
@@ -134,7 +134,7 @@ See below for full details & pros and cons of each.
 
 #### Pros
 
-- It's a well established pattern in the DevOps community with plenty of working examplest to copy from.
+- It's a well established pattern in the DevOps community with plenty of working examples to copy from.
 - Requires fewer system applications and dependencies than cloning the repo locally decreasing the potential attack surface.
 - Doesn't necessarily have to hit a public host or VCS repository.
 - Ensures that only the application and it's necessary dependencies are shipped rather than the entire contents of the git repository.
