@@ -111,7 +111,7 @@ See below for full details & pros and cons of each.
 
 #### Cons
 
-- Docker and it's ism's
+- Docker and its ism's
 - In certain environments with certain configurations, its networking and talking to remote services can become a tangled mess.
 
 ### Production server clones local repo and builds locally on production host
@@ -124,7 +124,7 @@ See below for full details & pros and cons of each.
 
 - Assumes 100% uptime of VCS repository.
 - Assumes remote host is capable of reaching VCS repository.
-- Requires additional software (git) and it's dependencies to be installed on a production server.
+- Requires additional software (git) and its dependencies to be installed on a production server.
 - A git clone may pull down more than what's necessary to run the production application resulting in potential vulnerability exploits as well as disk usage.
 - Potential for being rate-limited by VCS host or CDN.
 - Larger attack surface than a Docker container based on a distroless image.
@@ -137,7 +137,7 @@ See below for full details & pros and cons of each.
 - It's a well established pattern in the DevOps community with plenty of working examples to copy from.
 - Requires fewer system applications and dependencies than cloning the repo locally decreasing the potential attack surface.
 - Doesn't necessarily have to hit a public host or VCS repository.
-- Ensures that only the application and it's necessary dependencies are shipped rather than the entire contents of the git repository.
+- Ensures that only the application and its necessary dependencies are shipped rather than the entire contents of the git repository.
 
 #### Cons
 
