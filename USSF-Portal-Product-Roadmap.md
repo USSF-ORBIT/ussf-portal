@@ -10,16 +10,16 @@ ____________________________________________________
 
 | Task  | Description | Status |
 | ------ | ------ | :------: |
-| Design edits to the graphic elements and theme | Update the theme and graphic elements to finalize the look and feel of the portal site that will launch | :rocket: IN PROGRESS |
-| Finalizing the CMS | Building the last of the infrastructure and application needed to have an integrated content management system for the BETA launch | :rocket: IN PROGRESS |
-| Finalizing authentication | Building the authentication workflow for users to ensure the portal recognizes who a person is when they are coming to the portal | :rocket: IN PROGRESS |
+| Design edits to the graphic elements and theme | Update the theme and graphic elements to finalize the look and feel of the portal site that will launch | :heavy_check_mark: DONE |
+| Finalizing the CMS | Building the last of the infrastructure and application needed to have an integrated content management system for the BETA launch | :heavy_check_mark: DONE |
+| Finalizing authentication | Building the authentication workflow for users to ensure the portal recognizes who a person is when they are coming to the portal | :heavy_check_mark: DONE |
 
 ### BETA Launch Preparation
 
 | Task  | Description | Status |
 | ------ | ------ | :------: |
 | BETA branding | Update theme and branding to explicitly show users they are on a BETA version of the site | :rocket: IN PROGRESS |
-| BETA opt-in / opt-out | Create a method for users to opt-in to the BETA portal in addition to being able to exit the beta if they wish to return to the legacy portal | :rocket: IN PROGRESS |
+| BETA opt-in / opt-out | Create a method for users to opt-in to the BETA portal in addition to being able to exit the beta if they wish to return to the legacy portal | :heavy_check_mark: DONE |
 | Infrastructure on C1 | Build the final application infrastructure on C1 | :rocket: IN PROGRESS |
 
 ## Post-Launch December & January
