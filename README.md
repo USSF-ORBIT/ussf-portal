@@ -1,6 +1,13 @@
 ## Welcome!
 This blog contains documentation for the upgrade of the USSF portal managed by the ORBIT team. This is meant to be the home for all engineering, research and design, and product-related information on the project, our findings, as well as decisions we've made along the way and what influenced them.
 
+## Our Journey
+Find out more about the history of the project and how we work. 
+* [Background]()
+* [The team]()
+* [Problem & Solution]()
+* [Project risks]()
+
 ## Design
 * [Design Principles](#)
 * [Design System](#)
