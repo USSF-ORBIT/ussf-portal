@@ -9,7 +9,7 @@ Find out more about the history of the project and how we work.
 * [Project risks](#)
 
 ## Design
-* [Design Principles](#)
+* [Design Experience Principles](#)
 * [Design System](#)
 
 ## Engineering
