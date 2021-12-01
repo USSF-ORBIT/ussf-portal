@@ -7,11 +7,11 @@ This blog contains documentation for the upgrade of the USSF portal managed by t
 
 ## Engineering
 * [Dev blog](#)
+* [Project Board](https://github.com/orgs/USSF-ORBIT/projects/3)
 
 ## USSF Portal Roadmap
 * [Roadmap](https://ussf-orbit.github.io/ussf-portal/USSF-Portal-Product-Roadmap)
-* [Project Board](#)
-* [Portal Development Updates](#)
+* [Portal Development Updates](https://ussf-orbit.github.io/ussf-portal/development-updates)
 
 ## Repos
 * [Portal Prototype](https://github.com/USSF-ORBIT/ussf-portal-prototype)
