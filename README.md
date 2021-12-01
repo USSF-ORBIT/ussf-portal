@@ -3,10 +3,10 @@ This blog contains documentation for the upgrade of the USSF portal managed by t
 
 ## Our Journey
 Find out more about the history of the project and how we work. 
-* [Background]()
-* [The team]()
-* [Problem & Solution]()
-* [Project risks]()
+* [Background](#)
+* [The team](#)
+* [Problem & Solution](#)
+* [Project risks](#)
 
 ## Design
 * [Design Principles](#)
