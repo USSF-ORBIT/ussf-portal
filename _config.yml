@@ -3,5 +3,5 @@ theme: jekyll-theme-slate
 plugins:
   - jemoji
 
-title: USSF portal Roadmap
+title: USSF Portal Dev Blog
 description: A quick look at the current and upcoming work to update the USSF portal
