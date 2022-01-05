@@ -21,8 +21,8 @@ ____________________________________________________
 | BETA branding | Update theme and branding to explicitly show users they are on a BETA version of the site | :white_check_mark: DONE |
 | BETA opt-in / opt-out | Create a method for users to opt-in to the BETA portal in addition to being able to exit the beta if they wish to return to the legacy portal | :white_check_mark: DONE |
 | Infrastructure on C1 | Build the final application infrastructure on C1 | :white_check_mark: DONE |
-| Custom 500 page | Build a better looking page to handle 500 errors | :construction: IN PROGRESS |
-| Custom 404 page | Build a better looking page to handle 404 errors | :construction: IN PROGRESS |
+| Custom 500 page | Build a better looking page to handle 500 errors | :white_check_mark: DONE |
+| Custom 404 page | Build a better looking page to handle 404 errors | :white_check_mark: DONE |
 
 ## Post-Launch December & January
 
@@ -33,23 +33,11 @@ ____________________________________________________
 | Task  | Description | Status |
 | ------ | ------ | :------: |
 
-| Standup analytics | Add analytics tracking code to portal pages | :construction: TODO |
-| Max limits on # collections and URLs | Set max limit for the number of collections one can add to their My Space and number of links within a collection | :construction: TODO |
-| Set focus on add url input field | Focus cursor on input fields when adding a URL to a collection | :construction: TODO |
-| Investigate passport/session login and server side auth | Use the requireAuth function to load a user's session on the server | :construction: TODO |
-| BUG: Unable to delete multiple URLs from a collection at a single time | Fix to allow users to delete 1+ URLs at a time. | :construction: TODO |
-
-____________________________________________________
-
-### CMS admin and publishing workflows
-
-| Task  | Description | Status |
-| ------ | ------ | :------: |
-
-| Create CMS users and roles | Add content author and content manager roles to the content management system | :construction: TODO |
-| Build a publishing workflow | Create the workflows for authoring and publishing content in the content management system | :construction: TODO |
-| Add content categories to the CMS | Create the initial set of categories for content authors and managers to select from when creating content | :construction: TODO |
-| Add Labels to CMS | Create intiial set of lables for content authors to select and add to their content | :construction: TODO |
+| Standup analytics | Add analytics tracking code to portal pages | :construction: IN PROGRESS |
+| Max limits on # collections and URLs | Set max limit for the number of collections one can add to their My Space and number of links within a collection | :construction: IN PROGRESS |
+| Set focus on add url input field | Focus cursor on input fields when adding a URL to a collection | :construction: IN PROGRESS |
+| Investigate passport/session login and server side auth | Use the requireAuth function to load a user's session on the server | :construction: IN PROGRESS |
+| BUG: Unable to delete multiple URLs from a collection at a single time | Fix to allow users to delete 1+ URLs at a time. | :construction: IN PROGRESS |
 
 ____________________________________________________
 
@@ -57,20 +45,15 @@ ____________________________________________________
 
 | Task  | Description | Status |
 | ------ | ------ | :------: |
-| Create article UI in CMS | The interface required for a content author to create content that can be published to the portal | :construction: TODO |
-| Add, edit, delete articles | Provides the ability for a content author or manager to fully manage the portal content that is development or already published | :construction: TODO |
-| Content publishing scheduler | Allows the author to schedule when they would like their content to be autopublished | :construction: TODO |
-| Content expiration scheduler | Allows the author to set an expiration date for their content | :construction: TODO |
-| Build article page | The front facing look and feel of an article page on the portal | :construction: TODO |
-| Build news & announcements page | This page will be responsible for displaying all the content authored in the CMS | :construction: TODO |
+| Build news & announcements page | This page will be responsible for displaying the existing SpaceForce.mil RSS news feed as well as all future content authored in the CMS | :construction: TODO |
 | Build news & announcements widget | This widget will sit on the users My Space with the goal of surfacing the latest or most relavent news and announcements | :construction: TODO |
 
-### Upcoming Tasks
+### UX updates 
 | Task  | Description | Status |
 | ------ | ------ | :------: |
 
-| Update design of the login page | Update the login page to provide rapid access to commonly used sites and applications without requiring a user to log in | :construction: TODO |
-| Drag and drop support for URLs in a collection | Create the ability for a user to rearrange the placement of URLs within a collection to allow them to have the greatest control of their personal page | :construction: TODO |
+| Include edit title option in gear icon | Expose the ability to edit a collection title from the gear icon dropdown menu | :construction: TODO |
+| Improved usability when adding a custom link to a collection | Separate UX of adding custom link from selecting a link from the dropdown menu | :construction: TODO |
 
 ## February & March
 
