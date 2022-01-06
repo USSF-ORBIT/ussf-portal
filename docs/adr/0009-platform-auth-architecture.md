@@ -19,6 +19,12 @@ This ADR describes a proposed strategy to address both authentication and author
 - The specific roles and permissions needed within each platform are still TBD, so the ability to modify these with little overhead is a priority
 - Our chosen analytics platform has a paid option to use SAML authentication out of the box
 
+## Decision Outcome Summary
+
+- For CMS authentication, configure the CMS platform to access the same Redis instance as the portal application, where session data is stored, and use the Portal application login implementation to create a session.
+- For analytics authentication, pay for the official SAML authentication plugin
+- For platform-specific authorization, maintain 2 roles within the SAML identity provider directory -- admin, and everyone else -- and further segment "everyone else" into more specific roles managed within each platform.
+
 ---
 
 ## Considered Options (Authentication - CMS)
@@ -31,12 +37,15 @@ This ADR describes a proposed strategy to address both authentication and author
 
 Configure the CMS platform to access the same Redis instance as the portal application, where session data is stored, and use the Portal application login implementation to create a session.
 
+With this strategy, the CMS platform would be configured to look in the shared Redis store for an existing session. If there is no session, the user would be redirected to the Portal login page and prompted to log in. Once they log in, the session would be created and they would then be able to access the CMS.
+
 ### Positive Consequences
 
 - We don't have to duplicate the SAML implementation we already set up on the Portal application
 - We don't have to ask the SAML Identity Provider to create a new configuration to support another service provider
 - Authorized users will be able to seamlessly access both the Portal application and the CMS without having to log in multiple times
 - The CMS platform easily allows us to provide an existing session store to use for authentication
+- This does not preclude us deciding to migrate to a separate SAML implementation or other authentication method in the future if we decide to
 
 ### Negative Consequences
 
@@ -59,6 +68,7 @@ Configure the CMS platform to access the same Redis instance as the portal appli
 
 - Good, because it requires no changes to the default CMS authentication method
 - Good, because username/password is a common, straightforward authentication strategy
+- Good, because we don't have to ask the SAML Identity Provider to create a new configuration to support another service provider
 - Bad, because it would not allow users to log into the CMS with their CAC and username/password is not as secure of an authentication method
 - Bad, because it would require us to manually create accounts for any users who need one
 - Bad, because users’ identities would not be tied to their CAC credentials and could more easily be hijacked
@@ -79,6 +89,7 @@ Pay for the official SAML authentication plugin
 
 - We're able to rely on an existing, officially supported SAML implementation with minimal work on our part
 - We're able to easily continue using CAC authentication, which maintains a high security standard and is consistent with our other services
+- It gets us the highest level of security with the least amount of work
 
 ### Negative Consequences
 
@@ -91,6 +102,7 @@ Pay for the official SAML authentication plugin
 
 - Good, because it requires no changes to the default analytics authentication method
 - Good, because username/password is a common, straightforward authentication strategy
+- Good, because we don't have to ask the SAML Identity Provider to create a new configuration to support another service provider
 - Bad, because it would not allow users to log into the analytics platform with their CAC and username/password is not as secure of an authentication method
 - Bad, because it would require us to manually create accounts for any users who need one
 - Bad, because users’ identities would not be tied to their CAC credentials and could more easily be hijacked
@@ -107,7 +119,7 @@ Pay for the official SAML authentication plugin
 
 ## Considered Options (Authorization - CMS & analytics)
 
-_The below options assume that we have decided to use CAC authentication for both platforms. For any platform that might use username/password instead, authorization can be handled with the respective platform’s built-in role/permission management capabilities._
+_The below options assume that we have decided to use SAML / CAC authentication for both platforms. For any platform that might use username/password instead, authorization can be handled with the respective platform’s built-in role/permission management capabilities._
 
 - Manage all roles within the SAML identity provider directory
 - **Maintain 2 roles within the SAML identity provider directory -- admin, and everyone else -- and further segment "everyone else" into more specific roles managed within each platform**
@@ -120,7 +132,7 @@ More specifically, with this approach we would create two broad user groups in t
 
 When a user assigned to the `USSF_PORTAL_SUPPORT` group logs into either platform for the first time, they will automatically receive whatever platform-specific role has the minimum set of permissions. For example, if the analytics platform has the roles `admin, write, read`, a new user would automatically be assigned the `read` role. If they need elevated permissions (such as `write`), a user from the `USSF_PORTAL_ADMIN` group will need to manually add them to that role.
 
-Futhermore, users who aren't in either group (for example, those who have a valid CAC and may still use the Portal application) will be denied access to both CMS and analytics platforms.
+Futhermore, users who aren't in either group (for example, those who have a valid CAC and may still be a regular user of the Portal application) can be denied access to both CMS and analytics platforms outright.
 
 ### Positive Consequences
 
