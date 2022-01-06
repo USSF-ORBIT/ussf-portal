@@ -1,6 +1,6 @@
 # Authentication Strategy & Architecture
 
-- Status: [proposed]
+- Status: Approved
 - Deciders: @suzubara @abbyoung @esacteksab @noahfirth
 - Date: 2021-11-02
 
