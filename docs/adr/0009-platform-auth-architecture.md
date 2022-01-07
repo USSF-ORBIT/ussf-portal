@@ -23,7 +23,7 @@ This ADR describes a proposed strategy to address both authentication and author
 
 - For CMS authentication, configure the CMS platform to access the same Redis instance as the portal application, where session data is stored, and use the Portal application login implementation to create a session.
 - For analytics authentication, pay for the official SAML authentication plugin
-- For platform-specific authorization, maintain 2 roles within the SAML identity provider directory -- admin, and everyone else -- and further segment "everyone else" into more specific roles managed within each platform.
+- For each platform (CMS and analytics), maintain 2 roles within the SAML identity provider directory -- admin (which refers to the development team and superadmin users), and everyone else (which refers to any other user of the non-public side of the CMS or analytics platform). In addition, "everyone else" will be further segmented, based on their needs, into more specific roles by editing their roles within each platform.
 
 ---
 
