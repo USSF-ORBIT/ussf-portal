@@ -122,17 +122,24 @@ Pay for the official SAML authentication plugin
 _The below options assume that we have decided to use SAML / CAC authentication for both platforms. For any platform that might use username/password instead, authorization can be handled with the respective platform’s built-in role/permission management capabilities._
 
 - Manage all roles within the SAML identity provider directory
-- **Maintain 2 roles within the SAML identity provider directory -- admin, and everyone else -- and further segment "everyone else" into more specific roles managed within each platform**
+- **Maintain 2 high-level roles for each application within the SAML identity provider directory (most privileged and least privileged) and further segment users into more specific roles managed within each platform**
 
 ## Decision Outcome
 
-Maintain 2 roles within the SAML identity provider directory -- admin, and everyone else -- and further segment "everyone else" into more specific roles managed within each platform.
+Maintain 2 high-level roles for each application within the SAML identity provider directory (most privileged and least privileged) and further segment users into more specific roles managed within each platform.
 
-More specifically, with this approach we would create two broad user groups in the SAML IdP directory, i.e. `USSF_PORTAL_ADMIN` and `USSF_PORTAL_SUPPORT` (these names are just examples). Users assigned to the `USSF_PORTAL_ADMIN` group would automatically get full user management permissions on all platforms. All other users who should have any kind of access to the CMS/analytics platform will be assigned to the `USSF_PORTAL_SUPPORT` group.
+More specifically, with this approach we would create two broad user groups in the SAML IdP directory for each application, i.e.:
 
-When a user assigned to the `USSF_PORTAL_SUPPORT` group logs into either platform for the first time, they will automatically receive whatever platform-specific role has the minimum set of permissions. For example, if the analytics platform has the roles `admin, write, read`, a new user would automatically be assigned the `read` role. If they need elevated permissions (such as `write`), a user from the `USSF_PORTAL_ADMIN` group will need to manually add them to that role.
+- `USSF_CMS_ADMIN, USSF_CMS_USERS`
+- `USSF_ANALYTICS_ADMIN, USSF_ANALYTICS_USERS`
 
-Futhermore, users who aren't in either group (for example, those who have a valid CAC and may still be a regular user of the Portal application) can be denied access to both CMS and analytics platforms outright.
+Users assigned to the `ADMIN` group would automatically get full user management permissions within that respective platform, and all other users who should have any kind of access will be assigned to the `USERS` group.
+
+When a user assigned to the `USERS` group logs into the platform for the first time, they will automatically receive whatever role has least privilege.
+
+For example, if the analytics platform has roles with permissions `admin, write, read`, a new user in the `USSF_ANALYTICS_USERS` group would automatically be assigned the `read` role. If they need elevated permissions (such as `write`), a user from the `USSF_ANALYTICS_ADMIN` group will need to manually grant them.
+
+Futhermore, users who aren't in either `ADMIN` or `USERS` group (for example, those who have a valid CAC and may still be a regular user of the USSF Portal) can be denied access to these platforms outright.
 
 ### Positive Consequences
 
