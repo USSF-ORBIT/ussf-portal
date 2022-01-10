@@ -1,8 +1,8 @@
 # Authentication & authorization strategy across platforms
 
-- Status: Proposed
+- Status: Approved
 - Deciders: @suzubara @abbyoung @esacteksab @noahfirth
-- Date: 2022-01-06
+- Date: 2022-01-10
 
 ## Context and Problem Statement
 
