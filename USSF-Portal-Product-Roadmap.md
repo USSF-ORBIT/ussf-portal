@@ -1,4 +1,4 @@
-# Here you'll find our product roadmap -- an up-to-date report on the work we're doing
+<--[Back](https://ussf-orbit.github.io/ussf-portal/portal-updates)
 
 Below is our product roadmap: a long-term plan of the goals, features, and direction of the USSF Portal. We update this frequently with the status of our progress, as well as add new high-level feature requests and ideas.
 
@@ -32,12 +32,19 @@ ____________________________________________________
 
 | Task  | Description | Status |
 | ------ | ------ | :------: |
-
 | Standup analytics | Add analytics tracking code to portal pages | :construction: IN PROGRESS |
-| Max limits on # collections and URLs | Set max limit for the number of collections one can add to their My Space and number of links within a collection | :construction: IN PROGRESS |
-| Set focus on add url input field | Focus cursor on input fields when adding a URL to a collection | :construction: IN PROGRESS |
-| Investigate passport/session login and server side auth | Use the requireAuth function to load a user's session on the server | :construction: IN PROGRESS |
-| BUG: Unable to delete multiple URLs from a collection at a single time | Fix to allow users to delete 1+ URLs at a time. | :construction: IN PROGRESS |
+| Max limits on # collections and URLs | Set max limit for the number of collections one can add to their My Space and number of links within a collection | :white_check_mark: DONE |
+| Set focus on add url input field | Focus cursor on input fields when adding a URL to a collection | :white_check_mark: DONE |
+| BUG: Unable to delete multiple URLs from a collection at a single time | Fix to allow users to delete 1+ URLs at a time. | :white_check_mark: DONE |
+
+### UX updates
+
+| Task  | Description | Status |
+| ------ | ------ | :------: |
+| Include edit title option in gear icon | Expose the ability to edit a collection title from the gear icon dropdown menu | :white_check_mark: DONE |
+| Improved usability when adding a custom link to a collection | Separate UX of adding custom link from selecting a link from the dropdown menu | :white_check_mark: DONE |
+
+## February & March
 
 ____________________________________________________
 
@@ -46,18 +53,15 @@ ____________________________________________________
 | Task  | Description | Status |
 | ------ | ------ | :------: |
 | Build news & announcements page | This page will be responsible for displaying the existing SpaceForce.mil RSS news feed as well as all future content authored in the CMS | :construction: TODO |
+| Build article template | The page template to be used when viewing content published throught he CMS | :construction: TODO |
 | Build news & announcements widget | This widget will sit on the users My Space with the goal of surfacing the latest or most relavent news and announcements | :construction: TODO |
 
-### UX updates 
+### Self hosted CMS
+
 | Task  | Description | Status |
 | ------ | ------ | :------: |
-
-| Include edit title option in gear icon | Expose the ability to edit a collection title from the gear icon dropdown menu | :construction: TODO |
-| Improved usability when adding a custom link to a collection | Separate UX of adding custom link from selecting a link from the dropdown menu | :construction: TODO |
-
-## February & March
-
-____________________________________________________
+| Infra tasks | Tasks required to configure and deploy a standalone CMS to production | :construction: TODO |
+| Auth and user roles | Use existing login methods and create the necessary CMS roles | :construction: TODO |
 
 ### Search
 
@@ -66,15 +70,16 @@ ____________________________________________________
 | Display search query interface | Add a search field to the portal | :construction: TODO |
 | Handle user search query input | Implement search and indexing logic | :construction: TODO |
 | Create search results page | The front facing search results page | :construction: TODO |
-| Display "no results" messaging | Apply messaging and treatment in the case where no search results are found | :construction: TODO |
-| Add pagination support for results | This will add pagination to a search results page should the number of results exceed the defined page limit | :construction: TODO |
-| Implement search results weighting logic | Establishes the hierarchy of the search results that are returned to the user | :construction: TODO |
-| Autocomplete results while a user types a search query | Autosuggestion for users based on the characters they are entering into the search field | :construction: TODO |
-| Display commonly used searched terms under search bar | Reduce search time for users by displaying quicklinks to commonly searched terms based on analytics | :construction: TODO |
+| Search e-Pubs | Pass search request to e-Pubs for forms and publictions | :construction: TODO |
+
+## April & May
+
 ____________________________________________________
 
-### Upcoming Tasks
+### Dark Mode
 
 | Task  | Description | Status |
 | ------ | ------ | :------: |
-| :construction: | :construction: | :construction: |
+| UX/UI updates | The frontend changes required to enable dark mode | :construction: TODO |
+| Update components | Create / update Storybook components to support dark mode view | :construction: TODO |
+| Dark mode settings | Surface settings for use to toggle on/off dark/light mode | :construction: TODO |
