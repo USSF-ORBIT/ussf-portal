@@ -6,22 +6,16 @@
 
 #### Release Notes
 
-**Latest release: 2/4/22**
+**Latest release: 2/17/22**
 
 *Features:*
 
-- Add event tracking to existing features (#495) (ae2aed3)
-- Add Link UX/UI improvements (#487) (d83610a)
-- Edit collection title ux improvements (#492) (95e3806)
-- Focus on Add Link input automatically (#478) (058840e)
-- Maximum collections UX (#486) (e3449c8)
-- Maximum links UI (#490) (b13d220)
-- Set up Matomo tracking on portal client (#458) (0f113b2)
-- USSF Tooltip component (#480) (215cc17)
+- [News Page](https://github.com/USSF-ORBIT/ussf-portal-client/pull/512)
 
 *Bug Fixes:*
 
-- Fix bug for multiple bookmark removes (#482) (18446d1)
+- [Init analytics context from API data](https://github.com/USSF-ORBIT/ussf-portal-client/issues/504)
+- [Modal body padding bug](https://github.com/USSF-ORBIT/ussf-portal-client/issues/515)
 
 Previous release notes can be found [here](https://github.com/USSF-ORBIT/ussf-portal-client/releases)
 
