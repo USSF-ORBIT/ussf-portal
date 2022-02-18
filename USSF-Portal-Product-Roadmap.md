@@ -54,16 +54,20 @@ ____________________________________________________
 
 | Task  | Description | Status |
 | ------ | ------ | :------: |
-| Build news & announcements page | This page will be responsible for displaying the existing SpaceForce.mil RSS news feed as well as all future content authored in the CMS | :construction: TODO |
+| Build news page | This page will be responsible for displaying the existing SpaceForce.mil RSS news feed as well as all future content authored in the CMS | :white_check_mark: DONE |
 | Build article template | The page template to be used when viewing content published throught he CMS | :construction: TODO |
-| Build news & announcements widget | This widget will sit on the users My Space with the goal of surfacing the latest or most relavent news and announcements | :construction: TODO |
+| Build news & announcements widget | This widget will sit on the users My Space with the goal of surfacing the latest or most relavent news and announcements | :construction: IN PROGRESS |
 
 ### Self hosted CMS
 
 | Task  | Description | Status |
 | ------ | ------ | :------: |
-| Infra tasks | Tasks required to configure and deploy a standalone CMS to production | :construction: TODO |
-| Auth and user roles | Use existing login methods and create the necessary CMS roles | :construction: TODO |
+| Infra tasks | Tasks required to configure and deploy a standalone CMS to production | :construction: IN PROGRESS |
+| Auth and user roles | Use existing login methods and create the necessary CMS roles | :construction: IN PROGRESS |
+
+## April & May
+
+____________________________________________________
 
 ### Search
 
@@ -73,10 +77,6 @@ ____________________________________________________
 | Handle user search query input | Implement search and indexing logic | :construction: TODO |
 | Create search results page | The front facing search results page | :construction: TODO |
 | Search e-Pubs | Pass search request to e-Pubs for forms and publictions | :construction: TODO |
-
-## April & May
-
-____________________________________________________
 
 ### Dark Mode
 
