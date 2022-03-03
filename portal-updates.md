@@ -6,16 +6,15 @@
 
 #### Release Notes
 
-**Latest release: 2/17/22**
+**Latest release: 3/3/22**
 
 *Features:*
 
-- [News Page](https://github.com/USSF-ORBIT/ussf-portal-client/pull/512)
+- [News widget](https://github.com/USSF-ORBIT/ussf-portal-client/issues/522)
 
 *Bug Fixes:*
 
-- [Init analytics context from API data](https://github.com/USSF-ORBIT/ussf-portal-client/issues/504)
-- [Modal body padding bug](https://github.com/USSF-ORBIT/ussf-portal-client/issues/515)
+- [Fix login success redirect status](https://github.com/USSF-ORBIT/ussf-portal-client/issues/542)
 
 Previous release notes can be found [here](https://github.com/USSF-ORBIT/ussf-portal-client/releases)
 
