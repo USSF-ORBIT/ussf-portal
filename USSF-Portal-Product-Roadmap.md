@@ -55,8 +55,9 @@ ____________________________________________________
 | Task  | Description | Status |
 | ------ | ------ | :------: |
 | Build news page | This page will be responsible for displaying the existing SpaceForce.mil RSS news feed as well as all future content authored in the CMS | :white_check_mark: DONE |
-| Build article template | The page template to be used when viewing content published throught he CMS | :construction: TODO |
-| Build news & announcements widget | This widget will sit on the users My Space with the goal of surfacing the latest or most relavent news and announcements | :construction: IN PROGRESS |
+| Build news widget | This widget will sit on the users My Space with the goal of surfacing the latest or most relavent news and announcements | :white_check_mark: DONE |
+| Migrate existing content | We will be porting over any existing pages on the current portal to the new UI | :construction: IN PROGRESS |
+| Announcements section | Create a new section on the home page displaying the most up to date announcements | :construction: TODO |
 
 ### Self hosted CMS
 
@@ -64,6 +65,14 @@ ____________________________________________________
 | ------ | ------ | :------: |
 | Infra tasks | Tasks required to configure and deploy a standalone CMS to production | :construction: IN PROGRESS |
 | Auth and user roles | Use existing login methods and create the necessary CMS roles | :construction: IN PROGRESS |
+
+### Analytics
+| ------ | ------ | :------: |
+| Deploy analytics platform to production | The remaining piece of getting the analytics platform on to the production environment so we can begin collecting data | | :construction: IN PROGRESS |
+
+
+| Task  | Description | Status |
+
 
 ## April & May
 
