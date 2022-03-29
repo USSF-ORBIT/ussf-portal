@@ -25,6 +25,14 @@ you're not married to an editor, we recommend you use one of these.
 
 ???
 
+#### NPM vs Yarn
+
+???
+
+#### TypeScript vs JavaScript
+
+???
+
 ### Docker
 
 Local development is done with Docker and Docker Compose. This allows us to install as few things as necessary on our local workstation. It also allows us to use the same artifact (Docker image) locally that we could eventually ship to production.
@@ -34,6 +42,14 @@ Docker images are based off of [Debian-Slim](https://hub.docker.com/_/node?tab=t
 We pin our image versions rather than `:latest`. For 3rd party applications (Mongo, PostgreSQL, Redis, etc.), we try and use the same version that's available on our hosting provider.
 
 We use [Trivy](https://github.com/aquasecurity/trivy) in a GitHub Action to scan our container for vulnerabilities.
+
+### Direnv
+
+We use a shell extension called [direnv](https://direnv.net/). This makes managing environment variables and secrets easier. It's likely no tooling or workflow in this project would work without it.
+
+### Make
+
+Make is powerful, but like anything else, it can become a Hydra, it can become very complex. Use sparingly. Be kind to your peers.
 
 ## Git
 
