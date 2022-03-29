@@ -33,6 +33,8 @@ Docker images are based off of [Debian-Slim](https://hub.docker.com/_/node?tab=t
 
 We pin our image versions rather than `:latest`. For 3rd party applications (Mongo, PostgreSQL, Redis, etc.), we try and use the same version that's available on our hosting provider.
 
+We use [Trivy](https://github.com/aquasecurity/trivy) in a GitHub Action to scan our container for vulnerabilities.
+
 ## Git
 
 ### Account Configuration
@@ -60,3 +62,41 @@ We've chosen to use GitHub Actions for our CI/CD run-time environment. Because o
 ## IaC
 
 ### Terraform
+
+#### Remote State
+
+State is stored in an S3 bucket. A lock is created in DynamoDB to ensure that two individuals aren't interacting with state at the same time.
+
+#### Providers
+
+We use AWS v3 Terraform Provider. v4 introduced breaking changes to S3 buckets so for the time being, we've chosen to not upgrade.
+
+#### Modules
+
+We should not use local modules. Given the opportunity, we'll favor TrussWorks [modules](https://github.com/trussworks/), then community modules from [Anton](https://github.com/terraform-aws-modules/), then [Cloud Posse](https://github.com/cloudposse/). Others are acceptable after a thorough analysis.
+
+Care should be taken to not use modules that import modules that import modules (you get the point)...Should a change need to occur, the amount of effort and pull requests necessary to see that change land in the parent module is likely greater than if you were starting from scratch with something simpler.
+
+#### TFSec
+
+We use TFSec both in [VSCode](https://marketplace.visualstudio.com/items?itemName=tfsec.tfsec) as a plugin as well as a [GitHub Action](https://github.com/aquasecurity/tfsec-action) to do static analysis of our infrastructure as code codebase.
+
+#### Variables are Free in Terraform
+
+Don't be afraid to use variables in Terraform. They allow for reusability and they cost us nothing. Use sane defaults and good descriptions.
+
+### Patterns
+
+#### Encryption
+
+Encryption should be enabled by default both for traffic in-flight as well as data at rest. In a test/dev/sandbox environment, using AWS's KMS keys is adequate. In a production environment, your managed KMS keys should be used instead.
+
+#### Load Balancing
+
+In a dev/test/sandbox environment, a shared [A|N|E]LB is acceptable. In a production environment, it may also be acceptable, but [A|N|E]LB's should not be shared across services. An Application load balancer serving a web application should listen on port 80 (HTTP) and 443 (HTTPS). Port 80 listener should be configured to do a direct to port 443 so that the website only ever serves traffic over HTTPS.
+
+If the opportunity exists, Amazon's Certificate Manager ([ACM](https://aws.amazon.com/certificate-manager/)) should be the preferred method of terminating SSL on the load balancer. If ACM cannot be used, a preference for [Let's Encrypt](https://letsencrypt.org/) would be next in line. In the event you cannot use either, use [IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_server-certs.html) to manage your certificate.
+
+#### Environment Variables
+
+The application should use Environment Variables for configuration and secrets. These values should be stored in AWS's [Parameter Store](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html).
