@@ -116,3 +116,21 @@ If the opportunity exists, Amazon's Certificate Manager ([ACM](https://aws.amazo
 #### Environment Variables
 
 The application should use Environment Variables for configuration and secrets. These values should be stored in AWS's [Parameter Store](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html).
+
+#### Cloud-based Services
+
+In a dev/test/sandbox environment, share services when possible. This saves on money and lowers the overhead and complexity of the environment. Single instances are often fine for these environments. Production unless hamstrung by the application, should always be deployed in an HA type architecture.
+
+#### Free Tier
+
+Given the opportunity, choose to use the Free Tier in AWS. It is likely you will exceed the usage for the month, but it is better than nothing. This is often t2 or t3 micro instances.
+
+#### Logging
+
+Be aggressive with retention in dev/test/sandbox environments. The transfer, storage and processing of these logs may cost money. In production, retention is defined by business requirements. Pro Tip: This may be 2, 3, 5, or 10 years often times. It varies on the dataset. When it doubt, go higher rather than lower. Like mentioned above, the transfer and storage of these logs should be encrypted.
+
+In a dev/test/sandbox environment, centralized logging may be too big of a lift to exist. In a production environment, configure and use centralized logging. Your peers will thank you. Also, it may be a compliance requirement.
+
+#### Deletion Protection
+
+Certain AWS services allow you to provision the service with Deletion Protection. In a dev/test/sandbox environment, use your best judgement. In Production, this should almost always be enabled to prevent an accidental deletion.
