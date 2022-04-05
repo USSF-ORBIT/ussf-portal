@@ -20,7 +20,7 @@ Some of our early feedback has been great to be able to revisit how we manage th
 
 Engineering is working on several fast-follow items to push to the beta portal since we’ve launched the new experience. These are improvements to the user experience, analytics opportunities and new methods for deploying the code to make every future release faster and easier for the team.
 
-The team created a microsite containing the details around how we approached this project, our design elements, what we’ve completed, and what we’re working towards in our product roadmap.  
+The team created a microsite containing the details around how we approached this project, our design elements, what we’ve completed, and what we’re working towards in our product roadmap. 
 
 **What’s next:**
 

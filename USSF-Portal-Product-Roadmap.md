@@ -1,6 +1,6 @@
 <--[Back](https://ussf-orbit.github.io/ussf-portal/portal-updates)
 
-Below is our product roadmap: a long-term plan of the goals, features, and direction of the USSF Portal. We update this frequently with the status of our progress, as well as add new high-level feature requests and ideas.
+Below is our product roadmap: a long-term plan of the goals, features, and direction of the USSF Portal. We update this every two weeks with the status of our progress, as well as add new high-level feature requests and ideas.
 
 **Last Updated: 02/04/2022**
 

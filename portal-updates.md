@@ -24,7 +24,7 @@ Previous release notes can be found [here](https://github.com/USSF-ORBIT/ussf-po
 
 #### Previous updates
 
-- An archive of our previous [development updates](development-updates).
+- An archive of our previous [development updates](development-updates)
 
 #### Repos
 
@@ -32,7 +32,7 @@ Previous release notes can be found [here](https://github.com/USSF-ORBIT/ussf-po
 
 #### Roadmap
 
-- Our USSF product [roadmap](USSF-Portal-Product-Roadmap).
+- Our USSF product [roadmap](USSF-Portal-Product-Roadmap)
 
 #### Project Boards
 
