@@ -4,15 +4,16 @@
 
 ---
 
-## Release Notes **Latest release: 3/23/22**
+## Release Notes **Latest release: 4/7/22**
 
-The USSF Portal is out of beta!
+Version 3.1.0 brings some new features and refinements to the portal!
 
 **Features:**
 
-- [Remove beta gate](https://github.com/USSF-ORBIT/ussf-portal-client/pull/565)
-- [Launch announcement component](https://github.com/USSF-ORBIT/ussf-portal-client/issues/564)
-- [Style Made By link](https://github.com/USSF-ORBIT/ussf-portal-client/issues/563)
+- [Add cancel button to Add Link flow] (https://github.com/USSF-ORBIT/ussf-portal-client/issues/585)
+- [Add PT doc to Essential Reading section] (https://github.com/USSF-ORBIT/ussf-portal-client/issues/583)
+- [Implement loading state for News page] (https://github.com/USSF-ORBIT/ussf-portal-client/issues/581)
+- [Update undo button style] (https://github.com/USSF-ORBIT/ussf-portal-client/issues/593)
 
 #### Dev Blog
 
@@ -20,7 +21,7 @@ The USSF Portal is out of beta!
 
 #### Previous Updates
 
-- An archive of our previous [development updates](development-updates).
+- An archive of our previous [development updates](development-updates)
 
 #### Code Repositories
 
@@ -28,4 +29,4 @@ The USSF Portal is out of beta!
 
 #### Roadmap
 
-- Our USSF product [roadmap](USSF-Portal-Product-Roadmap).
+- Our USSF product [roadmap](USSF-Portal-Product-Roadmap)
