@@ -10,10 +10,10 @@ Version 3.1.0 brings some new features and refinements to the portal!
 
 **Features:**
 
-- [Add cancel button to Add Link flow] (https://github.com/USSF-ORBIT/ussf-portal-client/issues/585)
-- [Add PT doc to Essential Reading section] (https://github.com/USSF-ORBIT/ussf-portal-client/issues/583)
-- [Implement loading state for News page] (https://github.com/USSF-ORBIT/ussf-portal-client/issues/581)
-- [Update undo button style] (https://github.com/USSF-ORBIT/ussf-portal-client/issues/593)
+- [Add cancel button to Add Link flow](https://github.com/USSF-ORBIT/ussf-portal-client/issues/585)
+- [Add PT doc to Essential Reading section](https://github.com/USSF-ORBIT/ussf-portal-client/issues/583)
+- [Implement loading state for News page](https://github.com/USSF-ORBIT/ussf-portal-client/issues/581)
+- [Update undo button style](https://github.com/USSF-ORBIT/ussf-portal-client/issues/593)
 
 #### Dev Blog
 
