@@ -1,0 +1,95 @@
+# Docker compose stack for E2E tests
+services:
+
+  # Portal client
+  app:
+    container_name: app
+    build:
+      context: ../../ussf-portal-client/
+      dockerfile: Dockerfile
+      target: e2e
+    restart: always
+    ports:
+      - '3000:3000'
+    environment:
+      SAML_ISSUER: ussf-portal-client
+      SAML_IDP_METADATA_URL: http://idp:8080/simplesaml/saml2/idp/metadata.php
+      REDIS_URL: redis://portal_redis:6379
+      MONGO_URL: mongodb://mongo:27017
+      MONGODB_DB: cypress-e2e
+      MONGO_HOST: ''
+      MONGO_USER: ''
+      MONGO_PASSWORD: ''
+      SESSION_SECRET: thisvaluecanbeanythingitisonlyforlocaldevelopment
+      SESSION_DOMAIN: localhost
+      KEYSTONE_URL: http://cms:3001
+    stdin_open: true
+    depends_on:
+      - mongo
+      - redis
+      - idp
+      - cms
+
+  cms:
+    container_name: keystone-cms
+    build:
+      context: ../../ussf-portal-cms/
+      dockerfile: Dockerfile
+      target: e2e
+    restart: always
+    ports:
+      - '3001:3001'
+    environment:
+      PORT: 3001
+      SESSION_SECRET: thisvaluecanbeanythingitisonlyforlocaldevelopment
+      SESSION_DOMAIN: localhost
+      DATABASE_URL: postgres://keystone:keystonecms@keystone-db:5432/test
+      REDIS_URL: redis://portal_redis:6379
+      PORTAL_URL: http://localhost:3000
+    stdin_open: true
+    depends_on:
+      - keystone-db
+      - redis
+
+  # Required by Portal app
+  mongo:
+    container_name: mongo
+    image: mongo:4.0.0
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: cypress-e2e
+    ports:
+      - '27017:27017'
+
+  # Shared between CMS and Portal app
+  redis:
+    container_name: portal_redis
+    image: redis:6.2
+    ports:
+      - '6379:6379'
+
+  idp:
+    container_name: test-saml-idp
+    image: kristophjunge/test-saml-idp
+    restart: always
+    ports:
+      - '8080:8080'
+      - '8443:8443'
+    environment:
+      SIMPLESAMLPHP_SP_ENTITY_ID: ussf-portal-client
+      SIMPLESAMLPHP_SP_ASSERTION_CONSUMER_SERVICE: http://localhost:3000/api/auth/login
+      SIMPLESAMLPHP_SP_SINGLE_LOGOUT_SERVICE: http://localhost:3000/api/auth/logout/callback
+    volumes:
+      - ../../ussf-portal-client/users.php:/var/www/simplesamlphp/config/authsources.php
+
+  # Required by CMS
+  keystone-db:
+    container_name: keystone-db
+    image: postgres:14
+    restart: always
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_PASSWORD=keystonecms
+      - POSTGRES_USER=keystone
+      - POSTGRES_DB=test
