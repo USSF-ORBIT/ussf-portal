@@ -1,0 +1,30 @@
+{
+  "name": "ussf-portal",
+  "version": "1.0.0",
+  "repository": "git@github.com:USSF-ORBIT/ussf-portal.git",
+  "private": true,
+  "engines": {
+    "node": "14.19.3"
+  },
+  "scripts": {
+    "cypress:install": "yarn --cwd e2e/ install",
+    "cypress:dev": "yarn --cwd e2e/ cypress open",
+    "e2e:install": "yarn --cwd playwright/ install && cd playwright/ && npx playwright install",
+    "e2e:test": "yarn --cwd playwright/ playwright test",
+    "e2e:debug": "PWDEBUG=1 yarn --cwd playwright/ playwright test --headed",
+    "e2e:codegen": "yarn --cwd playwright/ playwright codegen localhost:3001"
+  },
+  "devDependencies": {
+    "@playwright-testing-library/test": "4.2.0",
+    "@playwright/test": "1.20.2",
+    "@testing-library/cypress": "8.0.2",
+    "axe-core": "4.4.1",
+    "axe-playwright": "1.1.11",
+    "cypress": "9.4.1",
+    "cypress-axe": "0.14.0",
+    "eslint-plugin-playwright": "0.8.0",
+    "mkdirp": "1.0.4",
+    "mongodb": "3.7.3",
+    "pg": "8.7.3"
+  }
+}
