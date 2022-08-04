@@ -15,12 +15,12 @@ yarn-error.log*
 coverage
 
 # Cypress artifacts
-cypress/screenshots
-cypress/videos
-cypress/reports
+e2e/cypress/screenshots
+e2e/cypress/videos
+e2e/cypress/reports
 
 # Playwright artifacts
-test-results
+e2e/test-results
 
 # Optional eslint cache
 .eslintcache
