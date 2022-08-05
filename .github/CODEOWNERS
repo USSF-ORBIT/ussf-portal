@@ -1,0 +1,16 @@
+# Default owners for e2e tests
+
+/e2e/ @abbyoung @esacteksab @gidjin
+
+# Github settings
+
+.github/settings.yml @abbyoung @esacteksab @gidjin
+
+# CODEOWNERS prevent renovate automerge since it will automatically ask for review
+
+# See documentation for more details: https://docs.renovatebot.com/automerge-configuration/
+
+# Solution: make files used by renovate owned by everyone
+
+**/*/package.json
+**/*/yarn.lock
