@@ -24,7 +24,14 @@ describe('Routes & navigation', () => {
       cy.get('head title').should('contain', 'Space Force Portal')
     })
 
-    it('can navigate to the News page', () => {
+    it('can navigate to the News & Announcments page', () => {
+      cy.visit('/news-announcements')
+      cy.injectAxe()
+      cy.contains('All USSF news')
+      cy.checkA11y(null, null, logging, { skipFailures: true })
+    })
+
+    it('can navigate to the internal News page', () => {
       cy.visit('/news')
       cy.injectAxe()
       cy.contains('All USSF news')

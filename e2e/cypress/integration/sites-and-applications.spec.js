@@ -1,3 +1,5 @@
+import logging from '../plugins/logging'
+
 describe('Sites and Applications', () => {
   before(() => {
     // Reset the database
@@ -8,6 +10,7 @@ describe('Sites and Applications', () => {
   beforeEach(() => {
     cy.preserveLoginCookies()
     cy.visit('/')
+    cy.injectAxe()
   })
 
   it('can add a new custom collection', () => {
@@ -23,6 +26,7 @@ describe('Sites and Applications', () => {
     // Client-side navigate to the page
     cy.contains('All sites & applications').click()
     cy.url().should('eq', Cypress.config().baseUrl + '/sites-and-applications')
+    cy.injectAxe()
     cy.contains('Sites & Applications')
 
     const collections = [
@@ -55,6 +59,7 @@ describe('Sites and Applications', () => {
     cy.contains('Sort by type').click()
     cy.contains('Career')
     cy.contains('Application name').should('not.exist')
+    cy.checkA11y(null, null, logging, { skipFailures: true })
   })
 
   it('can add collections from the Sites & Applications page to My Space', () => {

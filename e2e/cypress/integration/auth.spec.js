@@ -52,7 +52,13 @@ describe('The Authentication flow', () => {
     })
 
     it('loads the user on each route', () => {
-      const routes = ['/', '/sites-and-applications', '/about-us', '/news']
+      const routes = [
+        '/',
+        '/sites-and-applications',
+        '/about-us',
+        '/news',
+        '/news-announcements',
+      ]
 
       routes.forEach((url) => {
         cy.visit(url)

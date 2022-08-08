@@ -15,6 +15,7 @@ describe('About Us', () => {
     cy.get('button[aria-controls="aboutUsDropdown"]').click()
     cy.findByRole('link', { name: 'About the USSF' }).click()
     cy.url().should('eq', Cypress.config().baseUrl + '/about-us')
+    cy.injectAxe()
     cy.findByRole('heading', { level: 1 }).contains('About us')
     cy.findAllByRole('heading', { level: 3, name: 'Essential Reading' }).should(
       'exist'
