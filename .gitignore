@@ -34,8 +34,5 @@ e2e/test-results
 
 tsconfig.tsbuildinfo
 
-# asdf
-.tool-versions
-
 #vscode
 .vscode
