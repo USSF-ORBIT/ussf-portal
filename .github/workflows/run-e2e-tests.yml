@@ -16,9 +16,6 @@ jobs:
   run-e2e-tests:
     runs-on: ubuntu-latest
     steps:
-      - name: Echo github.head_ref
-        run: echo ${{github.head_ref}}
-
       - name: Check out E2E tests repo
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
         with:
