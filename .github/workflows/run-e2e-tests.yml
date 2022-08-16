@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
         with:
           path: ./e2e-tests
-          ref: ${{github.head_ref}}
+          ref: ${{github.head_ref || main}}
 
       - name: Read Node.js version from package.json
         run: echo ::set-output name=nodeVersion::$(node -p "require('./e2e-tests/e2e/package.json').engines.node")
@@ -36,14 +36,14 @@ jobs:
         with:
           repository: USSF-ORBIT/ussf-portal-client
           path: ./ussf-portal-client
-          ref: ${{github.head_ref}}
+          ref: ${{github.head_ref || main}}
 
       - name: Check out cms
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
         with:
           repository: USSF-ORBIT/ussf-portal-cms
           path: ./ussf-portal-cms
-          ref: ${{github.head_ref}}
+          ref: ${{github.head_ref || main}}
 
       - name: Docker compose
         run: docker-compose up -d
