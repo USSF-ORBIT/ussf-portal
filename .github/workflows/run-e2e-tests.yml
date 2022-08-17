@@ -16,11 +16,47 @@ jobs:
   run-e2e-tests:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out E2E tests repo
+      - name: Clone E2E tests repo
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
         with:
+          repository: USSF-ORBIT/ussf-portal
           path: ./e2e-tests
-          ref: ${{github.head_ref || "main"}}
+          fetch-depth: 0 # fetch all branch information, needed to checkout the branch if present later
+          ref: main      # checkout main by default
+
+      - name: Checkout E2E ${{github.head_ref}} or main
+        working-directory: ./e2e-tests
+        run: |
+          # checkout the branch that started this pull request or stay on main if no such branch
+          /usr/bin/git checkout --progress --force -B ${{github.head_ref}} origin/${{github.head_ref}} || echo "staying on main"
+
+      - name: Clone portal client
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
+        with:
+          repository: USSF-ORBIT/ussf-portal-client
+          path: ./ussf-portal-client
+          fetch-depth: 0 # fetch all branch information, needed to checkout the branch if present later
+          ref: main      # checkout main by default
+
+      - name: Checkout portal client ${{github.head_ref}} or main
+        working-directory: ./ussf-portal-client
+        run: |
+          # checkout the branch that started this pull request or stay on main if no such branch
+          /usr/bin/git checkout --progress --force -B ${{github.head_ref}} origin/${{github.head_ref}} || echo "staying on main"
+
+      - name: Clone cms
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
+        with:
+          repository: USSF-ORBIT/ussf-portal-cms
+          path: ./ussf-portal-cms
+          fetch-depth: 0 # fetch all branch information, needed to checkout the branch if present later
+          ref: main      # checkout main by default
+
+      - name: Checkout cms ${{github.head_ref}} or main
+        working-directory: ./ussf-portal-cms
+        run: |
+          # checkout the branch that started this pull request or stay on main if no such branch
+          /usr/bin/git checkout --progress --force -B ${{github.head_ref}} origin/${{github.head_ref}} || echo "staying on main"
 
       - name: Read Node.js version from package.json
         run: echo ::set-output name=nodeVersion::$(node -p "require('./e2e-tests/e2e/package.json').engines.node")
@@ -30,20 +66,6 @@ jobs:
         uses: actions/setup-node@eeb10cff27034e7acf239c5d29f62154018672fd # tag=v3
         with:
           node-version: ${{ steps.engines.outputs.nodeVersion }}
-
-      - name: Check out portal client
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
-        with:
-          repository: USSF-ORBIT/ussf-portal-client
-          path: ./ussf-portal-client
-          ref: ${{github.head_ref || "main"}}
-
-      - name: Check out cms
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
-        with:
-          repository: USSF-ORBIT/ussf-portal-cms
-          path: ./ussf-portal-cms
-          ref: ${{github.head_ref || "main"}}
 
       - name: Docker compose
         run: docker-compose up -d
