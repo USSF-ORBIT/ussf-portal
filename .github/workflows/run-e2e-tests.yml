@@ -1,11 +1,15 @@
 name: Build & run E2E tests
 
 on:
+  # make the workflow reusable
+  workflow_call:
+  # configure on push events
   push:
     paths:
       - "e2e/**"
       - "!e2e/**.md"
     branches: [main]
+  # configure on pull request events
   pull_request:
     paths:
       - "e2e/**"
