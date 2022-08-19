@@ -1,10 +1,10 @@
 # Default owners for e2e tests
 
-/e2e/ @abbyoung @esacteksab @gidjin
+/e2e/ @abbyoung @esacteksab @gidjin @minhlai
 
 # Github settings
 
-.github/settings.yml @abbyoung @esacteksab @gidjin
+.github/settings.yml @abbyoung @esacteksab @gidjin @minhlai
 
 # CODEOWNERS prevent renovate automerge since it will automatically ask for review
 
