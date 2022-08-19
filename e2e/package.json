@@ -7,6 +7,8 @@
     "node": "14.19.3"
   },
   "scripts": {
+    "services:removeall": "docker ps --quiet --all | xargs docker rm --force",
+    "services:up": "docker compose up --build --force-recreate --remove-orphans",
     "cypress:install": "yarn --cwd e2e/ install",
     "cypress:dev": "yarn --cwd e2e/ cypress open",
     "e2e:install": "yarn --cwd playwright/ install && cd playwright/ && npx playwright install",
