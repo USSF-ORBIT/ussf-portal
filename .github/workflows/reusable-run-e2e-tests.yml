@@ -1,0 +1,136 @@
+name: Build & run E2E tests
+
+on:
+  # make the workflow reusable
+  workflow_call:
+  # configure on push events
+  push:
+    paths:
+      - "e2e/**"
+      - "!e2e/**.md"
+    branches: [main]
+  # configure on pull request events
+  pull_request:
+    paths:
+      - "e2e/**"
+      - "!e2e/**.md"
+    branches: [main]
+
+jobs:
+  run-e2e-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone E2E tests repo
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
+        with:
+          repository: USSF-ORBIT/ussf-portal
+          path: ./e2e-tests
+          fetch-depth: 0 # fetch all branch information, needed to checkout the branch if present later
+          ref: main      # checkout main by default
+
+      - name: Checkout E2E ${{github.head_ref}} or main
+        working-directory: ./e2e-tests
+        run: |
+          # checkout the branch that started this pull request or stay on main if no such branch
+          /usr/bin/git checkout --progress --force -B ${{github.head_ref}} origin/${{github.head_ref}} || echo "staying on main"
+
+      - name: Clone portal client
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
+        with:
+          repository: USSF-ORBIT/ussf-portal-client
+          path: ./ussf-portal-client
+          fetch-depth: 0 # fetch all branch information, needed to checkout the branch if present later
+          ref: main      # checkout main by default
+
+      - name: Checkout portal client ${{github.head_ref}} or main
+        working-directory: ./ussf-portal-client
+        run: |
+          # checkout the branch that started this pull request or stay on main if no such branch
+          /usr/bin/git checkout --progress --force -B ${{github.head_ref}} origin/${{github.head_ref}} || echo "staying on main"
+
+      - name: Clone cms
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
+        with:
+          repository: USSF-ORBIT/ussf-portal-cms
+          path: ./ussf-portal-cms
+          fetch-depth: 0 # fetch all branch information, needed to checkout the branch if present later
+          ref: main      # checkout main by default
+
+      - name: Checkout cms ${{github.head_ref}} or main
+        working-directory: ./ussf-portal-cms
+        run: |
+          # checkout the branch that started this pull request or stay on main if no such branch
+          /usr/bin/git checkout --progress --force -B ${{github.head_ref}} origin/${{github.head_ref}} || echo "staying on main"
+
+      - name: Read Node.js version from package.json
+        run: echo ::set-output name=nodeVersion::$(node -p "require('./e2e-tests/e2e/package.json').engines.node")
+        id: engines
+
+      - name: Set up node
+        uses: actions/setup-node@eeb10cff27034e7acf239c5d29f62154018672fd # tag=v3
+        with:
+          node-version: ${{ steps.engines.outputs.nodeVersion }}
+
+      - name: Docker compose
+        run: docker-compose up -d
+        working-directory: ./e2e-tests/e2e
+
+      - name: Docker logs
+        uses: jwalton/gh-docker-logs@v2.2.0
+        with:
+          dest: "./docker-logs"
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+        working-directory: ./e2e-tests/e2e
+
+      - name: Install Playwright
+        run: npx playwright install --with-deps
+        working-directory: ./e2e-tests/e2e
+
+      - name: Run Playwright tests
+        run: yarn playwright test
+        working-directory: ./e2e-tests/e2e
+
+      - name: Upload Playwright test results
+        if: always()
+        uses: actions/upload-artifact@6673cd052c4cd6fcf4b4e6e60ea986c889389535 # tag=v3
+        with:
+          name: playwright-results
+          path: ./e2e-tests/e2e/test-results
+
+      - name: Cypress run
+        uses: cypress-io/github-action@31b3f686c1ee05fb7390cc106d1f09eb83919a3c # tag=v3.2.0
+        env:
+          CYPRESS_BASE_URL: http://localhost:3000
+        with:
+          install-command: yarn install --frozen-lockfile
+          working-directory: ./e2e-tests/e2e
+
+      - name: Upload screenshots
+        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8 # tag=v3
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: ./e2e-tests/e2e/cypress/screenshots
+
+      - name: Upload videos
+        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8 # tag=v3
+        if: always()
+        with:
+          name: cypress-videos
+          path: ./e2e-tests/e2e/cypress/videos
+
+      - name: Upload reports
+        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8 # tag=v3
+        if: always()
+        with:
+          name: cypress-reports
+          path: ./e2e-tests/e2e/cypress/reports
+
+      - name: Upload logs
+        uses: actions/upload-artifact@6673cd052c4cd6fcf4b4e6e60ea986c889389535 # tag=v3
+        if: always()
+        with:
+          name: container-logs
+          path: ./docker-logs
