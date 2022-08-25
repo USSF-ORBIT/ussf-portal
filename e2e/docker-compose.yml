@@ -1,6 +1,5 @@
 # Docker compose stack for E2E tests
 services:
-
   # Portal client
   app:
     container_name: app

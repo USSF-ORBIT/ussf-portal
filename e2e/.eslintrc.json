@@ -3,11 +3,7 @@
     "node": true,
     "cypress/globals": true
   },
-  "plugins": [
-    "cypress",
-    "@typescript-eslint",
-    "security"
-  ],
+  "plugins": ["cypress", "@typescript-eslint", "security"],
   "extends": [
     "eslint:recommended",
     "plugin:import/recommended",
