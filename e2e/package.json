@@ -12,6 +12,7 @@
     "services:up": "docker compose up --build --force-recreate --remove-orphans",
     "cypress:install": "yarn --cwd e2e/ install",
     "cypress:dev": "yarn --cwd e2e/ cypress open",
+    "cypress:test": "yarn --cwd e2e/ cypress run",
     "e2e:install": "yarn --cwd playwright/ install && cd playwright/ && npx playwright install",
     "e2e:test": "yarn --cwd playwright/ playwright test",
     "e2e:debug": "PWDEBUG=1 yarn --cwd playwright/ playwright test --headed",
