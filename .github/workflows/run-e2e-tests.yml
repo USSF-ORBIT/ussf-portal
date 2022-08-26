@@ -23,6 +23,7 @@ jobs:
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
 
       - name: Read Node.js version from package.json
+        working-directory: ./e2e
         run: echo ::set-output name=nodeVersion::$(node -p "require('./package.json').engines.node")
         id: engines
 
@@ -32,6 +33,7 @@ jobs:
           node-version: ${{ steps.engines.outputs.nodeVersion }}
 
       - name: Get yarn cache directory path
+        working-directory: ./e2e
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
 
@@ -45,7 +47,9 @@ jobs:
 
       # The yarn cache is not node_modules
       - name: Install dependencies
+        working-directory: ./e2e
         run: yarn --frozen-lockfile
 
       - name: Lint code
+        working-directory: ./e2e
         run: yarn lint
