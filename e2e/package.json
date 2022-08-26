@@ -19,8 +19,8 @@
     "e2e:codegen": "yarn --cwd playwright/ playwright codegen localhost:3001"
   },
   "devDependencies": {
-    "@playwright-testing-library/test": "4.2.0",
-    "@playwright/test": "1.20.2",
+    "@playwright-testing-library/test": "4.3.1",
+    "@playwright/test": "1.25.1",
     "@testing-library/cypress": "8.0.2",
     "@typescript-eslint/eslint-plugin": "5.35.1",
     "@typescript-eslint/parser": "5.35.1",
