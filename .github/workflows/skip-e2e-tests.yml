@@ -1,5 +1,11 @@
 name: Skip E2E tests when only docs changed
 
+# These are required be cause the .github/settings.yml sets them
+# as required for the build. However, these builds only run when
+# files in the e2e folder are made. So these workflows create ones
+# that run when those files are not changed giving the same name
+# allowing markdown only builds to pass.
+
 on:
   # configure on push events
   push:
@@ -19,3 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "skip e2e tests for doc only changes"
+  lint-e2e-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "skip linting e2e tests for doc only changes"
