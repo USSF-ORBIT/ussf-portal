@@ -14,9 +14,8 @@ on:
 
 jobs:
   run-e2e-tests:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: ./.github/workflows/reusable-run-e2e-tests
+    uses: ./.github/workflows/reusable-run-e2e-tests.yml
+
   lint-e2e-tests:
     runs-on: ubuntu-latest
     steps:
