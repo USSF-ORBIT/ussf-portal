@@ -24,7 +24,7 @@
     "@testing-library/cypress": "8.0.2",
     "@typescript-eslint/eslint-plugin": "5.35.1",
     "@typescript-eslint/parser": "5.35.1",
-    "axe-core": "4.4.1",
+    "axe-core": "4.4.3",
     "axe-playwright": "1.1.11",
     "cypress": "9.4.1",
     "cypress-axe": "0.14.0",
