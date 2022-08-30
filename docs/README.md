@@ -11,6 +11,7 @@
 - [How To Update Github Actions](./how-to/updating-github-actions.md)
 - [How to Release](./how-to/releasing.md)
 - [How to manage JS dependencies](./how-to/dependencies.md)
+- [How to run and/or update the e2e tests](./how-to/run-or-update-e2e-tests.md)
 
 ## Architectural Decision Records
 
@@ -27,3 +28,4 @@ When creating a new ADR, you can copy the [template](./adr/0000-template.md).
 9. [Authentication & authorization strategy across platforms](./adr/0009-platform-auth-architecture.md)
 10. [Use Playwright to end-to-end test the CMS](./adr/0010-playwright-e2e-cms.md)
 11. [Separate Repo for end-to-end tests](./adr/0011-separate-repo-for-e2e-tests.md)
+12. [Use Playwright to end-to-end test the Client](./adr/0012-playwrigt-e2e-client.md)
