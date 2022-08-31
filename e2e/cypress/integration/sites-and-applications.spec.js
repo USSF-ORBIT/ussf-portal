@@ -77,7 +77,9 @@ describe('Sites and Applications', () => {
     // Go to Sites & Applications
     cy.findByRole('button', { name: 'Add section' }).click()
 
-    cy.findByRole('button', { name: 'Select collection from template' }).click()
+    cy.findByRole('button', {
+      name: 'Select collection from template',
+    }).click()
 
     cy.url().should(
       'eq',
