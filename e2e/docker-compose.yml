@@ -7,6 +7,9 @@ services:
       context: ../../ussf-portal-client/
       dockerfile: Dockerfile
       target: e2e
+      cache_from:
+        - "${PORTAL_REPO}:builder"
+        - "${PORTAL_REPO}:e2e"
     restart: always
     ports:
       - '3000:3000'
@@ -35,6 +38,9 @@ services:
       context: ../../ussf-portal-cms/
       dockerfile: Dockerfile
       target: e2e
+      cache_from:
+        - "${CMS_REPO}:builder"
+        - "${CMS_REPO}:e2e"
     restart: always
     ports:
       - '3001:3001'

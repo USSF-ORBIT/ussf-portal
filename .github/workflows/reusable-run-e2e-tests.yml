@@ -59,10 +59,27 @@ jobs:
         with:
           node-version: ${{ steps.engines.outputs.nodeVersion }}
 
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@67fbcbb121271f7775d2e7715933280b06314838 # tag=v1
+        with:
+          aws-access-key-id: ${{ secrets.GHA_ECR_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.GHA_ECR_AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+          role-to-assume: ${{ secrets.GHA_ECR_ROLE_ASSUMPTION }}
+          role-skip-session-tagging: true
+          role-duration-seconds: '3600'
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@9149ade017c57f86dea2f76a01f8b2d5bd06b10f # tag=v1
+
       - name: Docker compose
         run: docker-compose up -d
         working-directory: ./e2e-tests/e2e
-
+        env:
+          CMS_REPO: ${{ steps.login-ecr.outputs.registry }}/keystone
+          PORTAL_REPO: ${{ steps.login-ecr.outputs.registry }}/portal-client
+          
       - name: Docker logs
         uses: jwalton/gh-docker-logs@v2.2.0
         with:
