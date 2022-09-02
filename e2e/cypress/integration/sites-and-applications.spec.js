@@ -240,42 +240,22 @@ describe('Sites and Applications', () => {
 
   it('can add custom links to an existing collection', () => {
     cy.contains('Example Collection')
-      .parent()
-      .parent()
-      .parent()
-      .within(() => {
-        // Add a link
-        cy.findByRole('button', { name: '+ Add link' }).click()
-        cy.findByRole('button', { name: 'Add a custom link' }).click()
-      })
-
-    cy.findByRole('dialog', { name: 'Add a custom link' }).within(() => {
-      cy.findByRole('button', { name: 'Cancel' }).click()
+    .parent()
+    .parent()
+    .parent()
+    .within(() => {
+      // Open Add Custom Link modal
+      cy.findByRole('button', { name: '+ Add link' }).click()
+      cy.findByLabelText('Select existing link').click()
+      cy.findByRole('option', { name: 'Add custom link' }).click()
     })
 
-    cy.contains('Example Collection')
-      .parent()
-      .parent()
-      .parent()
-      .within(() => {
-        // Add a link
-        cy.findByRole('button', { name: '+ Add link' }).click()
-        cy.findByRole('button', { name: 'Add a custom link' }).click()
-      })
-
     cy.findByRole('dialog', { name: 'Add a custom link' }).within(() => {
-      cy.findByLabelText('Name')
-        .then(($el) => $el[0].checkValidity())
-        .should('be.false')
 
       cy.findByLabelText('Name')
         .type('My Custom Link')
         .then(($el) => $el[0].checkValidity())
         .should('be.true')
-
-      cy.findByLabelText('URL')
-        .then(($el) => $el[0].checkValidity())
-        .should('be.false')
 
       cy.findByLabelText('URL')
         .type('not a URL')
