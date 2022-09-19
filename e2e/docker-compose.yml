@@ -48,13 +48,15 @@ services:
       PORT: 3001
       SESSION_SECRET: thisvaluecanbeanythingitisonlyforlocaldevelopment
       SESSION_DOMAIN: localhost
-      DATABASE_URL: postgres://keystone:keystonecms@keystone-db:5432/test
+      DATABASE_URL: postgres://keystone:keystonecms@keystone-db:5432/test?connect_timeout=10
       REDIS_URL: redis://portal_redis:6379
       PORTAL_URL: http://localhost:3000
     stdin_open: true
     depends_on:
-      - keystone-db
-      - redis
+      keystone-db:
+        condition: service_healthy
+      redis:
+        condition: service_started
 
   # Required by Portal app
   mongo:
@@ -98,3 +100,8 @@ services:
       - POSTGRES_PASSWORD=keystonecms
       - POSTGRES_USER=keystone
       - POSTGRES_DB=test
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready --username=keystone --dbname=test"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
