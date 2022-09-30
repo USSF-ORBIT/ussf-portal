@@ -80,11 +80,6 @@ jobs:
           CMS_REPO: ${{ steps.login-ecr.outputs.registry }}/keystone
           PORTAL_REPO: ${{ steps.login-ecr.outputs.registry }}/portal-client
           
-      - name: Docker logs
-        uses: jwalton/gh-docker-logs@v2.2.0
-        with:
-          dest: "./docker-logs"
-
       - name: Install dependencies
         run: yarn install --frozen-lockfile
         working-directory: ./e2e-tests/e2e
@@ -111,7 +106,12 @@ jobs:
         with:
           install-command: yarn install --frozen-lockfile
           working-directory: ./e2e-tests/e2e
-
+          
+      - name: Docker logs
+        uses: jwalton/gh-docker-logs@v2.2.0
+        with:
+          dest: "./docker-logs"
+          
       - name: Upload screenshots
         uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8 # tag=v3
         if: failure()
