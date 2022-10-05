@@ -29,3 +29,4 @@ When creating a new ADR, you can copy the [template](./adr/0000-template.md).
 10. [Use Playwright to end-to-end test the CMS](./adr/0010-playwright-e2e-cms.md)
 11. [Separate Repo for end-to-end tests](./adr/0011-separate-repo-for-e2e-tests.md)
 12. [Use Playwright to end-to-end test the Client](./adr/0012-playwrigt-e2e-client.md)
+13. [Use Happo.io for visual regression testing](./adr/0013-happo-for-visual-regression-testing.md)
