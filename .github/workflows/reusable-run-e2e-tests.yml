@@ -14,7 +14,7 @@ jobs:
           repository: USSF-ORBIT/ussf-portal
           path: ./e2e-tests
           fetch-depth: 0 # fetch all branch information, needed to checkout the branch if present later
-          ref: main      # checkout main by default
+          ref: main # checkout main by default
 
       - name: Checkout E2E ${{github.head_ref}} or main
         working-directory: ./e2e-tests
@@ -28,7 +28,7 @@ jobs:
           repository: USSF-ORBIT/ussf-portal-client
           path: ./ussf-portal-client
           fetch-depth: 0 # fetch all branch information, needed to checkout the branch if present later
-          ref: main      # checkout main by default
+          ref: main # checkout main by default
 
       - name: Checkout portal client ${{github.head_ref}} or main
         working-directory: ./ussf-portal-client
@@ -42,7 +42,7 @@ jobs:
           repository: USSF-ORBIT/ussf-portal-cms
           path: ./ussf-portal-cms
           fetch-depth: 0 # fetch all branch information, needed to checkout the branch if present later
-          ref: main      # checkout main by default
+          ref: main # checkout main by default
 
       - name: Checkout cms ${{github.head_ref}} or main
         working-directory: ./ussf-portal-cms
@@ -67,7 +67,7 @@ jobs:
           aws-region: us-west-2
           role-to-assume: ${{ secrets.GHA_ECR_ROLE_ASSUMPTION }}
           role-skip-session-tagging: true
-          role-duration-seconds: '3600'
+          role-duration-seconds: "3600"
 
       - name: Login to Amazon ECR
         id: login-ecr
@@ -79,7 +79,7 @@ jobs:
         env:
           CMS_REPO: ${{ steps.login-ecr.outputs.registry }}/keystone
           PORTAL_REPO: ${{ steps.login-ecr.outputs.registry }}/portal-client
-          
+
       - name: Install dependencies
         run: yarn install --frozen-lockfile
         working-directory: ./e2e-tests/e2e
@@ -100,19 +100,19 @@ jobs:
           path: ./e2e-tests/e2e/test-results
 
       - name: Cypress run
-        uses: cypress-io/github-action@31b3f686c1ee05fb7390cc106d1f09eb83919a3c # tag=v3.2.0
+        uses: cypress-io/github-action@v4.2.0
         env:
           CYPRESS_BASE_URL: http://localhost:3000
         with:
           install-command: yarn install --frozen-lockfile
           working-directory: ./e2e-tests/e2e
-          
+
       - name: Docker logs
         uses: jwalton/gh-docker-logs@v2.2.0
         if: ${{ always() }}
         with:
           dest: "./docker-logs"
-          
+
       - name: Upload screenshots
         uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8 # tag=v3
         if: failure()
