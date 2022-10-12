@@ -35,6 +35,7 @@ describe('The Authentication flow', () => {
 
       cy.contains('Log out').click()
       cy.wait('@logout')
+      cy.wait('@testIDPLogout')
 
       cy.visit('/')
       cy.url().should('match', /login/)
