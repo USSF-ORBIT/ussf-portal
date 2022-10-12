@@ -9,6 +9,13 @@ describe('SAML flow (with test IdP)', () => {
     cy.preserveLoginCookies()
   })
 
+  it('returns null if there is no current user', () => {
+    cy.getCookie('sid').should('not.exist')
+    cy.request({ url: '/api/auth/user', failOnStatusCode: false })
+      .its('status')
+      .should('eq', 401)
+  })
+
   it('can login to the test SAML IDP', () => {
     cy.getCookie('sid').should('not.exist')
 
@@ -59,12 +66,5 @@ describe('SAML flow (with test IdP)', () => {
     cy.getCookie('sid').should('exist')
     cy.request('/api/auth/logout')
     cy.getCookie('sid').should('not.exist')
-  })
-
-  it('returns null if there is no current user', () => {
-    cy.getCookie('sid').should('not.exist')
-    cy.request({ url: '/api/auth/user', failOnStatusCode: false })
-      .its('status')
-      .should('eq', 401)
   })
 })
