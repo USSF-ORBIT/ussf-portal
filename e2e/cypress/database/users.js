@@ -81,9 +81,13 @@ const exampleCollection3 = {
 module.exports.testUser1 = {
   userId: 'BERNADETTE.CAMPBELL.5244446289@testusers.cce.af.mil',
   mySpace: [exampleCollection1, exampleCollection2],
+  displayName: 'Bernie',
+  theme: 'light',
 }
 
 module.exports.testUser2 = {
   userId: 'RONALD.BOYD.312969168@testusers.cce.af.mil',
   mySpace: [exampleCollection3],
+  displayName: 'Ronny',
+  theme: 'light',
 }
