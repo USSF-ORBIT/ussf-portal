@@ -13,7 +13,7 @@ describe('Routes & navigation', () => {
     it('can navigate to the home page', () => {
       cy.visit('/')
       cy.injectAxe()
-      cy.contains('Welcome, BERNIE')
+      cy.contains('Welcome, Bernie')
       cy.contains('My Space')
 
       // Check a11y
