@@ -79,7 +79,7 @@ describe('The Authentication flow', () => {
     it('logging in as Test User 1 loads their My Space data', () => {
       cy.loginTestIDP()
       cy.contains('My Space')
-      cy.contains('Welcome, BERNADETTE CAMPBELL')
+      cy.contains('Welcome, Bernie')
       cy.contains('Example Collection')
       cy.contains('Second Collection')
     })
@@ -87,7 +87,7 @@ describe('The Authentication flow', () => {
     it('logging in as Test User 2 loads their My Space data', () => {
       cy.loginTestIDP({ username: 'user2', password: 'user2pass' })
       cy.contains('My Space')
-      cy.contains('Welcome, RONALD BOYD')
+      cy.contains('Welcome, Ronny')
       cy.contains('Third Collection')
     })
   })
