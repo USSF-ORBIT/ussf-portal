@@ -1,0 +1,173 @@
+# See https://developer.github.com/v3/repos/#edit for all available settings.
+repository:
+  name: ussf-portal
+  description: Central hub for USSF Portal
+  private: false
+  has_issues: true
+  has_projects: true
+  has_wiki: true
+  default_branch: main
+  allow_squash_merge: true
+  # This will allow merge commits on branches, but only squash merges allowed on main (below)
+  allow_merge_commit: true
+  allow_rebase_merge: true
+  delete_branch_on_merge: true
+  enable_automated_security_fixes: true
+  enable_vulnerability_alerts: true
+
+# Labels: define labels for Issues and Pull Requests
+labels:
+  - name: help
+    color: '#5a87f9'
+  - name: question
+    color: '#ff00ff'
+  - name: schedule meeting
+    color: '#980000'
+  - name: infrastructure
+    color: '#9900ff'
+  - name: design
+    color: '#f9cb9c'
+  - name: prototype
+    color: '#00ffff'
+  - name: dependencies
+    color: '#cfe2f3'
+  - name: MVP
+    color: '#c27ba0'
+  - name: mobile
+    color: '#45818e'
+  - name: good first issue
+    color: '#351c75'
+  - name: 'severity: 1'
+    color: '#ff4c4c'
+  - name: 'severity: 2'
+    color: '#ff7f7f'
+  - name: 'severity: 3'
+    color: '#ffb2b2'
+  - name: 'severity: 4'
+    color: '#ffe5e5'
+  - name: 'priority: core functionality'
+    color: '#ffa500'
+  - name: 'priority: nice to have'
+    color: '#ffb732'
+  - name: 'priority: critical'
+    color: '#ffc966'
+  - name: 'priority: high'
+    color: '#ffdb99'
+  - name: 'priority: medium'
+    color: '#ffedcc'
+  - name: 'priority: low'
+    color: '#fff6e5'
+  - name: 'type: bug'
+    color: '#ff4c4c'
+  - name: 'type: chore'
+    color: '#ff7f7f'
+  - name: 'type: spike'
+    color: '#ffb2b2'
+  - name: 'type: discussion'
+    color: '#ffe5e5'
+  - name: 'type: documentation'
+    color: '#ffa500'
+  - name: 'type: feature'
+    color: '#ffb732'
+  - name: 'type: security / ATO'
+    color: '#ffc966'
+  - name: 'type: enhancement'
+    color: '#ffdb99'
+  - name: 'type: maintenance'
+    color: '#ffedcc'
+  - name: 'type: tech debt'
+    color: '#fff6e5'
+  - name: 'type: task'
+    color: '#674ea7'
+  - name: 'type: regression'
+    color: '#bf9000'
+  - name: 'type: test coverage'
+    color: '#6aa84f'
+  - name: 'type: a11y'
+    color: '#f1c232'
+  - name: 'type: storybook component'
+    color: '#660000'
+  - name: 'type: design assets'
+    color: '#efefef'
+  - name: 'type: ci/cd'
+    color: '#666666'
+  - name: 'type: breaking'
+    color: '#c305d9'
+  - name: 'type: dependencies'
+    color: '#6ae2da'
+  - name: 'type: refactor'
+    color: '#7e709c'
+  - name: 'type: release'
+    color: '#97dbed'
+  - name: 'status: on hold'
+    color: '#0000ff'
+  - name: 'status: waiting on others'
+    color: '#3232ff'
+  - name: 'status: abandoned'
+    color: '#6666ff'
+  - name: 'status: duplicate'
+    color: '#9999ff'
+  - name: 'status: stale'
+    color: '#ccccff'
+  - name: 'status: WIP'
+    color: '#7f7fff'
+  - name: 'status: wontfix'
+    color: '#e5e5ff'
+  - name: 'topic: cms'
+    color: '#008000'
+  - name: 'topic: analytics'
+    color: '#329932'
+  - name: 'topic: testing'
+    color: '#66b266'
+  - name: 'topic: UX'
+    color: '#99cc99'
+  - name: 'topic: NextJS'
+    color: '#cce5cc'
+  - name: 'topic: React'
+    color: '#2f972f'
+  - name: 'topic: a11y'
+    color: '#5eae5e'
+  - name: 'topic: storybook'
+    color: '#8cc58c'
+  - name: 'topic: migration'
+    color: '#badcba'
+  - name: 'needs: research'
+    color: '#ffff00'
+  - name: 'needs: feedback'
+    color: '#ffff4c'
+  - name: 'needs: approval'
+    color: '#ffff7f'
+  - name: 'needs: design'
+    color: '#ffffb2'
+  - name: 'needs: refinement'
+    color: '#ffffe5'
+
+branches:
+  - name: main
+    # Branch Protection settings. Set to null to disable
+    protection:
+      required_pull_request_reviews:
+        required_approving_review_count: 1
+        dismiss_stale_reviews: false
+        require_code_owner_reviews: true
+        dismissal_restrictions:
+          users: []
+          teams: []
+      # Required. Require status checks to pass before merging. Set to null to disable
+      required_status_checks:
+        # Required. Require branches to be up to date before merging.
+        strict: true
+        # Required. The list of status checks to require in order to merge into this branch
+        contexts: ["run-e2e-tests / run-e2e-tests", "lint-e2e-tests"]
+      # Required. Enforce all configured restrictions for administrators. Set to true to enforce required status checks for repository administrators. Set to null to disable.
+      enforce_admins: true
+      # Commits pushed to matching branches must have verified signatures. Set to false to disable.
+      required_signatures: true
+      required_linear_history: true
+      allow_force_pushes: false
+      allow_deletions: false
+      # Required. Restrict who can push to this branch. Team and user restrictions are only available for organization-owned repositories. Set to null to disable.
+      restrictions:
+        apps: []
+        users: []
+        teams: []

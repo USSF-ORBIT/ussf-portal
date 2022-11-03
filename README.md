@@ -20,3 +20,8 @@ The team at TrussWorks strongly believes in building products based on feedback 
 - Working software over comprehensive documentation
 - Customer collaboration over contract negotiation
 - Responding to change over following a plan
+
+
+# End to End Testing
+
+End to end (E2E) testing is an important part of our software engineering practice. It helps us ensure that all the various components of the system can interact together properly. It also helps raise our confidence in upgrades and improvements as they are built. Since our E2E testing spans more than one application (e.g. the portal-client and portal-cms repositories) and are dependant on all those applications the E2E tests live in this repository.

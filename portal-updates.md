@@ -4,6 +4,16 @@
 
 ---
 
+## Release Notes **Latest release: 3/23/22**
+
+The USSF Portal is out of beta!
+
+**Features:**
+
+- [Remove beta gate](https://github.com/USSF-ORBIT/ussf-portal-client/pull/565)
+- [Launch announcement component](https://github.com/USSF-ORBIT/ussf-portal-client/issues/564)
+- [Style Made By link](https://github.com/USSF-ORBIT/ussf-portal-client/issues/563)
+
 #### Dev Blog
 
 - Coming soon!

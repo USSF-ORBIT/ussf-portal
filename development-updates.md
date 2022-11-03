@@ -1,43 +1,71 @@
-<-- [Back](https://ussf-orbit.github.io/ussf-portal/portal-updates)
+<--[Back](https://ussf-orbit.github.io/ussf-portal/portal-updates)
 
 # Space Force Development Updates
 
 ---
+
+## Week of 1/10
+
+Happy New Year!
+
+**What we’ve been working on:**
+
+The team launched a beta version of the portal!!!
+
+Guardians can now preview the beta version of the portal by clicking on the Join Beta links on the current portal homepage.
+
+We want to encourage everyone to join the beta so they can explore its features and provide any feedback they may have.
+
+Some of our early feedback has been great to be able to revisit how we manage the user experience when it comes to editing link collections and reordering links once they have been added to a user’s personalized page. This is leading us to compile all the quantitative and qualitative usability data we’ve gathered through the previous rounds of research.
+
+Engineering is working on several fast-follow items to push to the beta portal since we’ve launched the new experience. These are improvements to the user experience, analytics opportunities and new methods for deploying the code to make every future release faster and easier for the team.
+
+The team created a microsite containing the details around how we approached this project, our design elements, what we’ve completed, and what we’re working towards in our product roadmap. 
+
+**What’s next:**
+
+The team will focus on the remaining items required to take the portal out of beta where the new portal will fully replace the existing, bare-bones site.  
+
+Design and research will provide assets for future UX/UI improvements and feature work on our product roadmap.  
+
+The engineering team will get our analytics platform up and running and migrate to a self-hosted version of our content management system (CMS). A self-hosted version of the CMS is the first step towards a system that allows us to build out the proper functionality to create and publish content.
+
+Engineering will also focus on migrating existing content from the current version of the portal to the new design and building out the pages required for our News & Announcements section.
 
 ## Week of 12/13
 
 **What we’ve been working on:**
 Research and design wrapped up round 7 of user research. The team ran another Insights & Actions exercise that generated some fantastic conversation. Here are some of the top highlights:
 
-- Overall, usability was very positive:
-  - Deleting a link and adding a collection from the Site and Apllications page was easy to use
-  - Entering the beta release from the existing portal was easily found and executed
-  - Deleting a collection from My Space was easily found and executed
-- We found a few areas where usability could be improved:
-  - Editing the title of a collection card caused some confusion for Guardians
-  - The ability to save a custom link was not as easily discoverable as we’d hoped
-  - Saving a link in a collection was confusing to some Guardians
-- Saving valuable or easily accessing frequently used documentation or forms appears to be a need. We will conduct more research and do some ideation around potential solutions.
-- Guardians still desire more visual design
-  - (This is coming shortly. We’re strategically separating functionality from visual design for the time being so that aesthetics don’t interfere with actions.)
-- The research and design team provided the final typography and branding elements.
+* Overall, usability was very positive:
+  * Deleting a link and adding a collection from the Site and Apllications page was easy to use
+  * Entering the beta release from the existing portal was easily found and executed
+  * Deleting a collection from My Space was easily found and executed
+* We found a few areas where usability could be improved:
+  * Editing the title of a collection card caused some confusion for Guardians
+  * The ability to save a custom link was not as easily discoverable as we’d hoped
+  * Saving a link in a collection was confusing to some Guardians
+* Saving valuable or easily accessing frequently used documentation or forms appears to be a need. We will conduct more research and do some ideation around potential solutions.
+* Guardians still desire more visual design
+  * (This is coming shortly. We’re strategically separating functionality from visual design for the time being so that aesthetics don’t interfere with actions.)
+The research and design team provided the final typography and branding elements.
 
-The team also provided final designs for the news & announcements pages which are scheduled to be live around the start of the new year.
+The team also provided final designs for the news & announcements pages which are scheduled to be live around the start of the new year.  
 
 The engineering team completed all of their database setup and configuration as well as authentication updates. This work allows the service member to perform two things:
 
-- Login using their CAC in which we request for more information about the user during authentication in order to provide a more personalized experience.
-- Save and persist any customizations a service member performed on the portal (i.e. add and edit custom collections and bookmarks)
-  The engineering team also continued making optimizations to their deployment pipeline.
+* Login using their CAC in which we request for more information about the user during authentication in order to provide a more personalized experience.
+* Save and persist any customizations a service member performed on the portal (i.e. add and edit custom collections and bookmarks)
+The engineering team also continued making optimizations to their deployment pipeline.  
 
 **What’s next:**
 The research and design team will continue mapping out the portal design experience principles.
 
-They will also run a few design studio sessions around feedback they received during round 7 of research for a couple of key features that raised some interaction concerns.
+They will also run a few design studio sessions around feedback they received during round 7 of research for a couple of key features that raised some interaction concerns.  
 
 The engineering team will work on adding some monitoring to the app to help with troubleshooting.
 
-They will also continue to make any final cosmetic tweaks in preparation for the beta launch on Dec. 20th.
+They will also continue to make any final cosmetic tweaks in preparation for the beta launch on Dec. 20th.  
 
 The entire team will be focusing their efforts on testing and ensuring the beta launch is a success. They also will launch a microsite containing information about the purpose of the beta, our design and development processes as well as our product roadmap.
 

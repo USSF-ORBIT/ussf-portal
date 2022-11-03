@@ -1,0 +1,38 @@
+{
+  "extends": [
+    "config:base",
+    "helpers:pinGitHubActionDigests",
+    ":dependencyDashboard",
+    "npm:unpublishSafe",
+    "packages:eslint",
+    "packages:jsUnitTest"
+  ],
+  "packageRules": [
+    {
+      "rebaseWhen": "behind-base-branch",
+      "matchUpdateTypes": ["patch", "minor", "pin", "digest"],
+      "automerge": true,
+      "lockFileMaintenance": { "enabled": true },
+      "labels": ["dependencies"]
+    },
+    {
+      "automerge": true,
+      "description": "Group minor and patch updates into a single PR",
+      "groupName": "dependencies",
+      "managers": ["npm"],
+      "matchUpdateTypes": ["minor", "patch"]
+    },
+    {
+      "managers": ["dockerfile"],
+      "matchUpdateTypes": ["major"],
+      "enabled": false
+    },
+    {
+      "groupName": "github-actions",
+      "managers": ["github-actions"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "labels": ["dependencies"]
+    }
+  ],
+  "ignorePresets": [":prHourlyLimit2"]
+}
