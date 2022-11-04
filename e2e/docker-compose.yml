@@ -1,8 +1,8 @@
 # Docker compose stack for E2E tests
 services:
   # Portal client
-  app:
-    container_name: app
+  client:
+    container_name: client
     build:
       context: ../../ussf-portal-client/
       dockerfile: Dockerfile
@@ -25,6 +25,7 @@ services:
       SESSION_SECRET: thisvaluecanbeanythingitisonlyforlocaldevelopment
       SESSION_DOMAIN: localhost
       KEYSTONE_URL: http://cms:3001
+      LAUNCHDARKLY_SDK_CLIENT_SIDE_ID: localfile
     stdin_open: true
     depends_on:
       - mongo
@@ -58,7 +59,7 @@ services:
       redis:
         condition: service_started
 
-  # Required by Portal app
+  # Required by Portal client
   mongo:
     container_name: mongo
     image: mongo:4.0.0
@@ -68,7 +69,7 @@ services:
     ports:
       - '27017:27017'
 
-  # Shared between CMS and Portal app
+  # Shared between CMS and Portal client
   redis:
     container_name: portal_redis
     image: redis:6.2
