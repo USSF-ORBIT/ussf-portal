@@ -8,8 +8,8 @@ services:
       dockerfile: Dockerfile
       target: e2e
       cache_from:
-        - "${PORTAL_REPO}:builder"
-        - "${PORTAL_REPO}:e2e"
+        - '${PORTAL_REPO}:builder'
+        - '${PORTAL_REPO}:e2e'
     restart: always
     ports:
       - '3000:3000'
@@ -40,8 +40,8 @@ services:
       dockerfile: Dockerfile
       target: e2e
       cache_from:
-        - "${CMS_REPO}:builder"
-        - "${CMS_REPO}:e2e"
+        - '${CMS_REPO}:builder'
+        - '${CMS_REPO}:e2e'
     restart: always
     ports:
       - '3001:3001'
@@ -102,7 +102,7 @@ services:
       - POSTGRES_USER=keystone
       - POSTGRES_DB=test
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready --username=keystone --dbname=test"]
+      test: ['CMD-SHELL', 'pg_isready --username=keystone --dbname=test']
       interval: 10s
       timeout: 5s
       retries: 5
