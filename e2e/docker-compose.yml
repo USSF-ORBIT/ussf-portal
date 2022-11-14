@@ -38,7 +38,7 @@ services:
     build:
       context: ../../ussf-portal-cms/
       dockerfile: Dockerfile
-      target: e2e
+      target: "e2e${LOCAL_BUILD}"
       cache_from:
         - "${CMS_REPO}:builder"
         - "${CMS_REPO}:e2e"
