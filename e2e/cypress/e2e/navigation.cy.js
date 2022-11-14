@@ -51,6 +51,13 @@ describe('Routes & navigation', () => {
       cy.contains('Sites & Applications')
       cy.checkA11y(null, null, logging, { skipFailures: true })
     })
+
+    it('can navigate to the USSF Documentation page', () => {
+      cy.visit('/ussf-documentation')
+      cy.injectAxe()
+      cy.contains('Official USSF documentation')
+      cy.checkA11y(null, null, logging, { skipFailures: true })
+    })
   })
 
   describe('logged out pages', () => {
