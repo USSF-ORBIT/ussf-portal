@@ -151,7 +151,8 @@ describe('Sites and Applications', () => {
       })
   })
 
-  it('can add links to an existing collection from the Sites & Applications page', () => {
+  // TODO convert this test to playwright to see if it can be stablilzed
+  it.skip('can add links to an existing collection from the Sites & Applications page', () => {
     // Client-side navigate to the page
     cy.contains('All sites & applications').click()
 
@@ -187,7 +188,8 @@ describe('Sites and Applications', () => {
       })
   })
 
-  it('can hide links from an existing collection', () => {
+  // TODO convert this test to playwright to see if it can be stablilzed
+  it.skip('can hide links from an existing collection', () => {
     cy.contains('My Space')
 
     cy.contains('Example Collection')
@@ -274,7 +276,8 @@ describe('Sites and Applications', () => {
     cy.contains('My Custom Link')
   })
 
-  it('can edit custom links', () => {
+  // TODO convert this test to playwright to see if it can be stablilzed
+  it.skip('can edit custom links', () => {
     cy.contains('Example Collection')
       .parent()
       .parent()
@@ -357,7 +360,8 @@ describe('Sites and Applications', () => {
       })
   })
 
-  it('can remove multiple links at once from an existing collection', () => {
+  // TODO convert this test to playwright to see if it can be stablilzed
+  it.skip('can remove multiple links at once from an existing collection', () => {
     cy.contains('My Space')
 
     cy.contains('Updated Title')
