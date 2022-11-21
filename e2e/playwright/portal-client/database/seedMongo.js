@@ -3,7 +3,7 @@
 const { MongoClient } = require('mongodb')
 const { testUser1, testUser2 } = require('./users.js')
 
-const DB = 'MONGO E2E'
+const DB = 'playwright-mongo'
 
 async function dropCollection(mongoClient, collectionName) {
   const collection = mongoClient.db(DB).collection(collectionName)
@@ -32,7 +32,6 @@ module.exports.seedDB = async () => {
 
   try {
     await client.connect()
-    console.log('Connected correctly to server')
 
     await dropCollection(client, 'users')
     await seedCollection(client, 'users', testUser1)
