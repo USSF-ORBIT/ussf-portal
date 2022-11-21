@@ -4,7 +4,7 @@ import {
   TestingLibraryFixtures,
 } from '@playwright-testing-library/test/fixture'
 
-import { LoginPage } from '../models/Login'
+import { LoginPage } from '../../models/Login'
 import { seedDB } from '../database/seedMongo'
 
 type CustomFixtures = {

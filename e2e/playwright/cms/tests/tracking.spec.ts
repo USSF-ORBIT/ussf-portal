@@ -1,6 +1,6 @@
 import { test as base } from '@playwright/test'
 
-import { LoginPage } from '../models/Login'
+import { LoginPage } from '../../models/Login'
 import { resetDb } from '../database/seed'
 
 const test = base.extend<{ loginPage: LoginPage }>({
