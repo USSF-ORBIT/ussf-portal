@@ -51,6 +51,17 @@ describe('Routes & navigation', () => {
       cy.contains('Sites & Applications')
       cy.checkA11y(null, null, logging, { skipFailures: true })
     })
+
+    it('can navigate to the USSF Documentation page', () => {
+      cy.visit('/ussf-documentation')
+      cy.injectAxe()
+      cy.contains('Official USSF documentation')
+      cy.contains('Essential Reading')
+      cy.get('[aria-expanded=true]').should('exist')
+      cy.get('h3.usa-accordion__heading > button').click()
+      cy.get('[aria-expanded=false]').should('exist')
+      cy.checkA11y(null, null, logging, { skipFailures: true })
+    })
   })
 
   describe('logged out pages', () => {

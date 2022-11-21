@@ -17,9 +17,6 @@ describe('About Us', () => {
     cy.url().should('eq', Cypress.config().baseUrl + '/about-us')
     cy.injectAxe()
     cy.findByRole('heading', { level: 1 }).contains('About us')
-    cy.findAllByRole('heading', { level: 3, name: 'Essential Reading' }).should(
-      'exist'
-    )
     cy.findAllByRole('heading', { level: 3, name: 'Mission' }).should('exist')
     cy.findAllByRole('heading', { level: 3, name: 'Leadership' }).should(
       'exist'
