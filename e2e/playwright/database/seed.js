@@ -36,6 +36,7 @@ const dropAndCreateSchema = async (client) => {
     "name" text NOT NULL DEFAULT ''::text,
     "isAdmin" bool NOT NULL DEFAULT false,
     "isEnabled" bool NOT NULL DEFAULT false,
+    
     "syncedAt" timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedBy" text,
     "createdBy" text,
@@ -102,6 +103,7 @@ ALTER TABLE "public"."User" ADD FOREIGN KEY ("updatedBy") REFERENCES "public"."U
     CONSTRAINT "Tag_pkey" PRIMARY KEY ("id"));`)
 
   // Article
+
   await client.query(`DROP TABLE IF EXISTS "public"."Article" CASCADE;`)
 
   await client.query(`DROP TYPE IF EXISTS "public"."ArticleStatusType";`)
@@ -136,6 +138,11 @@ ALTER TABLE "public"."User" ADD FOREIGN KEY ("updatedBy") REFERENCES "public"."U
     "createdAt" timestamp(3) DEFAULT CURRENT_TIMESTAMP,
     "archivedDate" timestamp(3),
     "publishedDate" timestamp(3),
+    "hero_extension" text,
+    "hero_filesize" int4,
+    "hero_height" int4,
+    "hero_id" text,
+    "hero_width" int4,
     CONSTRAINT "Article_createdBy_fkey" FOREIGN KEY ("createdBy") REFERENCES "public"."User"("id") ON DELETE SET NULL ON UPDATE CASCADE,
     CONSTRAINT "Article_updatedBy_fkey" FOREIGN KEY ("updatedBy") REFERENCES "public"."User"("id") ON DELETE SET NULL ON UPDATE CASCADE,
     PRIMARY KEY ("id")
