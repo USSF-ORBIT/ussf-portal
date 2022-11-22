@@ -36,6 +36,7 @@ const dropAndCreateSchema = async (client) => {
     "name" text NOT NULL DEFAULT ''::text,
     "isAdmin" bool NOT NULL DEFAULT false,
     "isEnabled" bool NOT NULL DEFAULT false,
+    
     "syncedAt" timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedBy" text,
     "createdBy" text,
@@ -107,6 +108,7 @@ ALTER TABLE "public"."User" ADD FOREIGN KEY ("updatedBy") REFERENCES "public"."U
     CONSTRAINT "Tag_pkey" PRIMARY KEY ("id"));`)
 
   // Article
+
   await client.query(`DROP TABLE IF EXISTS "public"."Article" CASCADE;`)
 
   await client.query(`DROP TYPE IF EXISTS "public"."ArticleStatusType";`)
