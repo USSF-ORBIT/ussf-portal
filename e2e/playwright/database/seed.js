@@ -36,6 +36,7 @@ const dropAndCreateSchema = async (client) => {
     "name" text NOT NULL DEFAULT ''::text,
     "isAdmin" bool NOT NULL DEFAULT false,
     "isEnabled" bool NOT NULL DEFAULT false,
+    
     "syncedAt" timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedBy" text,
     "createdBy" text,
@@ -79,6 +80,10 @@ ALTER TABLE "public"."User" ADD FOREIGN KEY ("updatedBy") REFERENCES "public"."U
 
   // Label
   await client.query(`DROP TABLE IF EXISTS "public"."Label" CASCADE;`)
+  await client.query(`DROP TYPE IF EXISTS "public"."LabelType";`)
+  await client.query(
+    `CREATE TYPE "public"."LabelType" AS ENUM ('Base', 'Source', 'Audience')`
+  )
 
   await client.query(`CREATE TABLE "public"."Label" (
     "id" text NOT NULL,
@@ -100,9 +105,11 @@ ALTER TABLE "public"."User" ADD FOREIGN KEY ("updatedBy") REFERENCES "public"."U
     "createdBy" text,
     "updatedAt" timestamp(3),
     "createdAt" timestamp(3) DEFAULT CURRENT_TIMESTAMP,
+    
     CONSTRAINT "Tag_pkey" PRIMARY KEY ("id"));`)
 
   // Article
+
   await client.query(`DROP TABLE IF EXISTS "public"."Article" CASCADE;`)
 
   await client.query(`DROP TYPE IF EXISTS "public"."ArticleStatusType";`)
