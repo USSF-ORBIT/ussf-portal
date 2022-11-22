@@ -88,6 +88,7 @@ ALTER TABLE "public"."User" ADD FOREIGN KEY ("updatedBy") REFERENCES "public"."U
     "createdBy" text,
     "updatedAt" timestamp(3),
     "createdAt" timestamp(3) DEFAULT CURRENT_TIMESTAMP,
+    "type" "public"."LabelType" NOT NULL,
     CONSTRAINT "Label_pkey" PRIMARY KEY ("id"));`)
 
   // Tag
