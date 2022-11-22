@@ -28,5 +28,15 @@ describe('MySpace', () => {
   test('can login and see MySpace', async ({ page, loginPage }) => {
     await loginPage.login('user1', 'user1pass')
     await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+    await expect(page.locator('text=My Space')).toBeVisible()
+  })
+
+  test('can toggle light/dark mode', async ({ page, loginPage }) => {
+    await loginPage.login('user1', 'user1pass')
+    await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+    await expect(page.locator('text=DARK MODE')).toBeVisible()
+
+    await page.locator('[data-testid="theme-toggle"]').click()
+    await expect(page.locator('text=LIGHT MODE')).toBeVisible()
   })
 })
