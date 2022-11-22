@@ -57,8 +57,6 @@ describe('Articles', () => {
     await page.locator('#title').fill('My Test Article')
     await page.locator('#preview').fill('This is my test article.')
 
-    await expect(page.locator('button:has-text("Upload Image")')).toBeVisible()
-
     await Promise.all([
       page.waitForNavigation(),
       page.locator('form span:has-text("Create Article")').click(),
