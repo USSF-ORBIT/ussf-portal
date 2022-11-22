@@ -1,4 +1,5 @@
 import { test as base } from '@playwright/test'
+
 import {
   fixtures,
   TestingLibraryFixtures,
@@ -55,6 +56,8 @@ describe('Articles', () => {
     await page.locator('#slug').fill('test-article-for-playwright')
     await page.locator('#title').fill('My Test Article')
     await page.locator('#preview').fill('This is my test article.')
+
+    await expect(page.locator('button:has-text("Upload Image")')).toBeVisible()
 
     await Promise.all([
       page.waitForNavigation(),
