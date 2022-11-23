@@ -44,16 +44,40 @@ describe('MySpace', () => {
     page,
     loginPage,
   }) => {
+    // Login
     await loginPage.login('user1', 'user1pass')
     await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
 
+    // Create a custom collection
     await page.locator('text=Add section').click()
     await page.locator('text=Create new collection').click()
     await page
       .locator('[placeholder="Name this collection"]')
       .fill('Playwright Test Collection')
     await page.locator('text=Save name').click()
-
     await expect(page.locator('text=Playwright Test Collection')).toBeVisible()
+  })
+
+  test('can hide links from an existing collection', async ({
+    page,
+    loginPage,
+  }) => {
+    // Login and check that user is in My Space
+    await loginPage.login('user1', 'user1pass')
+    await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+    await expect(page.locator('text=Example Collection')).toBeVisible()
+
+    // Remove Webmail and undo
+    await expect(
+      page.locator('text=Webmail(opens in a new window)')
+    ).toBeVisible()
+    await page.locator('[aria-label="Remove this link"]').first().click()
+    await expect(
+      page.locator('text=Webmail(opens in a new window)')
+    ).toBeHidden()
+    await page.locator('text=Undo remove').click()
+    await expect(
+      page.locator('text=Webmail(opens in a new window)')
+    ).toBeVisible()
   })
 })

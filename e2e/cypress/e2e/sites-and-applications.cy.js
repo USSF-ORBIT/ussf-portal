@@ -189,33 +189,33 @@ describe('Sites and Applications', () => {
   // })
 
   // TODO convert this test to playwright to see if it can be stablilzed
-  it.skip('can hide links from an existing collection', () => {
-    cy.contains('My Space')
+  // it.skip('can hide links from an existing collection', () => {
+  //   cy.contains('My Space')
 
-    cy.contains('Example Collection')
-      .parent()
-      .parent()
-      .next()
-      .within(() => {
-        // Inside of <ol>
-        cy.get('[aria-label="Drag Handle"]').should('have.length', 6)
-        cy.contains('Webmail')
+  //   cy.contains('Example Collection')
+  //     .parent()
+  //     .parent()
+  //     .next()
+  //     .within(() => {
+  //       // Inside of <ol>
+  //       cy.get('[aria-label="Drag Handle"]').should('have.length', 6)
+  //       cy.contains('Webmail')
 
-        // First undo
-        cy.findAllByRole('button', { name: 'Remove this link' }).first().click()
-        cy.contains('Webmail').should('not.exist')
-        cy.contains('Undo remove').click()
-        cy.contains('Webmail')
+  //       // First undo
+  //       cy.findAllByRole('button', { name: 'Remove this link' }).first().click()
+  //       cy.contains('Webmail').should('not.exist')
+  //       cy.contains('Undo remove').click()
+  //       cy.contains('Webmail')
 
-        // Don't undo
-        cy.findAllByRole('button', { name: 'Remove this link' }).first().click()
-        cy.contains('Webmail').should('not.exist')
-        cy.contains('Undo remove').should('not.exist')
+  //       // Don't undo
+  //       cy.findAllByRole('button', { name: 'Remove this link' }).first().click()
+  //       cy.contains('Webmail').should('not.exist')
+  //       cy.contains('Undo remove').should('not.exist')
 
-        // The number is 6 because vMPF doesn't exist, but the drag handle for it still does
-        cy.get('[aria-label="Drag Handle"]').should('have.length', 5)
-      })
-  })
+  //       // The number is 6 because vMPF doesn't exist, but the drag handle for it still does
+  //       cy.get('[aria-label="Drag Handle"]').should('have.length', 5)
+  //     })
+  // })
 
   it('can add existing links to an existing collection', () => {
     cy.contains('Example Collection')
