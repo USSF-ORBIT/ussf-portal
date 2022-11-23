@@ -102,4 +102,33 @@ describe('MySpace', () => {
       page.locator('text=ACPINS(opens in a new window)')
     ).toBeVisible()
   })
+
+  test('can add custom links to an existing collection', async ({
+    page,
+    loginPage,
+  }) => {
+    // Login and check that user is in My Space
+    await loginPage.login('user1', 'user1pass')
+    await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+    await expect(page.locator('text=Example Collection')).toBeVisible()
+
+    // Open dropdown and select the 'Add custom link' option and click it
+    await page.locator('text=+ Add link').first().click()
+    await page.locator('[data-testid="combo-box-toggle"]').click()
+    await page.locator('[data-testid="combo-box-option-custom"]').click()
+
+    // Modal
+    await expect(page.locator('#bookmarkLabel >> nth=0')).toBeVisible()
+    await page.locator('#bookmarkLabel').first().fill('My Custom Link')
+    await page.locator('#bookmarkUrl').first().fill('google.com')
+    await page
+      .locator('.usa-form > .usa-button-group > li > .usa-button')
+      .first()
+      .click()
+
+    // Check that custom link is in the collection
+    await expect(
+      page.locator('text=My Custom Link(opens in a new window)')
+    ).toBeVisible()
+  })
 })

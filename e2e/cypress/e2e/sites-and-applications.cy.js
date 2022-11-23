@@ -240,40 +240,40 @@ describe('Sites and Applications', () => {
   //     })
   // })
 
-  it('can add custom links to an existing collection', () => {
-    cy.contains('Example Collection')
-      .parent()
-      .parent()
-      .parent()
-      .within(() => {
-        // Open Add Custom Link modal
-        cy.findByRole('button', { name: '+ Add link' }).click()
-        cy.findByLabelText('Select existing link').click()
-        cy.findByRole('option', { name: 'Add custom link' }).click()
-      })
+  // it('can add custom links to an existing collection', () => {
+  //   cy.contains('Example Collection')
+  //     .parent()
+  //     .parent()
+  //     .parent()
+  //     .within(() => {
+  //       // Open Add Custom Link modal
+  //       cy.findByRole('button', { name: '+ Add link' }).click()
+  //       cy.findByLabelText('Select existing link').click()
+  //       cy.findByRole('option', { name: 'Add custom link' }).click()
+  //     })
 
-    cy.findByRole('dialog', { name: 'Add a custom link' }).within(() => {
-      cy.findByLabelText('Name')
-        .type('My Custom Link')
-        .then(($el) => $el[0].checkValidity())
-        .should('be.true')
+  //   cy.findByRole('dialog', { name: 'Add a custom link' }).within(() => {
+  //     cy.findByLabelText('Name')
+  //       .type('My Custom Link')
+  //       .then(($el) => $el[0].checkValidity())
+  //       .should('be.true')
 
-      cy.findByLabelText('URL')
-        .type('not a URL')
-        .then(($el) => $el[0].checkValidity())
-        .should('be.false')
+  //     cy.findByLabelText('URL')
+  //       .type('not a URL')
+  //       .then(($el) => $el[0].checkValidity())
+  //       .should('be.false')
 
-      cy.findByLabelText('URL')
-        .clear()
-        .type('https://google.com')
-        .then(($el) => $el[0].checkValidity())
-        .should('be.true')
+  //     cy.findByLabelText('URL')
+  //       .clear()
+  //       .type('https://google.com')
+  //       .then(($el) => $el[0].checkValidity())
+  //       .should('be.true')
 
-      cy.findByRole('button', { name: 'Save custom link' }).click()
-    })
+  //     cy.findByRole('button', { name: 'Save custom link' }).click()
+  //   })
 
-    cy.contains('My Custom Link')
-  })
+  //   cy.contains('My Custom Link')
+  // })
 
   // TODO convert this test to playwright to see if it can be stablilzed
   it.skip('can edit custom links', () => {
