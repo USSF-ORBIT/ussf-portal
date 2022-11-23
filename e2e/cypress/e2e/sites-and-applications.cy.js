@@ -20,47 +20,47 @@ describe('Sites and Applications', () => {
   //   cy.contains('My New Collection')
   // })
 
-  it('can visit the Sites & Applications page', () => {
-    cy.contains('My Space')
+  // it('can visit the Sites & Applications page', () => {
+  //   cy.contains('My Space')
 
-    // Client-side navigate to the page
-    cy.contains('All sites & applications').click()
-    cy.url().should('eq', Cypress.config().baseUrl + '/sites-and-applications')
-    cy.injectAxe()
-    cy.contains('Sites & Applications')
+  //   // Client-side navigate to the page
+  //   cy.contains('All sites & applications').click()
+  //   cy.url().should('eq', Cypress.config().baseUrl + '/sites-and-applications')
+  //   cy.injectAxe()
+  //   cy.contains('Sites & Applications')
 
-    const collections = [
-      'Career',
-      'Personnel & Administration',
-      'Medical & Dental',
-      'Life & Fitness',
-      'PCS',
-      'Finance & Travel',
-      'Outprocessing',
-      'Management',
-      'vMPF',
-      'Supervisory',
-      'Education',
-      'Public Social Platforms',
-      'Public Military Websites',
-    ]
-    collections.forEach((collection) => cy.contains(collection))
+  //   const collections = [
+  //     'Career',
+  //     'Personnel & Administration',
+  //     'Medical & Dental',
+  //     'Life & Fitness',
+  //     'PCS',
+  //     'Finance & Travel',
+  //     'Outprocessing',
+  //     'Management',
+  //     'vMPF',
+  //     'Supervisory',
+  //     'Education',
+  //     'Public Social Platforms',
+  //     'Public Military Websites',
+  //   ]
+  //   collections.forEach((collection) => cy.contains(collection))
 
-    // Toggle sorting
-    cy.contains('Sort by type').should('be.disabled')
-    cy.contains('Sort alphabetically').click()
-    cy.contains('Sort by type').should('be.enabled')
-    cy.contains('Sort alphabetically').should('be.disabled')
-    cy.contains('Application name')
-    // Check for a url description
-    cy.contains('Automated Computer Program Identification Number System')
-    // cy.findAllByRole('row').should('have.length', 311)
+  //   // Toggle sorting
+  //   cy.contains('Sort by type').should('be.disabled')
+  //   cy.contains('Sort alphabetically').click()
+  //   cy.contains('Sort by type').should('be.enabled')
+  //   cy.contains('Sort alphabetically').should('be.disabled')
+  //   cy.contains('Application name')
+  //   // Check for a url description
+  //   cy.contains('Automated Computer Program Identification Number System')
+  //   // cy.findAllByRole('row').should('have.length', 311)
 
-    cy.contains('Sort by type').click()
-    cy.contains('Career')
-    cy.contains('Application name').should('not.exist')
-    cy.checkA11y(null, null, logging, { skipFailures: true })
-  })
+  //   cy.contains('Sort by type').click()
+  //   cy.contains('Career')
+  //   cy.contains('Application name').should('not.exist')
+  //   cy.checkA11y(null, null, logging, { skipFailures: true })
+  // })
 
   it('can add collections from the Sites & Applications page to My Space', () => {
     cy.contains('My Space')
