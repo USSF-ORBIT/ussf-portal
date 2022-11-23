@@ -80,4 +80,26 @@ describe('MySpace', () => {
       page.locator('text=Webmail(opens in a new window)')
     ).toBeVisible()
   })
+
+  test('can add existing links to an existing collection', async ({
+    page,
+    loginPage,
+  }) => {
+    // Login and check that user is in My Space
+    await loginPage.login('user1', 'user1pass')
+    await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+    await expect(page.locator('text=Example Collection')).toBeVisible()
+
+    // Open dropdown and select an existing bookmark and click it
+    await page.locator('text=+ Add link').first().click()
+    await page.locator('[data-testid="combo-box-toggle"]').click()
+    await expect(page.locator('li:has-text("ACPINS")')).toBeVisible()
+    await page.locator('li:has-text("ACPINS")').click()
+
+    // Check that dropdown is hidden and there is a new bookmark
+    await expect(page.locator('[data-testid="combo-box-toggle"]')).toBeHidden()
+    await expect(
+      page.locator('text=ACPINS(opens in a new window)')
+    ).toBeVisible()
+  })
 })

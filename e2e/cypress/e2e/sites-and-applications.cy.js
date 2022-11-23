@@ -217,28 +217,28 @@ describe('Sites and Applications', () => {
   //     })
   // })
 
-  it('can add existing links to an existing collection', () => {
-    cy.contains('Example Collection')
-      .parent()
-      .parent()
-      .parent()
-      .within(() => {
-        cy.findByRole('link', {
-          name: 'ADP (opens in a new window)',
-        }).should('not.exist')
+  // it('can add existing links to an existing collection', () => {
+  //   cy.contains('Example Collection')
+  //     .parent()
+  //     .parent()
+  //     .parent()
+  //     .within(() => {
+  //       cy.findByRole('link', {
+  //         name: 'ADP (opens in a new window)',
+  //       }).should('not.exist')
 
-        // Add a link
-        cy.findByRole('button', { name: '+ Add link' }).click()
-        cy.findByLabelText('Select existing link').click() // Open the select
-        cy.findByRole('option', { name: 'ADP' }).click()
+  //       // Add a link
+  //       cy.findByRole('button', { name: '+ Add link' }).click()
+  //       cy.findByLabelText('Select existing link').click() // Open the select
+  //       cy.findByRole('option', { name: 'ADP' }).click()
 
-        /*
-        cy.findByRole('link', {
-          name: 'ADP (opens in a new window)',
-        }).should('exist')
-        */
-      })
-  })
+  //       /*
+  //       cy.findByRole('link', {
+  //         name: 'ADP (opens in a new window)',
+  //       }).should('exist')
+  //       */
+  //     })
+  // })
 
   it('can add custom links to an existing collection', () => {
     cy.contains('Example Collection')
