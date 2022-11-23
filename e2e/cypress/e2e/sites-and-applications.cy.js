@@ -62,60 +62,60 @@ describe('Sites and Applications', () => {
   //   cy.checkA11y(null, null, logging, { skipFailures: true })
   // })
 
-  it('can add collections from the Sites & Applications page to My Space', () => {
-    cy.contains('My Space')
-    cy.findByRole('heading', { level: 3, name: 'Career' }).should('not.exist')
-    cy.findByRole('heading', {
-      level: 3,
-      name: 'Medical & Dental',
-    }).should('not.exist')
-    cy.findByRole('heading', {
-      level: 3,
-      name: 'Life & Fitness',
-    }).should('not.exist')
+  // it('can add collections from the Sites & Applications page to My Space', () => {
+  //   cy.contains('My Space')
+  //   cy.findByRole('heading', { level: 3, name: 'Career' }).should('not.exist')
+  //   cy.findByRole('heading', {
+  //     level: 3,
+  //     name: 'Medical & Dental',
+  //   }).should('not.exist')
+  //   cy.findByRole('heading', {
+  //     level: 3,
+  //     name: 'Life & Fitness',
+  //   }).should('not.exist')
 
-    // Go to Sites & Applications
-    cy.findByRole('button', { name: 'Add section' }).click()
+  //   // Go to Sites & Applications
+  //   cy.findByRole('button', { name: 'Add section' }).click()
 
-    cy.findByRole('button', {
-      name: 'Select collection from template',
-    }).click()
+  //   cy.findByRole('button', {
+  //     name: 'Select collection from template',
+  //   }).click()
 
-    cy.url().should(
-      'eq',
-      Cypress.config().baseUrl + '/sites-and-applications?selectMode=true'
-    )
+  //   cy.url().should(
+  //     'eq',
+  //     Cypress.config().baseUrl + '/sites-and-applications?selectMode=true'
+  //   )
 
-    cy.findByRole('button', { name: 'Select collection Career' }).click()
-    cy.findByRole('button', {
-      name: 'Select collection Medical & Dental',
-    }).click()
-    cy.findByRole('button', {
-      name: 'Select collection Life & Fitness',
-    }).click()
-    cy.contains('3 collections selected')
+  //   cy.findByRole('button', { name: 'Select collection Career' }).click()
+  //   cy.findByRole('button', {
+  //     name: 'Select collection Medical & Dental',
+  //   }).click()
+  //   cy.findByRole('button', {
+  //     name: 'Select collection Life & Fitness',
+  //   }).click()
+  //   cy.contains('3 collections selected')
 
-    cy.findByRole('button', {
-      name: 'Unselect collection Medical & Dental',
-    }).click()
-    cy.contains('2 collections selected')
+  //   cy.findByRole('button', {
+  //     name: 'Unselect collection Medical & Dental',
+  //   }).click()
+  //   cy.contains('2 collections selected')
 
-    cy.findByRole('button', { name: 'Add selected' }).click()
+  //   cy.findByRole('button', { name: 'Add selected' }).click()
 
-    // Go back to My Space
-    cy.url().should('eq', Cypress.config().baseUrl + '/')
+  //   // Go back to My Space
+  //   cy.url().should('eq', Cypress.config().baseUrl + '/')
 
-    cy.contains('My Space')
-    cy.findByRole('heading', { level: 3, name: 'Career' }).should('exist')
-    cy.findByRole('heading', {
-      name: 'Life & Fitness',
-      level: 3,
-    }).should('exist')
-    cy.findByRole('heading', {
-      name: 'Medical & Dental',
-      level: 3,
-    }).should('not.exist')
-  })
+  //   cy.contains('My Space')
+  //   cy.findByRole('heading', { level: 3, name: 'Career' }).should('exist')
+  //   cy.findByRole('heading', {
+  //     name: 'Life & Fitness',
+  //     level: 3,
+  //   }).should('exist')
+  //   cy.findByRole('heading', {
+  //     name: 'Medical & Dental',
+  //     level: 3,
+  //   }).should('not.exist')
+  // })
 
   it('can add links to a new collection from the Sites & Applications page', () => {
     // Client-side navigate to the page

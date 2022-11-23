@@ -58,4 +58,41 @@ describe('Sites & Applications', () => {
       )
     ).toBeHidden()
   })
+
+  test('can add collections from the Sites & Applications page to My Space', async ({
+    page,
+    loginPage,
+  }) => {
+    // Login and check that user is in My Space
+    await loginPage.login('user1', 'user1pass')
+    await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+    await expect(page.locator('text=Example Collection')).toBeVisible()
+
+    // Click 'Add Section' and navigate to /sites-and-applications
+    await page.locator('text=Add section').click()
+    await page.locator('text=Select collection from template').click()
+    await expect(page).toHaveURL(
+      'http://localhost:3000/sites-and-applications?selectMode=true'
+    )
+
+    // Add three collections from Sites & Apps, unselect one, and navigate back to My Space
+    await page
+      .locator('[aria-label="Select collection Personnel \\& Administration"]')
+      .click()
+    await page.locator('[aria-label="Select collection Career"]').click()
+    await page
+      .locator('[aria-label="Select collection Medical \\& Dental"]')
+      .click()
+    await expect(page.locator('text=3 collections selected')).toBeVisible()
+    await page
+      .locator('[aria-label="Unselect collection Medical \\& Dental"]')
+      .click()
+    await expect(page.locator('text=2 collections selected')).toBeVisible()
+    await page.locator('text=Add selected').click()
+    await expect(page).toHaveURL('http://localhost:3000/')
+
+    // Check that new collections are in My Space
+    await expect(page.locator('text=Personnel & Administration')).toBeVisible()
+    await expect(page.locator('text=Career')).toBeVisible()
+  })
 })
