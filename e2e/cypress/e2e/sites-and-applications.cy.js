@@ -13,12 +13,12 @@ describe('Sites and Applications', () => {
     cy.injectAxe()
   })
 
-  it('can add a new custom collection', () => {
-    cy.findByRole('button', { name: 'Add section' }).click()
-    cy.findByRole('button', { name: 'Create new collection' }).click()
-    cy.findByLabelText('Collection Title').type('My New Collection{enter}')
-    cy.contains('My New Collection')
-  })
+  // it('can add a new custom collection', () => {
+  //   cy.findByRole('button', { name: 'Add section' }).click()
+  //   cy.findByRole('button', { name: 'Create new collection' }).click()
+  //   cy.findByLabelText('Collection Title').type('My New Collection{enter}')
+  //   cy.contains('My New Collection')
+  // })
 
   it('can visit the Sites & Applications page', () => {
     cy.contains('My Space')
@@ -242,18 +242,17 @@ describe('Sites and Applications', () => {
 
   it('can add custom links to an existing collection', () => {
     cy.contains('Example Collection')
-    .parent()
-    .parent()
-    .parent()
-    .within(() => {
-      // Open Add Custom Link modal
-      cy.findByRole('button', { name: '+ Add link' }).click()
-      cy.findByLabelText('Select existing link').click()
-      cy.findByRole('option', { name: 'Add custom link' }).click()
-    })
+      .parent()
+      .parent()
+      .parent()
+      .within(() => {
+        // Open Add Custom Link modal
+        cy.findByRole('button', { name: '+ Add link' }).click()
+        cy.findByLabelText('Select existing link').click()
+        cy.findByRole('option', { name: 'Add custom link' }).click()
+      })
 
     cy.findByRole('dialog', { name: 'Add a custom link' }).within(() => {
-
       cy.findByLabelText('Name')
         .type('My Custom Link')
         .then(($el) => $el[0].checkValidity())
