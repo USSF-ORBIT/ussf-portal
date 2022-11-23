@@ -25,12 +25,6 @@ test.beforeAll(async () => {
 })
 
 describe('MySpace', () => {
-  test('can login and see MySpace', async ({ page, loginPage }) => {
-    await loginPage.login('user1', 'user1pass')
-    await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
-    await expect(page.locator('text=Example Collection')).toBeVisible()
-  })
-
   test('can toggle light/dark mode', async ({ page, loginPage }) => {
     await loginPage.login('user1', 'user1pass')
     await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
