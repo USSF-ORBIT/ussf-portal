@@ -117,39 +117,39 @@ describe('Sites and Applications', () => {
   //   }).should('not.exist')
   // })
 
-  it('can add links to a new collection from the Sites & Applications page', () => {
-    // Client-side navigate to the page
-    cy.contains('All sites & applications').click()
+  // it('can add links to a new collection from the Sites & Applications page', () => {
+  //   // Client-side navigate to the page
+  //   cy.contains('All sites & applications').click()
 
-    cy.url().should('eq', Cypress.config().baseUrl + '/sites-and-applications')
-    cy.contains('Sites & Applications')
+  //   cy.url().should('eq', Cypress.config().baseUrl + '/sites-and-applications')
+  //   cy.contains('Sites & Applications')
 
-    // Toggle sorting
-    cy.contains('Career')
-    cy.contains('Sort alphabetically').click()
+  //   // Toggle sorting
+  //   cy.contains('Career')
+  //   cy.contains('Sort alphabetically').click()
 
-    cy.contains('Move.mil')
-      .parent()
-      .parent()
-      .within(() => {
-        cy.findByRole('button', { name: 'Add to My Space Closed' }).click()
-        cy.contains('Add to new collection').click()
-      })
+  //   cy.contains('Move.mil')
+  //     .parent()
+  //     .parent()
+  //     .within(() => {
+  //       cy.findByRole('button', { name: 'Add to My Space Closed' }).click()
+  //       cy.contains('Add to new collection').click()
+  //     })
 
-    // Go back to My Space
-    cy.url().should('eq', Cypress.config().baseUrl + '/')
+  //   // Go back to My Space
+  //   cy.url().should('eq', Cypress.config().baseUrl + '/')
 
-    cy.findByLabelText('Collection Title').type(
-      'My Second New Collection{enter}'
-    )
-    cy.contains('My Second New Collection')
-      .parent()
-      .parent()
-      .parent()
-      .within(() => {
-        cy.contains('Move.mil')
-      })
-  })
+  //   cy.findByLabelText('Collection Title').type(
+  //     'My Second New Collection{enter}'
+  //   )
+  //   cy.contains('My Second New Collection')
+  //     .parent()
+  //     .parent()
+  //     .parent()
+  //     .within(() => {
+  //       cy.contains('Move.mil')
+  //     })
+  // })
 
   // TODO convert this test to playwright to see if it can be stablilzed
   it.skip('can add links to an existing collection from the Sites & Applications page', () => {

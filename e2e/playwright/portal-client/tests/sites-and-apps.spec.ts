@@ -29,14 +29,17 @@ describe('Sites & Applications', () => {
     page,
     loginPage,
   }) => {
+    // Login and check that user is in My Space
     await loginPage.login('user1', 'user1pass')
     await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
 
+    // Navigate to /sites-and-applications using the side nav
     await page.locator('text=All sites & applications').click()
     await expect(
       page.locator('h2:has-text("Sites & Applications")')
     ).toBeVisible()
 
+    // Check that default collections are displaying
     await expect(page.locator('text=Personnel & Administration')).toBeVisible()
     await expect(page.locator('text=Finance & Travel')).toBeVisible()
     await expect(page.locator('text=Public Military Websites')).toBeVisible()
@@ -94,5 +97,37 @@ describe('Sites & Applications', () => {
     // Check that new collections are in My Space
     await expect(page.locator('text=Personnel & Administration')).toBeVisible()
     await expect(page.locator('text=Career')).toBeVisible()
+  })
+
+  test('can add links to a new collection from the Sites & Applications page', async ({
+    page,
+    loginPage,
+  }) => {
+    // Login and check that user is in My Space
+    await loginPage.login('user1', 'user1pass')
+    await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+    await expect(page.locator('text=Example Collection')).toBeVisible()
+
+    // Navigate to /sites-and-applications
+    await page.locator('text=All sites & applications').click()
+    await expect(page).toHaveURL('http://localhost:3000/sites-and-applications')
+
+    // Add the ACES bookmark to a new collection in My Space
+    await page.locator('text=Sort alphabetically').click()
+    await page
+      .locator(
+        'text=ACES(opens in a new window)Provides direct Civil Engineer information management >> [data-testid="button"]'
+      )
+      .click()
+    await page.locator('text=Add to new collection').click()
+    await expect(page).toHaveURL('http://localhost:3000/')
+    await page
+      .locator('[placeholder="Name this collection"]')
+      .fill('Test adding from sites and apps')
+    await page.locator('text=Save name').click()
+    await expect(
+      page.locator('text=Test adding from sites and apps')
+    ).toBeVisible()
+    await expect(page.locator('text=ACES(opens in a new window)')).toBeVisible()
   })
 })
