@@ -152,41 +152,41 @@ describe('Sites and Applications', () => {
   // })
 
   // TODO convert this test to playwright to see if it can be stablilzed
-  it.skip('can add links to an existing collection from the Sites & Applications page', () => {
-    // Client-side navigate to the page
-    cy.contains('All sites & applications').click()
+  // it.skip('can add links to an existing collection from the Sites & Applications page', () => {
+  //   // Client-side navigate to the page
+  //   cy.contains('All sites & applications').click()
 
-    cy.url().should('eq', Cypress.config().baseUrl + '/sites-and-applications')
-    cy.contains('Sites & Applications')
+  //   cy.url().should('eq', Cypress.config().baseUrl + '/sites-and-applications')
+  //   cy.contains('Sites & Applications')
 
-    // Toggle sorting
-    cy.contains('Career')
-    cy.contains('Sort alphabetically').click()
+  //   // Toggle sorting
+  //   cy.contains('Career')
+  //   cy.contains('Sort alphabetically').click()
 
-    cy.contains('SURF')
-      .parent()
-      .parent()
-      .within(() => {
-        cy.findByRole('button', { name: 'Add to My Space Closed' }).click()
-        cy.contains('Example Collection').click()
-      })
+  //   cy.contains('SURF')
+  //     .parent()
+  //     .parent()
+  //     .within(() => {
+  //       cy.findByRole('button', { name: 'Add to My Space Closed' }).click()
+  //       cy.contains('Example Collection').click()
+  //     })
 
-    cy.contains(
-      'You have successfully added “SURF” to the “Example Collection” section.'
-    )
+  //   cy.contains(
+  //     'You have successfully added “SURF” to the “Example Collection” section.'
+  //   )
 
-    // Go back to My Space
-    cy.contains('My Space').click()
-    cy.url().should('eq', Cypress.config().baseUrl + '/')
-    cy.findByRole('heading', { name: 'My Space' })
-    cy.contains('Example Collection')
-      .parent()
-      .parent()
-      .next()
-      .within(() => {
-        cy.contains('SURF')
-      })
-  })
+  //   // Go back to My Space
+  //   cy.contains('My Space').click()
+  //   cy.url().should('eq', Cypress.config().baseUrl + '/')
+  //   cy.findByRole('heading', { name: 'My Space' })
+  //   cy.contains('Example Collection')
+  //     .parent()
+  //     .parent()
+  //     .next()
+  //     .within(() => {
+  //       cy.contains('SURF')
+  //     })
+  // })
 
   // TODO convert this test to playwright to see if it can be stablilzed
   it.skip('can hide links from an existing collection', () => {

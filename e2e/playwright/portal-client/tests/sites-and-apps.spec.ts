@@ -130,4 +130,35 @@ describe('Sites & Applications', () => {
     ).toBeVisible()
     await expect(page.locator('text=ACES(opens in a new window)')).toBeVisible()
   })
+
+  test('can add links to an existing collection from the Sites & Applications page', async ({
+    page,
+    loginPage,
+  }) => {
+    // Login and check that user is in My Space
+    await loginPage.login('user1', 'user1pass')
+    await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+    await expect(page.locator('text=Example Collection')).toBeVisible()
+
+    // Navigate to /sites-and-applications
+    await page.locator('text=All sites & applications').click()
+    await expect(page).toHaveURL('http://localhost:3000/sites-and-applications')
+
+    // Add 'Air University' bookmark to 'Example Collection' in My space
+    await page.locator('text=Sort alphabetically').click()
+    await page
+      .locator(
+        'text=Air University(opens in a new window)A center for professional military educatio >> [data-testid="button"]'
+      )
+      .click()
+    await page.locator('text=Example Collection').click()
+
+    // Navigate back to My Space
+    await page.locator('[data-testid="sidenav"] >> text=My Space').click()
+    await expect(page).toHaveURL('http://localhost:3000/')
+    await expect(page.locator('text=Example Collection')).toBeVisible()
+    await expect(
+      page.locator('text=Air University(opens in a new window)')
+    ).toBeVisible()
+  })
 })
