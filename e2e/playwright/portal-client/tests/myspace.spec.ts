@@ -97,7 +97,7 @@ describe('MySpace', () => {
     ).toBeVisible()
   })
 
-  test('can add custom links to an existing collection', async ({
+  test('can add/edit custom links to an existing collection', async ({
     page,
     loginPage,
   }) => {
@@ -123,6 +123,23 @@ describe('MySpace', () => {
     // Check that custom link is in the collection
     await expect(
       page.locator('text=My Custom Link(opens in a new window)')
+    ).toBeVisible()
+
+    // Edit custom link
+    await page.locator('[aria-label="Edit this link"]').first().click()
+
+    // Found this selector using e2e:debug, but not sure if this will consistently be nth=4
+    await expect(
+      page.locator('[placeholder="Example link name"] >> nth=4')
+    ).toBeVisible()
+    await page
+      .locator('[placeholder="Example link name"] >> nth=4')
+      .fill('Edited custom link name')
+
+    await page.locator('text=Save custom link >> nth=4').click()
+
+    await expect(
+      page.locator('text=Edited custom link name(opens in a new window)')
     ).toBeVisible()
   })
 })

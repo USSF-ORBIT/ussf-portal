@@ -276,41 +276,41 @@ describe('Sites and Applications', () => {
   // })
 
   // TODO convert this test to playwright to see if it can be stablilzed
-  it.skip('can edit custom links', () => {
-    cy.contains('Example Collection')
-      .parent()
-      .parent()
-      .parent()
-      .within(() => {
-        // Edit a link
-        cy.findAllByRole('button', { name: 'Edit this link' }).first().click()
-      })
+  // it.skip('can edit custom links', () => {
+  //   cy.contains('Example Collection')
+  //     .parent()
+  //     .parent()
+  //     .parent()
+  //     .within(() => {
+  //       // Edit a link
+  //       cy.findAllByRole('button', { name: 'Edit this link' }).first().click()
+  //     })
 
-    cy.findByRole('dialog', { name: 'Edit custom link' }).within(() => {
-      cy.findByRole('button', { name: 'Cancel' }).click()
-    })
+  //   cy.findByRole('dialog', { name: 'Edit custom link' }).within(() => {
+  //     cy.findByRole('button', { name: 'Cancel' }).click()
+  //   })
 
-    cy.contains('Example Collection')
-      .parent()
-      .parent()
-      .parent()
-      .within(() => {
-        // Edit a link
-        cy.findAllByRole('button', { name: 'Edit this link' }).first().click()
-      })
+  //   cy.contains('Example Collection')
+  //     .parent()
+  //     .parent()
+  //     .parent()
+  //     .within(() => {
+  //       // Edit a link
+  //       cy.findAllByRole('button', { name: 'Edit this link' }).first().click()
+  //     })
 
-    cy.findByRole('dialog', { name: 'Edit custom link' }).within(() => {
-      cy.findByLabelText('Name').should('have.value', 'My Custom Link')
-      cy.findByLabelText('Name').clear().type('Edited Custom Link')
-      cy.findByLabelText('URL').should('have.value', 'https://google.com')
-      cy.findByLabelText('URL').clear().type('https://example.com')
-      cy.findByRole('button', { name: 'Save custom link' }).click()
-    })
+  //   cy.findByRole('dialog', { name: 'Edit custom link' }).within(() => {
+  //     cy.findByLabelText('Name').should('have.value', 'My Custom Link')
+  //     cy.findByLabelText('Name').clear().type('Edited Custom Link')
+  //     cy.findByLabelText('URL').should('have.value', 'https://google.com')
+  //     cy.findByLabelText('URL').clear().type('https://example.com')
+  //     cy.findByRole('button', { name: 'Save custom link' }).click()
+  //   })
 
-    cy.findByRole('link', {
-      name: 'Edited Custom Link (opens in a new window)',
-    }).should('exist')
-  })
+  //   cy.findByRole('link', {
+  //     name: 'Edited Custom Link (opens in a new window)',
+  //   }).should('exist')
+  // })
 
   it('can delete custom links', () => {
     cy.contains('Example Collection')
