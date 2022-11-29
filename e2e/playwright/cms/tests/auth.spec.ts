@@ -35,7 +35,7 @@ describe('Authentication', () => {
 
     await page.goto('/')
 
-    await expect(page.url()).toBe(
+    expect(page.url()).toBe(
       'http://localhost:3000/login?redirectTo=http%3A%2F%2Flocalhost%3A3001%2F'
     )
     await expect(page.locator('h1')).toHaveText('Space Force Portal Login')
@@ -124,7 +124,7 @@ describe('Authentication', () => {
     await loginPage.login('user2', 'user2pass')
     await expect(page.locator('text=WELCOME, RONNY')).toBeVisible()
     await page.goto('http://localhost:3001')
-    await expect(page.url()).toContain('/no-access')
+    expect(page.url()).toContain('/no-access')
     await expect(
       page.locator("text=You don't have access to this page.")
     ).toBeVisible()
