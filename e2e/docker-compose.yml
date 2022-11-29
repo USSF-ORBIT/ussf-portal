@@ -18,7 +18,7 @@ services:
       SAML_IDP_METADATA_URL: http://idp:8080/simplesaml/saml2/idp/metadata.php
       REDIS_URL: redis://portal_redis:6379
       MONGO_URL: mongodb://mongo:27017
-      MONGODB_DB: cypress-e2e
+      MONGODB_DB: mongo-e2e
       MONGO_HOST: ''
       MONGO_USER: ''
       MONGO_PASSWORD: ''
@@ -38,7 +38,7 @@ services:
     build:
       context: ../../ussf-portal-cms/
       dockerfile: Dockerfile
-      target: "e2e${LOCAL_BUILD}"
+      target: 'e2e${LOCAL_BUILD}'
       cache_from:
         - '${CMS_REPO}:builder'
         - '${CMS_REPO}:e2e'
@@ -71,7 +71,7 @@ services:
     image: mongo:4.0.0
     restart: always
     environment:
-      MONGO_INITDB_DATABASE: cypress-e2e
+      MONGO_INITDB_DATABASE: mongo-e2e
     ports:
       - '27017:27017'
 

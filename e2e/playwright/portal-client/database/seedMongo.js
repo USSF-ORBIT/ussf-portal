@@ -32,7 +32,6 @@ module.exports.seedDB = async () => {
 
   try {
     await client.connect()
-    console.log('Connected correctly to server')
 
     await dropCollection(client, 'users')
     await seedCollection(client, 'users', testUser1)

@@ -1,6 +1,8 @@
 import { test as base } from '@playwright/test'
 
-import { LoginPage } from '../models/Login'
+import { LoginPage } from '../../models/Login'
+import { resetDb } from '../database/seed'
+import { seedDB } from '../../portal-client/database/seedMongo'
 
 const test = base.extend<{ loginPage: LoginPage }>({
   loginPage: async ({ page, context }, use) => {
@@ -9,6 +11,11 @@ const test = base.extend<{ loginPage: LoginPage }>({
 })
 
 const { describe, expect } = test
+
+test.beforeAll(async () => {
+  await resetDb()
+  await seedDB()
+})
 
 describe('Navigation', () => {
   test('can access each link in the side bar navigation', async ({

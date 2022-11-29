@@ -4,8 +4,9 @@ import {
   TestingLibraryFixtures,
 } from '@playwright-testing-library/test/fixture'
 
-import { LoginPage } from '../models/Login'
+import { LoginPage } from '../../models/Login'
 import { resetDb, seedRevokeUsers, seedGrantUsers } from '../database/seed'
+import { seedDB } from '../../portal-client/database/seedMongo'
 
 type CustomFixtures = {
   loginPage: LoginPage
@@ -22,10 +23,7 @@ const { describe, expect } = test
 
 test.beforeAll(async () => {
   await resetDb()
-})
-
-test.afterAll(async () => {
-  await resetDb()
+  await seedDB()
 })
 
 describe('Authentication', () => {
@@ -37,7 +35,7 @@ describe('Authentication', () => {
 
     await page.goto('/')
 
-    await expect(page.url()).toBe(
+    expect(page.url()).toBe(
       'http://localhost:3000/login?redirectTo=http%3A%2F%2Flocalhost%3A3001%2F'
     )
     await expect(page.locator('h1')).toHaveText('Space Force Portal Login')
@@ -88,7 +86,7 @@ describe('Authentication', () => {
     await loginPage.login('user1', 'user1pass')
 
     await expect(
-      page.locator('text=WELCOME, BERNADETTE CAMPBELL')
+      page.locator('text=WELCOME, BERNIE')
     ).toBeVisible()
 
     await page.goto('http://localhost:3001')
@@ -114,19 +112,19 @@ describe('Authentication', () => {
 
     // RONALD BOYD is enabled but should not be
     await expect(
-      page.locator('tr:has-text("RONALD BOYD") td:nth-child(5)')
+      page.locator('tr:has-text("RONNY") td:nth-child(5)')
     ).toHaveText('False')
     await expect(
-      page.locator('tr:has-text("RONALD BOYD") td:nth-child(6)')
+      page.locator('tr:has-text("RONNY") td:nth-child(6)')
     ).toHaveText('True')
 
     await loginPage.logout()
 
     // Login as user with no access
     await loginPage.login('user2', 'user2pass')
-    await expect(page.locator('text=WELCOME, RONALD BOYD')).toBeVisible()
+    await expect(page.locator('text=WELCOME, RONNY')).toBeVisible()
     await page.goto('http://localhost:3001')
-    await expect(page.url()).toContain('/no-access')
+    expect(page.url()).toContain('/no-access')
     await expect(
       page.locator("text=You don't have access to this page.")
     ).toBeVisible()
@@ -142,10 +140,10 @@ describe('Authentication', () => {
 
     // RONALD BOYD is now disabled
     await expect(
-      page.locator('tr:has-text("RONALD BOYD") td:nth-child(5)')
+      page.locator('tr:has-text("RONNY") td:nth-child(5)')
     ).toHaveText('False')
     await expect(
-      page.locator('tr:has-text("RONALD BOYD") td:nth-child(6)')
+      page.locator('tr:has-text("RONNY") td:nth-child(6)')
     ).toHaveText('False')
   })
 
