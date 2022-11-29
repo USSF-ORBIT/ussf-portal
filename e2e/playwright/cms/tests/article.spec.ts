@@ -6,6 +6,7 @@ import {
 
 import { LoginPage } from '../../models/Login'
 import { resetDb, seedCMSUsers } from '../database/seed'
+import { seedDB } from '../../portal-client/database/seedMongo'
 
 type CustomFixtures = {
   loginPage: LoginPage
@@ -22,15 +23,13 @@ const { describe, expect } = test
 
 test.beforeAll(async () => {
   await resetDb()
+  await seedDB()
   await seedCMSUsers()
-})
-
-test.afterAll(async () => {
-  await resetDb()
 })
 
 describe('Articles', () => {
   test('can be created by an author', async ({ page, loginPage }) => {
+    test.slow()
     await loginPage.login('cmsauthor', 'cmsauthorpass')
 
     await expect(page.locator('text=WELCOME, ETHEL NEAL')).toBeVisible()
@@ -74,6 +73,7 @@ describe('Articles', () => {
   })
 
   test('can be published by a manager', async ({ page, loginPage }) => {
+    test.slow()
     await loginPage.login('cmsmanager', 'cmsmanagerpass')
 
     await expect(page.locator('text=WELCOME, CHRISTINA HAVEN')).toBeVisible()

@@ -9,7 +9,7 @@ const config: PlaywrightTestConfig = {
     trace: 'retain-on-failure',
   },
   workers: 1,
-
+  expect: { timeout: 15000 },
   projects: [
     {
       name: 'CMS E2E',
