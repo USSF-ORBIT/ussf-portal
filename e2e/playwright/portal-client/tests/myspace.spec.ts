@@ -175,4 +175,24 @@ describe('MySpace', () => {
 
     await expect(page.locator('text=Updated Collection Title')).toBeVisible()
   })
+
+  test('can remove multiple links at once from an existing collection', async ({
+    page,
+    loginPage,
+  }) => {
+    // Login and check that user is in My Space
+    await loginPage.login('user1', 'user1pass')
+    await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+    await expect(page.locator('text=Updated Collection Title')).toBeVisible()
+
+    // This line is repeated because after the first click, the first 'x' disappears
+    // and the second bookmark in the collection becomes the first
+    await page.locator('[aria-label="Remove this link"]').first().click()
+    await page.locator('[aria-label="Remove this link"]').first().click()
+
+    await expect(
+      page.locator('text=Webmail(opens in a new window)')
+    ).toBeHidden()
+    await expect(page.locator('text=MyPay(opens in a new window)')).toBeHidden()
+  })
 })

@@ -360,27 +360,27 @@ describe('Sites and Applications', () => {
   // })
 
   // TODO convert this test to playwright to see if it can be stablilzed
-  it.skip('can remove multiple links at once from an existing collection', () => {
-    cy.contains('My Space')
+  // it.skip('can remove multiple links at once from an existing collection', () => {
+  //   cy.contains('My Space')
 
-    cy.contains('Updated Title')
-      .parent()
-      .parent()
-      .parent()
-      .within(() => {
-        // Inside of <ol>
-        // Start with 7 links, remove 2
-        cy.get('[aria-label="Drag Handle"]').should('have.length', 6)
+  //   cy.contains('Updated Title')
+  //     .parent()
+  //     .parent()
+  //     .parent()
+  //     .within(() => {
+  //       // Inside of <ol>
+  //       // Start with 7 links, remove 2
+  //       cy.get('[aria-label="Drag Handle"]').should('have.length', 6)
 
-        cy.contains('vMPF').next().click()
-        cy.contains('LeaveWeb').next().click()
+  //       cy.contains('vMPF').next().click()
+  //       cy.contains('LeaveWeb').next().click()
 
-        cy.contains('vMPF').should('not.exist')
-        cy.contains('LeaveWeb').should('not.exist')
+  //       cy.contains('vMPF').should('not.exist')
+  //       cy.contains('LeaveWeb').should('not.exist')
 
-        cy.get('[aria-label="Drag Handle"]').should('have.length', 4)
-      })
-  })
+  //       cy.get('[aria-label="Drag Handle"]').should('have.length', 4)
+  //     })
+  // })
 
   it('can delete an existing collection', () => {
     cy.contains('My Second New Collection')
