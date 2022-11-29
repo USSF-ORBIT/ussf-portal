@@ -29,6 +29,7 @@ test.beforeAll(async () => {
 
 describe('Articles', () => {
   test('can be created by an author', async ({ page, loginPage }) => {
+    test.slow()
     await loginPage.login('cmsauthor', 'cmsauthorpass')
 
     await expect(page.locator('text=WELCOME, ETHEL NEAL')).toBeVisible()
@@ -72,6 +73,7 @@ describe('Articles', () => {
   })
 
   test('can be published by a manager', async ({ page, loginPage }) => {
+    test.slow()
     await loginPage.login('cmsmanager', 'cmsmanagerpass')
 
     await expect(page.locator('text=WELCOME, CHRISTINA HAVEN')).toBeVisible()
