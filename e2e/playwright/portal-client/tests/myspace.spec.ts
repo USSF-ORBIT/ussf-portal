@@ -5,6 +5,7 @@ import {
 } from '@playwright-testing-library/test/fixture'
 
 import { LoginPage } from '../../models/Login'
+import { resetDb } from '../../cms/database/seed'
 import { seedDB } from '../database/seedMongo'
 
 type CustomFixtures = {
@@ -21,6 +22,7 @@ const test = base.extend<TestingLibraryFixtures & CustomFixtures>({
 const { describe, expect } = test
 
 test.beforeAll(async () => {
+  await resetDb()
   await seedDB()
 })
 

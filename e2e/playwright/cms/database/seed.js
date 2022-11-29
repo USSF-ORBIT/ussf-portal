@@ -167,7 +167,7 @@ module.exports.seedRevokeUsers = async () => {
 
     // These users are intentionally out-of-sync with their access in the test users SAML file for testing purposes
     await client.query(`INSERT INTO "public"."User" ("id", "name", "isAdmin", "isEnabled", "role", "userId") VALUES
-('cl0jylky70105fs97hvb6sc7x', 'RONALD BOYD', 'f', 't', 'User', 'RONALD.BOYD.312969168@testusers.cce.af.mil'),
+('cl0jylky70105fs97hvb6sc7x', 'RONNY', 'f', 't', 'User', 'RONALD.BOYD.312969168@testusers.cce.af.mil'),
 ('cl0jyfow10002fs97yimqq04c', 'JOHN HENKE', 't', 't', 'User', 'JOHN.HENKE.562270783@testusers.cce.af.mil'),
 ('cl0jylky79105fs97hvb6sc7x', 'FLOYD KING', 't', 't', 'User', 'FLOYD.KING.376144527@testusers.cce.af.mil');`)
 

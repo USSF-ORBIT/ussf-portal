@@ -6,6 +6,7 @@ import {
 
 import { LoginPage } from '../../models/Login'
 import { resetDb, seedCMSUsers } from '../database/seed'
+import { seedDB } from '../../portal-client/database/seedMongo'
 
 type CustomFixtures = {
   loginPage: LoginPage
@@ -22,11 +23,8 @@ const { describe, expect } = test
 
 test.beforeAll(async () => {
   await resetDb()
+  await seedDB()
   await seedCMSUsers()
-})
-
-test.afterAll(async () => {
-  await resetDb()
 })
 
 describe('Articles', () => {
