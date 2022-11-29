@@ -97,7 +97,7 @@ describe('MySpace', () => {
     ).toBeVisible()
   })
 
-  test('can add/edit custom links to an existing collection', async ({
+  test('can add/edit/delete custom links in an existing collection', async ({
     page,
     loginPage,
   }) => {
@@ -128,18 +128,34 @@ describe('MySpace', () => {
     // Edit custom link
     await page.locator('[aria-label="Edit this link"]').first().click()
 
-    // Found this selector using e2e:debug, but not sure if this will consistently be nth=4
-    await expect(
-      page.locator('[placeholder="Example link name"] >> nth=4')
-    ).toBeVisible()
     await page
-      .locator('[placeholder="Example link name"] >> nth=4')
+      .locator(
+        'div.is-visible > div.usa-modal-overlay > div > div.usa-modal__content > div.usa-modal__main > form > input'
+      )
+      .first()
       .fill('Edited custom link name')
 
-    await page.locator('text=Save custom link >> nth=4').click()
+    await page
+      .locator(
+        'div.is-visible > div.usa-modal-overlay > div > div.usa-modal__content > div.usa-modal__main > form > ul.usa-button-group > li > button:has-text("Save custom link")'
+      )
+      .click()
 
     await expect(
       page.locator('text=Edited custom link name(opens in a new window)')
     ).toBeVisible()
+
+    // Delete custom link
+    await page.locator('[aria-label="Edit this link"]').first().click()
+
+    await page
+      .locator(
+        'div.is-visible > div.usa-modal-overlay > div > div.usa-modal__content > div.usa-modal__main > form > ul.usa-button-group > li > button:has-text("Delete")'
+      )
+      .click()
+
+    await expect(
+      page.locator('text=Edited custom link name(opens in a new window)')
+    ).toBeHidden()
   })
 })

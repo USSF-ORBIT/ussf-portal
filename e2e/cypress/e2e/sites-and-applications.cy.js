@@ -312,32 +312,32 @@ describe('Sites and Applications', () => {
   //   }).should('exist')
   // })
 
-  it('can delete custom links', () => {
-    cy.contains('Example Collection')
-      .parent()
-      .parent()
-      .parent()
-      .within(() => {
-        // Edit a link
-        cy.findAllByRole('button', { name: 'Edit this link' }).first().click()
-      })
+  // it('can delete custom links', () => {
+  //   cy.contains('Example Collection')
+  //     .parent()
+  //     .parent()
+  //     .parent()
+  //     .within(() => {
+  //       // Edit a link
+  //       cy.findAllByRole('button', { name: 'Edit this link' }).first().click()
+  //     })
 
-    cy.findByRole('dialog', { name: 'Edit custom link' }).within(() => {
-      cy.findByRole('button', { name: 'Delete' }).click()
-    })
+  //   cy.findByRole('dialog', { name: 'Edit custom link' }).within(() => {
+  //     cy.findByRole('button', { name: 'Delete' }).click()
+  //   })
 
-    cy.findByRole('link', {
-      name: 'Edited Custom Link (opens in a new window)',
-    }).should('not.exist')
+  //   cy.findByRole('link', {
+  //     name: 'Edited Custom Link (opens in a new window)',
+  //   }).should('not.exist')
 
-    cy.contains('Example Collection')
-      .parent()
-      .parent()
-      .parent()
-      .within(() => {
-        cy.get('[aria-label="Drag Handle"]').should('have.length', 6)
-      })
-  })
+  //   cy.contains('Example Collection')
+  //     .parent()
+  //     .parent()
+  //     .parent()
+  //     .within(() => {
+  //       cy.get('[aria-label="Drag Handle"]').should('have.length', 6)
+  //     })
+  // })
 
   it('can edit an existing collection title', () => {
     cy.contains('Example Collection')
