@@ -195,4 +195,31 @@ describe('MySpace', () => {
     ).toBeHidden()
     await expect(page.locator('text=MyPay(opens in a new window)')).toBeHidden()
   })
+
+  test('can delete an existing collection', async ({ page, loginPage }) => {
+    // Login and check that user is in My Space
+    await loginPage.login('user1', 'user1pass')
+    await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+    await expect(page.locator('text=Updated Collection Title')).toBeVisible()
+
+    // Cancel
+    await page.locator('[aria-label="Collection Settings"]').first().click()
+    await page.locator('button:has-text("Delete this collection")').click()
+    await page
+      .locator(
+        'div.is-visible > div.usa-modal-overlay > div > div.usa-modal__content > div.usa-modal__main > div.usa-modal__footer > ul > li > button:has-text("Cancel")'
+      )
+      .click()
+    await expect(page.locator('text=Updated Collection Title')).toBeVisible()
+
+    // Delete
+    await page.locator('[aria-label="Collection Settings"]').first().click()
+    await page.locator('button:has-text("Delete this collection")').click()
+    await page
+      .locator(
+        'div.is-visible > div.usa-modal-overlay > div > div.usa-modal__content > div.usa-modal__main > div.usa-modal__footer > ul > li > button:has-text("Delete")'
+      )
+      .click()
+    await expect(page.locator('text=Updated Collection Title')).toBeHidden()
+  })
 })
