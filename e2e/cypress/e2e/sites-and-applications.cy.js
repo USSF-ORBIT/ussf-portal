@@ -339,25 +339,25 @@ describe('Sites and Applications', () => {
   //     })
   // })
 
-  it('can edit an existing collection title', () => {
-    cy.contains('Example Collection')
-      .parent()
-      .parent()
-      .within(() => {
-        cy.findByRole('button', { name: 'Collection Settings' }).click()
-        cy.findByRole('button', { name: 'Edit collection title' }).click()
+  // it('can edit an existing collection title', () => {
+  //   cy.contains('Example Collection')
+  //     .parent()
+  //     .parent()
+  //     .within(() => {
+  //       cy.findByRole('button', { name: 'Collection Settings' }).click()
+  //       cy.findByRole('button', { name: 'Edit collection title' }).click()
 
-        cy.findByRole('textbox').clear()
-        cy.findByRole('textbox').type('Updated Title{enter}')
-        cy.contains('Updated Title')
-          .parent()
-          .within(() => {
-            cy.findByRole('heading', {
-              level: 3,
-            }).should('have.text', 'Updated Title')
-          })
-      })
-  })
+  //       cy.findByRole('textbox').clear()
+  //       cy.findByRole('textbox').type('Updated Title{enter}')
+  //       cy.contains('Updated Title')
+  //         .parent()
+  //         .within(() => {
+  //           cy.findByRole('heading', {
+  //             level: 3,
+  //           }).should('have.text', 'Updated Title')
+  //         })
+  //     })
+  // })
 
   // TODO convert this test to playwright to see if it can be stablilzed
   it.skip('can remove multiple links at once from an existing collection', () => {

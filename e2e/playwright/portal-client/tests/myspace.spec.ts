@@ -158,4 +158,21 @@ describe('MySpace', () => {
       page.locator('text=Edited custom link name(opens in a new window)')
     ).toBeHidden()
   })
+
+  test('can edit an existing collection title', async ({ page, loginPage }) => {
+    // Login and check that user is in My Space
+    await loginPage.login('user1', 'user1pass')
+    await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+    await expect(page.locator('text=Example Collection')).toBeVisible()
+
+    // Update Example Collection title
+    await page.locator('[aria-label="Collection Settings"]').first().click()
+    await page.locator('text=Edit collection title').click()
+    await page
+      .locator('[placeholder="Name this collection"]')
+      .fill('Updated Collection Title')
+    await page.locator('text=Save name').click()
+
+    await expect(page.locator('text=Updated Collection Title')).toBeVisible()
+  })
 })
