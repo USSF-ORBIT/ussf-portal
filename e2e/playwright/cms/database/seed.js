@@ -79,6 +79,10 @@ ALTER TABLE "public"."User" ADD FOREIGN KEY ("updatedBy") REFERENCES "public"."U
 
   // Label
   await client.query(`DROP TABLE IF EXISTS "public"."Label" CASCADE;`)
+  await client.query(`DROP TYPE IF EXISTS "public"."LabelType";`)
+  await client.query(
+    `CREATE TYPE "public"."LabelType" AS ENUM ('Base', 'Source', 'Audience')`
+  )
 
   await client.query(`CREATE TABLE "public"."Label" (
     "id" text NOT NULL,
@@ -87,6 +91,7 @@ ALTER TABLE "public"."User" ADD FOREIGN KEY ("updatedBy") REFERENCES "public"."U
     "createdBy" text,
     "updatedAt" timestamp(3),
     "createdAt" timestamp(3) DEFAULT CURRENT_TIMESTAMP,
+    "type" "public"."LabelType" NOT NULL,
     CONSTRAINT "Label_pkey" PRIMARY KEY ("id"));`)
 
   // Tag
@@ -136,6 +141,11 @@ ALTER TABLE "public"."User" ADD FOREIGN KEY ("updatedBy") REFERENCES "public"."U
     "createdAt" timestamp(3) DEFAULT CURRENT_TIMESTAMP,
     "archivedDate" timestamp(3),
     "publishedDate" timestamp(3),
+    "hero_extension" text,
+    "hero_filesize" int4,
+    "hero_height" int4,
+    "hero_id" text,
+    "hero_width" int4,
     CONSTRAINT "Article_createdBy_fkey" FOREIGN KEY ("createdBy") REFERENCES "public"."User"("id") ON DELETE SET NULL ON UPDATE CASCADE,
     CONSTRAINT "Article_updatedBy_fkey" FOREIGN KEY ("updatedBy") REFERENCES "public"."User"("id") ON DELETE SET NULL ON UPDATE CASCADE,
     PRIMARY KEY ("id")
