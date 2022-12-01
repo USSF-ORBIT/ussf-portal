@@ -4,9 +4,9 @@ import {
   TestingLibraryFixtures,
 } from '@playwright-testing-library/test/fixture'
 
-import { LoginPage } from '../../models/Login'
-import { resetDb } from '../../cms/database/seed'
-import { seedDB } from '../database/seedMongo'
+import { LoginPage } from '../models/Login'
+import { resetDb } from '../cms/database/seed'
+import { seedDB } from '../portal-client/database/seedMongo'
 
 type CustomFixtures = {
   loginPage: LoginPage
