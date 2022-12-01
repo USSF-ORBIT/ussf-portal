@@ -21,6 +21,10 @@ const test = base.extend<TestingLibraryFixtures & CustomFixtures>({
 
 const { describe, expect } = test
 
+const waitFor = (delay: number) => {
+  return new Promise((resolve) => setTimeout(resolve, delay))
+}
+
 test.beforeAll(async () => {
   await resetDb()
   await seedDB()
@@ -196,6 +200,11 @@ describe('MySpace', () => {
       page.locator('text=Webmail(opens in a new window)')
     ).toBeHidden()
     await expect(page.locator('text=MyPay(opens in a new window)')).toBeHidden()
+
+    // 'Undo remove' option disappears after 3 seconds, so we wait for 4 seconds
+    // before performing check
+    await waitFor(4000)
+    await expect(page.locator('text=Undo remove')).toBeHidden()
   })
 
   test('can delete an existing collection', async ({ page, loginPage }) => {
