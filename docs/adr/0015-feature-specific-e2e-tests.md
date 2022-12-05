@@ -23,7 +23,7 @@ End-to-end testing is used to test that an application behaves as expected from 
 
 Chosen option: "Make tests feature-specific", because this will not only reduce the execution time of our tests, it will also reduce complexity, making it easier and faster to create new tests.
 
-### Positive Consequences <!-- optional -->
+### Positive Consequences
 
 - Less complexity around creating new tests
 - Less mental overhead maintaining tests
