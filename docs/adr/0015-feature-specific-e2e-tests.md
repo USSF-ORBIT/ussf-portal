@@ -8,7 +8,7 @@
 
 End-to-end testing is used to test that an application behaves as expected from the perspective of the user. The current state of our e2e tests is a mix of feature-specific tests, and tests that could be described as page-specific. Page-specific meaning, there is a test file for each page that is in the portal client, and some pages within the CMS dashboard. A lot of these page-specific assertions are already being covered with our unit tests, so there exists a fair amount of redundancy. We would also like to test some features that require interaction with both the CMS and the portal client, so placing a test like that in a CMS folder or a portal client folder just makes things more confusing. There is also a lot of unnecessary complexity in some of these test files that chain together tests, causing test results to largely depend on the results of a prior test.
 
-## Decision Drivers <!-- optional -->
+## Decision Drivers
 
 - It's often difficult to know exactly where a new test should go
 - A lot of existing tests rely on past actions/results from a test that comes before, which leads to more flakeyness and unnecessary complexity
