@@ -51,6 +51,4 @@ Chosen option: "Make tests feature-specific", because this will not only reduce 
 - Good, because smaller tests are easier to maintain
 - Bad, because a lot of upfront work is needed to break apart and refactor current test files
 
-## Links <!-- optional -->
-
 <!-- markdownlint-disable-file MD013 -->
