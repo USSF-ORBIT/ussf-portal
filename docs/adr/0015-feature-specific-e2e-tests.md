@@ -30,7 +30,7 @@ Chosen option: "Make tests feature-specific", because this will not only reduce 
 - Further reduce test flakeyness by having more isolated tests
 - Reduce test execution time
 
-### Negative Consequences <!-- optional -->
+### Negative Consequences
 
 - A lot of upfront work to break apart current test files
 
