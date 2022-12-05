@@ -35,9 +35,4 @@ describe('Toggle light/dark mode', () => {
     await page.locator('[data-testid="theme-toggle"]').click()
     await expect(page.locator('text=LIGHT MODE')).toBeVisible()
   })
-
-  test('this test will fail', async ({ page, loginPage }) => {
-    await loginPage.login('user1', 'user1pass')
-    await expect(page.locator('text=THIS TEST WILL FAIL')).toBeVisible()
-  })
 })
