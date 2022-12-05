@@ -34,7 +34,7 @@ Chosen option: "Make tests feature-specific", because this will not only reduce 
 
 - A lot of upfront work to break apart current test files
 
-## Pros and Cons of the Options <!-- optional -->
+## Pros and Cons of the Options
 
 ### Do nothing, keep tests as they are, segmented tests that are specific to both the CMS and portal client
 
