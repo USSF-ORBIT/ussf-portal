@@ -25,6 +25,13 @@ const config: PlaywrightTestConfig = {
       },
       testDir: 'playwright/portal-client/tests',
     },
+    {
+      name: 'FEATURES E2E',
+      use: {
+        baseURL: 'http://localhost:3000',
+      },
+      testDir: 'playwright/feature',
+    },
   ],
 }
 
