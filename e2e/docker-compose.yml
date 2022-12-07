@@ -57,7 +57,7 @@ services:
       S3_ACCESS_KEY_ID: 'thiscanbeanything'
       S3_SECRET_ACCESS_KEY: 'thiscanbeanything'
       ASSET_BASE_URL: http://localhost:3001
-      IS_PROD: 'false'
+      USE_S3_STORAGE: 'false'
     stdin_open: true
     depends_on:
       keystone-db:
