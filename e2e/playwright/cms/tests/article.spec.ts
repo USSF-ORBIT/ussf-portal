@@ -29,7 +29,7 @@ test.beforeAll(async () => {
 })
 
 describe('Articles', () => {
-  test.only('can be created by an author', async ({ page, loginPage }) => {
+  test('can be created by an author', async ({ page, loginPage }) => {
     test.slow()
     await loginPage.login('cmsauthor', 'cmsauthorpass')
 
@@ -56,17 +56,6 @@ describe('Articles', () => {
     await page.locator('#slug').fill('test-article-for-playwright')
     await page.locator('#title').fill('My Test Article')
     await page.locator('#preview').fill('This is my test article.')
-
-    // Note that Promise.all prevents a race condition
-    // between clicking and waiting for the file chooser.
-    const [fileChooser] = await Promise.all([
-      // It is important to call waitForEvent before click to set up waiting.
-      page.waitForEvent('filechooser'),
-      // Opens the file chooser.
-      console.log('found teh event'),
-      page.locator('text=Upload').click(),
-    ])
-    await fileChooser.setFiles(path.resolve(__dirname, 'placeholder.png'))
 
     await Promise.all([
       page.waitForNavigation(),
