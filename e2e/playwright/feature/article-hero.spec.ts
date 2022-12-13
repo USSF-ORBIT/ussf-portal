@@ -28,7 +28,7 @@ test.beforeAll(async () => {
   await seedCMSUsers()
 })
 
-describe.only('Article Hero Image', () => {
+describe('Article Hero Image', () => {
   test('hero image can be uploaded and saved by an author', async ({
     page,
     loginPage,
