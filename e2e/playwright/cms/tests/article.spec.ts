@@ -1,5 +1,4 @@
 import { test as base } from '@playwright/test'
-import path from 'path'
 import {
   fixtures,
   TestingLibraryFixtures,
