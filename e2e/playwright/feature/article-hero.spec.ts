@@ -85,14 +85,14 @@ describe('Article Hero Image', () => {
 
     /* Navigate back to Articles page and confirm article was created as a draft */
 
-    await Promise.all([
-      page.waitForNavigation(),
-      page.locator('[aria-label="Side Navigation"] >> text=Articles').click(),
-    ])
+    // await Promise.all([
+    //   page.waitForNavigation(),
+    //   page.locator('[aria-label="Side Navigation"] >> text=Articles').click(),
+    // ])
 
-    // await page
-    //   .locator('[aria-label="Side Navigation"] >> text=Articles')
-    //   .click()
+    await page
+      .locator('[aria-label="Side Navigation"] >> text=Articles')
+      .click()
     await expect(page).toHaveURL('http://localhost:3001/articles')
 
     await expect(
