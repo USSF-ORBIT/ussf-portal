@@ -83,8 +83,6 @@ describe('Article Hero Image', () => {
       page.locator('img[alt="Image uploaded to hero field"]')
     ).toBeVisible()
 
-    await page.locator('label:has-text("Published")').check()
-
     /* Navigate back to Articles page and confirm article was created as a draft */
 
     await page
@@ -96,39 +94,53 @@ describe('Article Hero Image', () => {
       page.locator('tr:has-text("My Test Article") td:nth-child(3)')
     ).toHaveText('Draft')
 
+    /* Log out as CMS author */
+    await loginPage.logout()
+  })
+  test('hero image can be viewed on published article', async ({
+    page,
+    loginPage,
+  }) => {
+    /* Log in as a CMS manager */
+    await loginPage.login('cmsmanager', 'cmsmanagerpass')
+    await expect(page.locator('text=WELCOME, CHRISTINA HAVEN')).toBeVisible()
+
+    await page.goto('http://localhost:3001')
+    await expect(
+      page.locator(
+        'text=Signed in as CHRISTINA.HAVEN.561698119@testusers.cce.af.mil'
+      )
+    ).toBeVisible()
+
+    /* Navigate to the Articles page */
+    await Promise.all([
+      page.waitForNavigation(),
+      page.locator('h3:has-text("Articles")').click(),
+    ])
+
     /* Publish article */
     await page.locator('a:has-text("My Test Article")').click()
 
-    // The Status labels are never "enabled"
-    // Here are many ways I tried to find them, but the inputs are marked
-    // disabled in the html. This only happens during a test, not when running
-    // codegen, or browsing the app.
+    await page.locator('label:has-text("Published")').check()
 
-    // await page.locator('label:has-text("Published")').check()
-    // await page.locator('text=Status >> text=Published').click({ timeout: 5000 })
-    // await page.locator('text=Status >> label:nth-child(1) >> input').check()
-
-    // await page.locator('button:has-text("Save changes")').click()
+    await page.locator('button:has-text("Save changes")').click()
 
     /* View article on the portal and confirm hero is present */
-    // #TODO
+    await page.goto('http://localhost:3000/about-us/orbit-blog/')
+    await expect(page.locator('h3:has-text("My Test Article")')).toBeVisible()
 
-    /* Navigate back to the CMS and remove the hero image*/
-    // #TODO
+    const [article] = await Promise.all([
+      page.waitForEvent('popup'),
+      page.locator('text=My Test Article').click(),
+    ])
 
-    // Click text=My Test Article
-    // await page.locator('a:has-text("My Test Article")').click()
-    // // await expect(page.locator('#slug')).toHaveText('my-test-article')
-    // // Click button:has-text("Remove")
-    // await page.locator('button:has-text("Remove")').click()
-    // // Click button:has-text("Save changes")
-    // await page.locator('button:has-text("Save changes")').click()
-    // // Click text=HeroUpload Image >> svg
-    // await expect(page.locator('text=HeroUpload Image >> svg')).toBeVisible()
+    await expect(
+      article.locator('img[alt="article hero graphic"]')
+    ).toBeVisible()
+    await article.close()
 
-    /* View article on the portal and confirm no hero image */
-    //#TODO
-
+    /* Return to CMS and log out */
+    await page.goto('http://localhost:3001')
     await loginPage.logout()
   })
 })
