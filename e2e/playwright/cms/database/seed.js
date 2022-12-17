@@ -5,11 +5,11 @@ const E2E_TEST_DATABASE = 'test'
 const E2E_TEST_CONNECTION = `postgres://keystone:keystonecms@0.0.0.0:5432/${E2E_TEST_DATABASE}`
 
 // DB util functions
-const dropAndCreateSchema = async (client) => {
-  // Drop
+const truncateSchema = async (client) => {
+  // Event
   await client.query(`TRUNCATE TABLE "public"."Event" CASCADE;`)
 
-  // Drop
+  // User
   await client.query(`TRUNCATE TABLE "public"."User" CASCADE;`)
 
   // Byline
@@ -34,7 +34,7 @@ module.exports.resetDb = async () => {
 
   try {
     await client.connect()
-    await dropAndCreateSchema(client)
+    await truncateSchema(client)
     console.log(`E2E database reset!`)
     await client.end()
   } catch (err) {
@@ -48,7 +48,7 @@ module.exports.seedRevokeUsers = async () => {
 
   try {
     await client.connect()
-    await dropAndCreateSchema(client)
+    await truncateSchema(client)
 
     // These users are intentionally out-of-sync with their access in the test users SAML file for testing purposes
     await client.query(`INSERT INTO "public"."User" ("id", "name", "isAdmin", "isEnabled", "role", "userId") VALUES
@@ -70,7 +70,7 @@ module.exports.seedGrantUsers = async () => {
 
   try {
     await client.connect()
-    await dropAndCreateSchema(client)
+    await truncateSchema(client)
 
     // These users are intentionally out-of-sync with their access in the test users SAML file for testing purposes
     await client.query(`INSERT INTO "public"."User" ("id", "name", "isAdmin", "isEnabled", "role", "userId") VALUES
@@ -91,7 +91,7 @@ module.exports.seedCMSUsers = async () => {
 
   try {
     await client.connect()
-    await dropAndCreateSchema(client)
+    await truncateSchema(client)
 
     // Seed CMS test users for each role
     await client.query(`INSERT INTO "public"."User" ("id", "name", "isAdmin", "isEnabled", "role", "userId") VALUES
