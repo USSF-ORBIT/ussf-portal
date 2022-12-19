@@ -84,4 +84,29 @@ describe('Portal authentication', () => {
       await expect(page).toHaveURL('http://localhost:3000/login')
     })
   })
+
+  describe('access while logged in', () => {
+    test('loads the user on each route', async ({ page, loginPage }) => {
+      const routes = [
+        '/',
+        '/sites-and-applications',
+        '/about-us',
+        '/news',
+        '/news-announcements',
+        '/search',
+        '/settings',
+        '/ussf-documentation',
+      ]
+
+      await loginPage.login('user1', 'user1pass')
+      await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+
+      // Check that logged in user can visit each url
+      for (const url of routes) {
+        await page.goto(url)
+        await page.waitForLoadState('domcontentloaded')
+        await expect(page).toHaveURL(`http://localhost:3000${url}`)
+      }
+    })
+  })
 })
