@@ -27,30 +27,61 @@ test.beforeAll(async () => {
 })
 
 describe('Portal authentication', () => {
-  test('requires a user to be logged in to view the portal routes', async ({
-    page,
-    loginPage,
-  }) => {
-    const routes = [
-      '/',
-      '/sites-and-applications',
-      '/about-us',
-      '/news',
-      '/news-announcements',
-      '/search',
-      '/settings',
-      '/ussf-documentation',
-    ]
+  describe('access without being logged in', () => {
+    test('requires a user to be logged in to view the portal routes', async ({
+      page,
+      loginPage,
+    }) => {
+      const routes = [
+        '/',
+        '/sites-and-applications',
+        '/about-us',
+        '/news',
+        '/news-announcements',
+        '/search',
+        '/settings',
+        '/ussf-documentation',
+      ]
 
-    // Navigate to portal login page
-    await page.goto(loginPage.loginUrl)
-    await expect(loginPage.loginButton).toBeVisible()
+      // Navigate to portal login page
+      await page.goto(loginPage.loginUrl)
+      await expect(loginPage.loginButton).toBeVisible()
 
-    // Check that each route redirects to /login
-    for (const url of routes) {
-      await page.goto(url)
-      await page.waitForLoadState('domcontentloaded')
+      // Check that each route redirects to /login
+      for (const url of routes) {
+        await page.goto(url)
+        await page.waitForLoadState('domcontentloaded')
+        await expect(page).toHaveURL('http://localhost:3000/login')
+      }
+    })
+  })
+
+  describe('logging in', () => {
+    test('a user can log into and out of the portal', async ({
+      page,
+      loginPage,
+    }) => {
+      await page.goto(loginPage.loginUrl)
+      await expect(loginPage.loginButton).toBeVisible()
+
+      await loginPage.login('user1', 'user1pass')
+      await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+
+      await Promise.all([
+        page.waitForResponse('/api/auth/logout'),
+        page.route(
+          '**/simplesaml/saml2/idp/SingleLogoutService.php*',
+          (route) =>
+            route.fulfill({
+              status: 200,
+              body: 'Logged out',
+            })
+        ),
+        page.locator('li:has-text("Log out")').click(),
+      ])
+
+      await page.goto('/')
       await expect(page).toHaveURL('http://localhost:3000/login')
-    }
+    })
   })
 })
