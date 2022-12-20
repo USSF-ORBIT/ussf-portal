@@ -91,6 +91,7 @@ describe('Portal authentication', () => {
         '/',
         '/sites-and-applications',
         '/about-us',
+        '/about-us/orbit-blog',
         '/news',
         '/news-announcements',
         '/search',
