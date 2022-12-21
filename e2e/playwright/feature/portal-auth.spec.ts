@@ -105,7 +105,7 @@ describe('Portal authentication', () => {
       // Check that logged in user can visit each url
       for (const url of routes) {
         await page.goto(url)
-        await page.waitForLoadState('domcontentloaded')
+        await page.waitForLoadState('load')
         await expect(page).toHaveURL(`http://localhost:3000${url}`)
       }
     })
