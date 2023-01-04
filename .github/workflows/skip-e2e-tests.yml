@@ -21,7 +21,7 @@ on:
     branches: [main]
 
 jobs:
-  run-e2e-tests:
+  check-e2e-tests:
     runs-on: ubuntu-latest
     steps:
       - run: echo "skip e2e tests for doc only changes"
