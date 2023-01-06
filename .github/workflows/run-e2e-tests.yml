@@ -17,24 +17,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
+        uses: actions/checkout@e2f20e631ae6d7dd3b768f56a5d2af784dd54791 # tag=v3
 
       - name: Read Node.js version from package.json
         working-directory: ./e2e
-        run: echo ::set-output name=nodeVersion::$(node -p "require('./package.json').engines.node")
+        run: echo "nodeVersion=$(node -p "require('./package.json').engines.node")" >> $GITHUB_OUTPUT
         id: engines
 
       - name: Set up node
-        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93 # tag=v3
+        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516 # tag=v3
         with:
           node-version: ${{ steps.engines.outputs.nodeVersion }}
 
       - name: Get yarn cache directory path
         working-directory: ./e2e
         id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
+        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
 
-      - uses: actions/cache@fd5de65bc895cf536527842281bea11763fefd77 # tag=v3
+      - uses: actions/cache@9b0c1fce7a93df8e3bb8926b0d6e9d89e92f20a7 # tag=v3
         id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
