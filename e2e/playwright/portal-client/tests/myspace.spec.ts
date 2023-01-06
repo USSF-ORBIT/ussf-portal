@@ -224,4 +224,23 @@ describe('MySpace', () => {
       .click()
     await expect(page.locator('text=Updated Collection Title')).toBeHidden()
   })
+
+  test('can add/remove the News Section to My Space', async ({
+    page,
+    loginPage,
+  }) => {
+    await loginPage.login('user1', 'user1pass')
+    await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+
+    // Add News Section
+    await page.locator('text=Add section').click()
+    await page.locator('text=Add news section').click()
+    await expect(page.locator('text=Recent News')).toBeVisible()
+    await expect(page.locator('[data-testid="tag"] >> nth=0')).toBeVisible()
+
+    // Remove News Section
+    await page.locator('[aria-label="Section Settings"]').click()
+    await page.locator('text=Remove this section').click()
+    await page.locator('#removeSectionModal button:has-text("Delete")').click()
+  })
 })
