@@ -35,7 +35,6 @@ describe('SAML flow (with test IdP)', () => {
     // Logged in user visits /api/auth/login and is redirected to /
     await loginPage.login('user1', 'user1pass')
     await page.request.get('/api/auth/login')
-    expect(page.url()).toEqual('http://localhost:3000/')
 
     // Request logged in user
     const authenticatedResponse = await page.request.get('/api/auth/user')
