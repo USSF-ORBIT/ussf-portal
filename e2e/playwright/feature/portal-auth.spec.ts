@@ -21,6 +21,18 @@ const test = base.extend<TestingLibraryFixtures & CustomFixtures>({
 
 const { describe, expect } = test
 
+const routes = [
+  '/',
+  '/sites-and-applications',
+  '/about-us',
+  '/about-us/orbit-blog',
+  '/news',
+  '/news-announcements',
+  '/search',
+  '/settings',
+  '/ussf-documentation',
+]
+
 test.beforeAll(async () => {
   await resetDb()
   await seedDB()
@@ -32,17 +44,6 @@ describe('Portal authentication', () => {
       page,
       loginPage,
     }) => {
-      const routes = [
-        '/',
-        '/sites-and-applications',
-        '/about-us',
-        '/news',
-        '/news-announcements',
-        '/search',
-        '/settings',
-        '/ussf-documentation',
-      ]
-
       // Navigate to portal login page
       await page.goto(loginPage.loginUrl)
       await expect(loginPage.loginButton).toBeVisible()
@@ -87,18 +88,6 @@ describe('Portal authentication', () => {
 
   describe('access while logged in', () => {
     test('loads the user on each route', async ({ page, loginPage }) => {
-      const routes = [
-        '/',
-        '/sites-and-applications',
-        '/about-us',
-        '/about-us/orbit-blog',
-        '/news',
-        '/news-announcements',
-        '/search',
-        '/settings',
-        '/ussf-documentation',
-      ]
-
       await loginPage.login('user1', 'user1pass')
       await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
 
