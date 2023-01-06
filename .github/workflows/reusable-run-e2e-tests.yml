@@ -109,40 +109,11 @@ jobs:
           name: playwright-results
           path: ./e2e-tests/e2e/test-results
 
-      - name: Cypress run
-        uses: cypress-io/github-action@v4.2.2
-        env:
-          CYPRESS_BASE_URL: http://localhost:3000
-        with:
-          install-command: yarn install --frozen-lockfile
-          working-directory: ./e2e-tests/e2e
-
       - name: Docker logs
         uses: jwalton/gh-docker-logs@v2.2.0
         if: ${{ always() }}
         with:
           dest: "./docker-logs"
-
-      - name: Upload screenshots
-        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8 # tag=v3
-        if: failure()
-        with:
-          name: cypress-screenshots
-          path: ./e2e-tests/e2e/cypress/screenshots
-
-      - name: Upload videos
-        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8 # tag=v3
-        if: always()
-        with:
-          name: cypress-videos
-          path: ./e2e-tests/e2e/cypress/videos
-
-      - name: Upload reports
-        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8 # tag=v3
-        if: always()
-        with:
-          name: cypress-reports
-          path: ./e2e-tests/e2e/cypress/reports
 
       - name: Upload logs
         uses: actions/upload-artifact@6673cd052c4cd6fcf4b4e6e60ea986c889389535 # tag=v3
