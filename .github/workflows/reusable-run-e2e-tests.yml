@@ -107,14 +107,6 @@ jobs:
           name: playwright-results
           path: ./e2e-tests/e2e/test-results
 
-      - name: Cypress run
-        uses: cypress-io/github-action@v4.2.2
-        env:
-          CYPRESS_BASE_URL: http://localhost:3000
-        with:
-          install-command: yarn install --frozen-lockfile
-          working-directory: ./e2e-tests/e2e
-
       - name: Docker logs
         uses: jwalton/gh-docker-logs@v2.2.0
         if: ${{ always() }}
