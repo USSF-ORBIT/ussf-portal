@@ -3,16 +3,9 @@ name: Run E2E tests when changed
 on:
   # configure on push events
   push:
-    paths:
-      - "e2e/**"
-      - ".github/workflows/**"
     branches: [main]
   # configure on pull request events
   pull_request:
-    paths:
-      - "e2e/**"
-      - ".github/workflows/**"
-
     branches: [main]
 
 jobs:
