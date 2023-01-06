@@ -3,7 +3,9 @@ name: Build & run E2E tests
 on:
   # make the workflow reusable
   workflow_call:
-
+permissions:
+  id-token: write
+  contents: read
 jobs:
   run-e2e-tests:
     runs-on: ubuntu-latest
