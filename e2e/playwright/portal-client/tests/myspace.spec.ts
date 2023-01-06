@@ -221,6 +221,6 @@ describe('MySpace', () => {
     await page.locator('[aria-label="Section Settings"]').click()
     await page.locator('text=Remove this section').click()
     await page.locator('[data-testid="modalFooter"] >> text=Delete').click()
-    await expect(page.locator('text=Recent News')).toBeVisible()
+    await expect(page.locator('text=Recent News')).toBeHidden()
   })
 })
