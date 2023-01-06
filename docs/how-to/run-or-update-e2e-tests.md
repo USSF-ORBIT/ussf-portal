@@ -39,9 +39,11 @@ You will need everything running before running any of the tests. This repo has 
 
 ### Run E2E tests in github actions manually
 
-Once the services are up, it still may take a minute before you are ready to run tests because sometimes the keystone database takes a bit to start up.
+Once the services are up, it still may take a minute before you are ready to run tests because sometimes the keystone database takes a bit to start up. To account for this in our GitHub Actions, we use a tool called [wait-on](https://github.com/jeffbski/wait-on), which allows us to wait for a 200 OK from the servers before executing our tests. If you would like to replicate this behavior when running tests locally, you can run the following after running `yarn services:up`:
 
-After verifying that all services are running, you can run the playwright based tests
+`yarn wait-on http://localhost:3001/api/sysinfo http://localhost:3000/api/sysinfo && yarn e2e:test`
+
+Alternatively, you can manually verify that all services are running and then simply run the playwright based tests:
 
 `yarn e2e:test`
 
