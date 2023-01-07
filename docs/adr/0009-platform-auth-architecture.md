@@ -1,6 +1,6 @@
 # Authentication & authorization strategy across platforms
 
-- Status: Approved
+- Status: Accepted
 - Deciders: @suzubara @abbyoung @esacteksab @noahfirth
 - Date: 2022-01-10
 
