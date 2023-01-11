@@ -5,7 +5,6 @@ import {
 } from '@playwright-testing-library/test/fixture'
 
 import { LoginPage } from '../models/Login'
-import { resetDb } from '../cms/database/seed'
 import { seedDB } from '../portal-client/database/seedMongo'
 
 type CustomFixtures = {
@@ -34,7 +33,6 @@ const routes = [
 ]
 
 test.beforeAll(async () => {
-  await resetDb()
   await seedDB()
 })
 
