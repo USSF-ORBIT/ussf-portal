@@ -20,9 +20,11 @@
     "e2e:codegen": "yarn --cwd playwright/ playwright codegen localhost:3001"
   },
   "devDependencies": {
+    "@faker-js/faker": "7.6.0",
     "@playwright-testing-library/test": "4.3.1",
     "@playwright/test": "1.25.1",
     "@testing-library/cypress": "8.0.3",
+    "@types/node": "18.11.18",
     "@typescript-eslint/eslint-plugin": "5.35.1",
     "@typescript-eslint/parser": "5.35.1",
     "axe-core": "4.4.3",

@@ -1,7 +1,6 @@
 import { test as base } from '@playwright/test'
 
 import { LoginPage } from '../../models/Login'
-import { resetDb } from '../database/seed'
 import { seedDB } from '../../portal-client/database/seedMongo'
 
 const test = base.extend<{ loginPage: LoginPage }>({
@@ -13,7 +12,6 @@ const test = base.extend<{ loginPage: LoginPage }>({
 const { describe, expect } = test
 
 test.beforeAll(async () => {
-  await resetDb()
   await seedDB()
 })
 

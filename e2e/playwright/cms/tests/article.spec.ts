@@ -3,10 +3,8 @@ import {
   fixtures,
   TestingLibraryFixtures,
 } from '@playwright-testing-library/test/fixture'
-
+import { faker } from '@faker-js/faker'
 import { LoginPage } from '../../models/Login'
-import { resetDb, seedCMSUsers } from '../database/seed'
-import { seedDB } from '../../portal-client/database/seedMongo'
 
 type CustomFixtures = {
   loginPage: LoginPage
@@ -20,11 +18,12 @@ const test = base.extend<TestingLibraryFixtures & CustomFixtures>({
 })
 
 const { describe, expect } = test
+let title: string
+let slug: string
 
 test.beforeAll(async () => {
-  await resetDb()
-  await seedDB()
-  await seedCMSUsers()
+  title = faker.lorem.words()
+  slug = faker.helpers.slugify(title)
 })
 
 describe('Articles', () => {
@@ -52,8 +51,8 @@ describe('Articles', () => {
     await page.keyboard.type('O')
     await page.keyboard.press('Enter')
 
-    await page.locator('#slug').fill('test-article-for-playwright')
-    await page.locator('#title').fill('My Test Article')
+    await page.locator('#slug').fill(`${slug}`)
+    await page.locator('#title').fill(`${title}'`)
     await page.locator('#preview').fill('This is my test article.')
 
     await Promise.all([
@@ -66,7 +65,7 @@ describe('Articles', () => {
       .click()
     await expect(page).toHaveURL('http://localhost:3001/articles')
     await expect(
-      page.locator('tr:has-text("My Test Article") td:nth-child(3)')
+      page.locator(`tr:has-text("${title}") td:nth-child(3)`)
     ).toHaveText('Draft')
 
     await loginPage.logout()
@@ -92,12 +91,12 @@ describe('Articles', () => {
 
     await expect(page).toHaveURL('http://localhost:3001/articles')
     await expect(
-      page.locator('tr:has-text("My Test Article") td:nth-child(3)')
+      page.locator(`tr:has-text("${title}") td:nth-child(3)`)
     ).toHaveText('Draft')
 
     await Promise.all([
       page.waitForNavigation(),
-      page.locator('a:has-text("My Test Article")').click(),
+      page.locator(`a:has-text("${title}")`).click(),
     ])
 
     await page.locator('label:has-text("Published")').click()
@@ -112,7 +111,7 @@ describe('Articles', () => {
       .click()
     await expect(page).toHaveURL('http://localhost:3001/articles')
     await expect(
-      page.locator('tr:has-text("My Test Article") td:nth-child(3)')
+      page.locator(`tr:has-text("${title}") td:nth-child(3)`)
     ).toHaveText('Published')
     await loginPage.logout()
   })
