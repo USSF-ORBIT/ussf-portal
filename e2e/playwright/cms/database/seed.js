@@ -43,19 +43,3 @@ export const createOrUpdateUsers = async ([...users]) => {
     return err
   }
 }
-
-export const revokeUser = async (user) => {
-  const client = new Client({ connectionString: E2E_TEST_CONNECTION })
-
-  try {
-    await client.connect()
-
-    const query = createOrUpdateUserQuery(user)
-    await client.query(query)
-
-    await client.end()
-  } catch (err) {
-    console.log(err.stack)
-    return err
-  }
-}
