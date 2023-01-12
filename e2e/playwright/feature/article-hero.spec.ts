@@ -5,7 +5,7 @@ import {
   fixtures,
   TestingLibraryFixtures,
 } from '@playwright-testing-library/test/fixture'
-
+import { authorUser, managerUser } from '../cms/database/users'
 import { LoginPage } from '../models/Login'
 
 type CustomFixtures = {
@@ -34,7 +34,7 @@ describe('Article Hero Image', () => {
     test.slow()
 
     /* Log in as a CMS author */
-    await loginPage.login('cmsauthor', 'cmsauthorpass')
+    await loginPage.login(authorUser.username, authorUser.password)
 
     await expect(page.locator('text=WELCOME, ETHEL NEAL')).toBeVisible()
 
@@ -101,7 +101,7 @@ describe('Article Hero Image', () => {
     loginPage,
   }) => {
     /* Log in as a CMS manager */
-    await loginPage.login('cmsmanager', 'cmsmanagerpass')
+    await loginPage.login(managerUser.username, managerUser.password)
     await expect(page.locator('text=WELCOME, CHRISTINA HAVEN')).toBeVisible()
 
     await page.goto('http://localhost:3001')

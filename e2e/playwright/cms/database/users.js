@@ -1,3 +1,4 @@
+// These users need to exist in the test IDP users.php file
 export const defaultUser = {
   id: 'cl0jyfow10002fs97yimqq04c',
   userId: 'JOHN.HENKE.562270783@testusers.cce.af.mil',
@@ -42,7 +43,18 @@ export const managerUser = {
   password: 'cmsmanagerpass',
 }
 
-export const portalUser = {
+export const portalUser1 = {
+  id: 'clc053a1bc3f3f5738ae5329',
+  userId: 'BERNADETTE.CAMPBELL.5244446289@testusers.cce.af.mil',
+  name: 'BERNADETTE CAMPBELL',
+  isAdmin: false,
+  isEnabled: true,
+  role: 'User',
+  username: 'user1',
+  password: 'user1pass',
+}
+
+export const portalUser2 = {
   id: 'cl492pfxe0013moytyf93ls0f',
   userId: 'RONALD.BOYD.312969168@testusers.cce.af.mil',
   name: 'RONALD BOYD',

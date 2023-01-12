@@ -6,7 +6,7 @@ import {
 
 import { LoginPage } from '../../models/Login'
 import { seedDB } from '../database/seedMongo'
-
+import { portalUser1, portalUser2 } from '../../cms/database/users'
 type CustomFixtures = {
   loginPage: LoginPage
 }
@@ -34,7 +34,7 @@ describe('MySpace', () => {
     loginPage,
   }) => {
     // Login
-    await loginPage.login('user1', 'user1pass')
+    await loginPage.login(portalUser1.username, portalUser1.password)
     await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
 
     // Create a custom collection
@@ -52,7 +52,7 @@ describe('MySpace', () => {
     loginPage,
   }) => {
     // Login and check that user is in My Space
-    await loginPage.login('user1', 'user1pass')
+    await loginPage.login(portalUser1.username, portalUser1.password)
     await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
     await expect(page.locator('text=Example Collection')).toBeVisible()
 
@@ -75,7 +75,7 @@ describe('MySpace', () => {
     loginPage,
   }) => {
     // Login and check that user is in My Space
-    await loginPage.login('user1', 'user1pass')
+    await loginPage.login(portalUser1.username, portalUser1.password)
     await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
     await expect(page.locator('text=Example Collection')).toBeVisible()
 
@@ -97,7 +97,7 @@ describe('MySpace', () => {
     loginPage,
   }) => {
     // Login and check that user is in My Space
-    await loginPage.login('user1', 'user1pass')
+    await loginPage.login(portalUser1.username, portalUser1.password)
     await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
     await expect(page.locator('text=Example Collection')).toBeVisible()
 
@@ -156,7 +156,7 @@ describe('MySpace', () => {
 
   test('can edit an existing collection title', async ({ page, loginPage }) => {
     // Login and check that user is in My Space
-    await loginPage.login('user1', 'user1pass')
+    await loginPage.login(portalUser1.username, portalUser1.password)
     await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
     await expect(page.locator('text=Example Collection')).toBeVisible()
 
@@ -176,7 +176,7 @@ describe('MySpace', () => {
     loginPage,
   }) => {
     // Login and check that user is in My Space
-    await loginPage.login('user1', 'user1pass')
+    await loginPage.login(portalUser1.username, portalUser1.password)
     await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
     await expect(page.locator('text=Updated Collection Title')).toBeVisible()
 
@@ -198,7 +198,7 @@ describe('MySpace', () => {
 
   test('can delete an existing collection', async ({ page, loginPage }) => {
     // Login and check that user is in My Space
-    await loginPage.login('user1', 'user1pass')
+    await loginPage.login(portalUser1.username, portalUser1.password)
     await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
     await expect(page.locator('text=Updated Collection Title')).toBeVisible()
 
@@ -227,7 +227,7 @@ describe('MySpace', () => {
     page,
     loginPage,
   }) => {
-    await loginPage.login('user1', 'user1pass')
+    await loginPage.login(portalUser1.username, portalUser1.password)
     await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
 
     // Add News Section

@@ -6,6 +6,7 @@ import {
 
 import { LoginPage } from '../models/Login'
 import { seedDB } from '../portal-client/database/seedMongo'
+import { portalUser1 } from '../cms/database/users'
 
 type CustomFixtures = {
   loginPage: LoginPage
@@ -63,7 +64,7 @@ describe('Portal authentication', () => {
       await page.goto(loginPage.loginUrl)
       await expect(loginPage.loginButton).toBeVisible()
 
-      await loginPage.login('user1', 'user1pass')
+      await loginPage.login(portalUser1.username, portalUser1.password)
       await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
 
       await Promise.all([
@@ -86,7 +87,7 @@ describe('Portal authentication', () => {
 
   describe('access while logged in', () => {
     test('loads the user on each route', async ({ page, loginPage }) => {
-      await loginPage.login('user1', 'user1pass')
+      await loginPage.login(portalUser1.username, portalUser1.password)
       await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
 
       // Check that logged in user can visit each url

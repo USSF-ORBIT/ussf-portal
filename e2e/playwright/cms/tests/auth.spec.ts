@@ -5,7 +5,12 @@ import {
 } from '@playwright-testing-library/test/fixture'
 
 import { LoginPage } from '../../models/Login'
-import { adminUser, defaultUser, portalUser } from '../database/users'
+import {
+  adminUser,
+  defaultUser,
+  portalUser1,
+  portalUser2,
+} from '../database/users'
 import { createOrUpdateUsers } from '../database/seed-data'
 type CustomFixtures = {
   loginPage: LoginPage
@@ -36,7 +41,7 @@ describe('Authentication', () => {
   })
 
   test('can log in as a CMS user', async ({ page, loginPage }) => {
-    await loginPage.login('cmsuser', 'cmsuserpass')
+    await loginPage.login(defaultUser.username, defaultUser.password)
 
     await expect(page.locator('text=WELCOME, JOHN HENKE')).toBeVisible()
 
@@ -55,7 +60,7 @@ describe('Authentication', () => {
   })
 
   test('can log in as a CMS admin', async ({ page, loginPage }) => {
-    await loginPage.login('cmsadmin', 'cmsadminpass')
+    await loginPage.login(adminUser.username, adminUser.password)
 
     await expect(page.locator('text=WELCOME, FLOYD KING')).toBeVisible()
 
@@ -73,7 +78,7 @@ describe('Authentication', () => {
     page,
     loginPage,
   }) => {
-    await loginPage.login('user1', 'user1pass')
+    await loginPage.login(portalUser1.username, portalUser1.password)
 
     await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
 
@@ -93,10 +98,10 @@ describe('Authentication', () => {
     // Log in as RONALD BOYD and verify No Access.
     // The database state will sync with SAML permissions, and `isEnabled = false`.
 
-    await createOrUpdateUsers([portalUser])
+    await createOrUpdateUsers([portalUser2])
 
     // Verify isEnabled state as admin user
-    await loginPage.login('cmsadmin', 'cmsadminpass')
+    await loginPage.login(adminUser.username, adminUser.password)
     await expect(page.locator('text=WELCOME, FLOYD KING')).toBeVisible()
     await page.goto('http://localhost:3001')
     await expect(page.locator('main div:has(h3:has-text("Users"))')).toHaveText(
@@ -116,7 +121,7 @@ describe('Authentication', () => {
 
     // Login as RONALD BOYD
     // Expected: No Access
-    await loginPage.login(`${portalUser.username}`, `${portalUser.password}`)
+    await loginPage.login(portalUser2.username, portalUser2.password)
     await expect(page.locator('text=WELCOME, RONNY')).toBeVisible()
     await page.goto('http://localhost:3001')
     expect(page.url()).toContain('/no-access')
@@ -125,7 +130,7 @@ describe('Authentication', () => {
     ).toBeVisible()
 
     // Verify updated state as admin user
-    await loginPage.login('cmsadmin', 'cmsadminpass')
+    await loginPage.login(adminUser.username, adminUser.password)
     await expect(page.locator('text=WELCOME, FLOYD KING')).toBeVisible()
     await page.goto('http://localhost:3001')
     await expect(page.locator('main div:has(h3:has-text("Users"))')).toHaveText(
@@ -156,7 +161,7 @@ describe('Authentication', () => {
     await createOrUpdateUsers([{ ...defaultUser, isAdmin: true }])
 
     // Verify previous state as admin user
-    await loginPage.login(`${adminUser.username}`, `${adminUser.password}`)
+    await loginPage.login(adminUser.username, adminUser.password)
     await expect(page.locator('text=WELCOME, FLOYD KING')).toBeVisible()
     await page.goto('http://localhost:3001')
     await expect(page.locator('main div:has(h3:has-text("Users"))')).toHaveText(
@@ -175,7 +180,7 @@ describe('Authentication', () => {
     await loginPage.logout()
 
     // Login as JOHN HENKE
-    await loginPage.login(`${defaultUser.username}`, `${defaultUser.password}`)
+    await loginPage.login(defaultUser.username, defaultUser.password)
     await expect(page.locator('text=WELCOME, JOHN HENKE')).toBeVisible()
     await page.goto('http://localhost:3001')
     await expect(
@@ -218,7 +223,7 @@ describe('Authentication', () => {
 
     await createOrUpdateUsers([{ ...adminUser, isAdmin: false }])
 
-    await loginPage.login(`${adminUser.username}`, `${adminUser.password}`)
+    await loginPage.login(adminUser.username, adminUser.password)
     await expect(page.locator('text=WELCOME, FLOYD KING')).toBeVisible()
     await page.goto('http://localhost:3001')
     await expect(page.locator('main div:has(h3:has-text("Users"))')).toHaveText(
@@ -238,7 +243,7 @@ describe('Authentication', () => {
     // The database state will sync with SAML permissions, and `isEnabled = true`.
     await createOrUpdateUsers([{ ...defaultUser, isEnabled: false }])
 
-    await loginPage.login(`${defaultUser.username}`, `${defaultUser.password}`)
+    await loginPage.login(defaultUser.username, defaultUser.password)
     await expect(page.locator('text=WELCOME, JOHN HENKE')).toBeVisible()
     await page.goto('http://localhost:3001')
     await expect(page.locator('main div:has(h3:has-text("Users"))')).toHaveText(

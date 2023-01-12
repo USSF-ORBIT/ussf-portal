@@ -5,7 +5,7 @@ import {
 } from '@playwright-testing-library/test/fixture'
 import { faker } from '@faker-js/faker'
 import { LoginPage } from '../../models/Login'
-
+import { authorUser, managerUser } from '../database/users'
 type CustomFixtures = {
   loginPage: LoginPage
 }
@@ -26,10 +26,10 @@ test.beforeAll(async () => {
   slug = faker.helpers.slugify(title)
 })
 
-describe('Articles', () => {
+describe.only('Articles', () => {
   test('can be created by an author', async ({ page, loginPage }) => {
     test.slow()
-    await loginPage.login('cmsauthor', 'cmsauthorpass')
+    await loginPage.login(authorUser.username, authorUser.password)
 
     await expect(page.locator('text=WELCOME, ETHEL NEAL')).toBeVisible()
 
@@ -73,7 +73,7 @@ describe('Articles', () => {
 
   test('can be published by a manager', async ({ page, loginPage }) => {
     test.slow()
-    await loginPage.login('cmsmanager', 'cmsmanagerpass')
+    await loginPage.login(managerUser.username, managerUser.password)
 
     await expect(page.locator('text=WELCOME, CHRISTINA HAVEN')).toBeVisible()
 

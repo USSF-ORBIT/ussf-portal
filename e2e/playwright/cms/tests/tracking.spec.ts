@@ -1,5 +1,6 @@
 import { test as base } from '@playwright/test'
 import { LoginPage } from '../../models/Login'
+import { adminUser, defaultUser } from '../database/users'
 
 const test = base.extend<{ loginPage: LoginPage }>({
   loginPage: async ({ page, context }, use) => {
@@ -14,7 +15,7 @@ describe('Event logging', () => {
     page,
     loginPage,
   }) => {
-    await loginPage.login('cmsuser', 'cmsuserpass')
+    await loginPage.login(defaultUser.username, defaultUser.password)
 
     await expect(page.locator('text=WELCOME, JOHN HENKE')).toBeVisible()
     await page.goto('/')
@@ -44,7 +45,7 @@ describe('Event logging', () => {
 
     await loginPage.logout()
 
-    await loginPage.login('cmsadmin', 'cmsadminpass')
+    await loginPage.login(adminUser.username, adminUser.password)
     await expect(page.locator('text=WELCOME, FLOYD KING')).toBeVisible()
     await page.goto('http://localhost:3001')
     await Promise.all([

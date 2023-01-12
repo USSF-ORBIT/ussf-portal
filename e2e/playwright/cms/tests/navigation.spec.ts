@@ -2,7 +2,7 @@ import { test as base } from '@playwright/test'
 
 import { LoginPage } from '../../models/Login'
 import { seedDB } from '../../portal-client/database/seedMongo'
-
+import { defaultUser } from '../database/users'
 const test = base.extend<{ loginPage: LoginPage }>({
   loginPage: async ({ page, context }, use) => {
     await use(new LoginPage(page, context))
@@ -20,7 +20,7 @@ describe('Navigation', () => {
     page,
     loginPage,
   }) => {
-    await loginPage.login('cmsuser', 'cmsuserpass')
+    await loginPage.login(defaultUser.username, defaultUser.password)
     await expect(page.locator('text=WELCOME, JOHN HENKE')).toBeVisible()
     await page.goto('/')
 
