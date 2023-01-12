@@ -94,7 +94,7 @@ describe('Authentication', () => {
   }) => {
     // Test Case: Make sure the SAML permissions take precedent.
     // Create portalUser RONALD BOYD in CMS database with `isEnabled = true`.
-    // Verify status as admin user.
+    // Log in as adminUser and verify RONALD BOYD `isEnabled = true`.
     // Log in as RONALD BOYD and verify No Access.
     // The database state will sync with SAML permissions, and `isEnabled = false`.
 
@@ -153,9 +153,9 @@ describe('Authentication', () => {
   }) => {
     // Test Case: Make sure the SAML permissions take precedent.
     // Update defaultUser JOHN HENKE in CMS database with `isAdmin = true`.
-    // Verify status as admin user.
-    // Log in as JOHN HENKE and verify no admin access.
-    // The database state will sync with SAML permissions, and `isAdmin = true`.
+    // Log in as adminUser FLOYD KING and verify `isAdmin = true` status.
+    // Log in as defaultUser JOHN HENKE and verify no admin access.
+    // The database state will sync with SAML permissions, and  defaultUser `isAdmin = false`.
 
     // Erroneously set defaultUser to be an admin
     await createOrUpdateUsers([{ ...defaultUser, isAdmin: true }])
@@ -217,9 +217,8 @@ describe('Authentication', () => {
   }) => {
     // Test Case: Make sure the SAML permissions take precedent.
     // Update adminUser FLOYD KING in CMS database with `isAdmin = false`.
-    // Verify status as admin user.
-    // Log in as FLOYD KING and verify admin access.
-    // The database state will sync with SAML permissions, and `isAdmin = true`.
+    // Log in as adminUser FLOYD KING
+    // The database state will sync with SAML permissions and set `isAdmin = true`.
 
     await createOrUpdateUsers([{ ...adminUser, isAdmin: false }])
 
@@ -238,8 +237,8 @@ describe('Authentication', () => {
   }) => {
     // Test Case: Make sure the SAML permissions take precedent.
     // Update defaultUser JOHN HENKE in CMS database with `isEnabled = false`.
-    // Verify status as admin user.
-    // Log in as JOHN HENKE and verify access.
+    // Log in as adminUser and verify JOHN HENKE `isEnabled = false` status.
+    // Log in as defaultUser JOHN HENKE and verify access.
     // The database state will sync with SAML permissions, and `isEnabled = true`.
     await createOrUpdateUsers([{ ...defaultUser, isEnabled: false }])
 
