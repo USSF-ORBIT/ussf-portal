@@ -6,7 +6,7 @@ import {
 
 import { LoginPage } from '../../models/Login'
 import { seedDB } from '../database/seedMongo'
-import { portalUser1, portalUser2 } from '../../cms/database/users'
+import { portalUser1 } from '../../cms/database/users'
 type CustomFixtures = {
   loginPage: LoginPage
 }
