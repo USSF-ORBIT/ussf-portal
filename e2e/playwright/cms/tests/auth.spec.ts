@@ -11,7 +11,7 @@ import {
   portalUser1,
   portalUser2,
 } from '../database/users'
-import { createOrUpdateUsers } from '../database/seed-data'
+import { createOrUpdateUsers } from '../database/seed'
 type CustomFixtures = {
   loginPage: LoginPage
 }

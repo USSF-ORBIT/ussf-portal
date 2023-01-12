@@ -26,7 +26,7 @@ test.beforeAll(async () => {
   slug = faker.helpers.slugify(title)
 })
 
-describe.only('Articles', () => {
+describe('Articles', () => {
   test('can be created by an author', async ({ page, loginPage }) => {
     test.slow()
     await loginPage.login(authorUser.username, authorUser.password)
