@@ -7,13 +7,15 @@ const DB = 'mongo-e2e'
 
 async function dropCollection(mongoClient, collectionName) {
   const collection = mongoClient.db(DB).collection(collectionName)
-
-  await collection.drop().catch((e) => {
-    console.log('error when dropping', e)
-    if (e.code !== 26) {
-      throw e
-    }
-  })
+  // Check for existing collection before trying to drop it
+  if (collection) {
+    await collection.drop().catch((e) => {
+      console.log('error when dropping', e)
+      if (e.code !== 26) {
+        throw e
+      }
+    })
+  }
 }
 
 async function seedCollection(mongoClient, collectionName, jsonData) {

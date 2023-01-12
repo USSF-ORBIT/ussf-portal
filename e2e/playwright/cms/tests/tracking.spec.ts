@@ -55,10 +55,21 @@ describe('Event logging', () => {
     // Sort events in descending order and choose the first
     // This will pull up the most recent event
     await page.locator('button:has-text("No field")').click()
-    await page.locator('#react-select-3-option-4').click()
+
+    await page.locator('input[role="combobox"]').fill('updated')
+    await page.locator('input[role="combobox"]').press('Enter')
+    await expect(page).toHaveURL(
+      'http://localhost:3001/events?sortBy=updatedAt'
+    )
+    // Must re-click 'Updated At' dropdown option to get to descending order
     await page.locator('button:has-text("Updated At ascending")').click()
-    await page.locator('#react-select-4-option-4').click()
-    await page.locator('.css-sbmfht > .css-bztyua').first().click()
+    await page.locator('input[role="combobox"]').fill('updated')
+    await page.locator('input[role="combobox"]').press('Enter')
+
+    await Promise.all([
+      page.waitForNavigation(),
+      page.locator('a:left-of(:text("update User"))>>nth=0').click(),
+    ])
 
     await expect(page.locator('label:has-text("Input Data") + div'))
       .toHaveText(`{
