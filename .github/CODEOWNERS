@@ -1,10 +1,10 @@
 # Default owners for e2e tests
 
-/e2e/ @abbyoung @esacteksab @gidjin @minhlai
+/e2e/ @USSF-ORBIT/code-owners
 
 # Github settings
 
-.github/settings.yml @abbyoung @esacteksab @gidjin @minhlai
+.github/settings.yml @USSF-ORBIT/code-owners
 
 # CODEOWNERS prevent renovate automerge since it will automatically ask for review
 
