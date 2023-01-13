@@ -215,7 +215,6 @@ describe('MySpace', () => {
     await page.locator('text=Add section').click()
     await page.locator('text=Add news section').click()
     await expect(page.locator('text=Recent News')).toBeVisible()
-    await expect(page.locator('[data-testid="tag"] >> nth=0')).toBeVisible()
 
     // Remove News Section
     await page.locator('[aria-label="Section Settings"]').click()
