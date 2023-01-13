@@ -22,6 +22,7 @@
     "@playwright/test": "1.25.1",
     "@typescript-eslint/eslint-plugin": "5.35.1",
     "@typescript-eslint/parser": "5.35.1",
+    "@types/node": "18.11.18",
     "axe-core": "4.4.3",
     "axe-playwright": "1.1.11",
     "eslint": "8.23.0",
