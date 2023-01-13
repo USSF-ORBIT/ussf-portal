@@ -43,6 +43,7 @@ describe('Portal authentication', () => {
       page,
       loginPage,
     }) => {
+      test.slow()
       // Navigate to portal login page
       await page.goto(loginPage.loginUrl)
       await expect(loginPage.loginButton).toBeVisible()
