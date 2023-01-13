@@ -11,7 +11,8 @@ import { seedDB } from './portal-client/database/seedMongo'
 import { createOrUpdateUsers } from './cms/database/seed'
 async function globalSetup(config: FullConfig) {
   await createOrUpdateUsers([defaultUser, adminUser, authorUser, managerUser])
-  await seedDB()
+  // false tells the function to *not* reset the db, since nothing exists yet
+  await seedDB(false)
 }
 
 export default globalSetup
