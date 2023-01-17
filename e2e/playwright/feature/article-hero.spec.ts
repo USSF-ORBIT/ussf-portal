@@ -1,11 +1,13 @@
 import { test as base } from '@playwright/test'
+import path from 'path'
+import { faker } from '@faker-js/faker'
 import {
   fixtures,
   TestingLibraryFixtures,
 } from '@playwright-testing-library/test/fixture'
-import { faker } from '@faker-js/faker'
-import { LoginPage } from '../../models/Login'
-import { authorUser, managerUser } from '../database/users'
+import { authorUser, managerUser } from '../cms/database/users'
+import { LoginPage } from '../models/Login'
+
 type CustomFixtures = {
   loginPage: LoginPage
 }
@@ -19,16 +21,19 @@ const test = base.extend<TestingLibraryFixtures & CustomFixtures>({
 
 const { describe, expect } = test
 let title: string
-let slug: string
 
 test.beforeAll(async () => {
   title = faker.lorem.words()
-  slug = faker.helpers.slugify(title)
 })
 
-describe('Articles', () => {
-  test('can be created by an author', async ({ page, loginPage }) => {
+describe('Article Hero Image', () => {
+  test('hero image can be uploaded and saved by an author', async ({
+    page,
+    loginPage,
+  }) => {
     test.slow()
+
+    /* Log in as a CMS author */
     await loginPage.login(authorUser.username, authorUser.password)
 
     await expect(page.locator('text=WELCOME, ETHEL NEAL')).toBeVisible()
@@ -40,41 +45,63 @@ describe('Articles', () => {
       )
     ).toBeVisible()
 
+    /* Navigate to the Articles page */
     await Promise.all([
       page.waitForNavigation(),
       page.locator('h3:has-text("Articles")').click(),
     ])
 
-    await page.locator('text=Create Article').click()
+    /** Create a new article *****
 
+      Category: ORBITBlog
+      Title: <Generated using Faker>
+      Hero Image: placeholder.png 
+      ****************************/
+
+    await page.locator('text=Create Article').click()
     await page.locator('label[for="category"]').click()
     await page.keyboard.type('O')
     await page.keyboard.press('Enter')
+    await page.locator('#title').fill(title)
 
-    await page.locator('#slug').fill(`${slug}`)
-    await page.locator('#title').fill(`${title}'`)
-    await page.locator('#preview').fill('This is my test article.')
+    /* Use fileChooser to upload a hero image */
+    const [fileChooser] = await Promise.all([
+      page.waitForEvent('filechooser'),
+      page.locator('text=Upload').click(),
+    ])
+    await fileChooser.setFiles(path.resolve(__dirname, 'placeholder.png'))
 
+    /* Create article */
     await Promise.all([
       page.waitForNavigation(),
       page.locator('form span:has-text("Create Article")').click(),
     ])
 
+    /* Confirm image has successfully uploaded and saved */
+    await expect(
+      page.locator('img[alt="Image uploaded to hero field"]')
+    ).toBeVisible()
+
+    /* Navigate back to Articles page and confirm article was created as a draft */
+
     await page
       .locator('[aria-label="Side Navigation"] >> text=Articles')
       .click()
     await expect(page).toHaveURL('http://localhost:3001/articles')
+
     await expect(
       page.locator(`tr:has-text("${title}") td:nth-child(3)`)
     ).toHaveText('Draft')
 
+    /* Log out as CMS author */
     await loginPage.logout()
   })
-
-  test('can be published by a manager', async ({ page, loginPage }) => {
-    test.slow()
+  test('hero image can be viewed on published article', async ({
+    page,
+    loginPage,
+  }) => {
+    /* Log in as a CMS manager */
     await loginPage.login(managerUser.username, managerUser.password)
-
     await expect(page.locator('text=WELCOME, CHRISTINA HAVEN')).toBeVisible()
 
     await page.goto('http://localhost:3001')
@@ -84,35 +111,35 @@ describe('Articles', () => {
       )
     ).toBeVisible()
 
+    /* Navigate to the Articles page */
     await Promise.all([
       page.waitForNavigation(),
       page.locator('h3:has-text("Articles")').click(),
     ])
 
-    await expect(page).toHaveURL('http://localhost:3001/articles')
-    await expect(
-      page.locator(`tr:has-text("${title}") td:nth-child(3)`)
-    ).toHaveText('Draft')
+    /* Publish article */
+    await page.locator(`a:has-text("${title}")`).click()
 
-    await Promise.all([
-      page.waitForNavigation(),
-      page.locator(`a:has-text("${title}")`).click(),
-    ])
-
-    await page.locator('label:has-text("Published")').click()
+    await page.locator('label:has-text("Published")').check()
 
     await page.locator('button:has-text("Save changes")').click()
-    await expect(
-      page.locator('label:has-text("Published") input')
-    ).toBeChecked()
 
-    await page
-      .locator('[aria-label="Side Navigation"] >> text=Articles')
-      .click()
-    await expect(page).toHaveURL('http://localhost:3001/articles')
+    /* View article on the portal and confirm hero is present */
+    await page.goto('http://localhost:3000/about-us/orbit-blog/')
+    await expect(page.locator(`h3:has-text("${title}")`)).toBeVisible()
+
+    const [article] = await Promise.all([
+      page.waitForEvent('popup'),
+      page.locator(`text="${title}"`).click(),
+    ])
+
     await expect(
-      page.locator(`tr:has-text("${title}") td:nth-child(3)`)
-    ).toHaveText('Published')
+      article.locator('img[alt="article hero graphic"]')
+    ).toBeVisible()
+    await article.close()
+
+    /* Return to CMS and log out */
+    await page.goto('http://localhost:3001')
     await loginPage.logout()
   })
 })

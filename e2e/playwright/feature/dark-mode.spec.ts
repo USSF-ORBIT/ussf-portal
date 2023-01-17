@@ -5,8 +5,7 @@ import {
 } from '@playwright-testing-library/test/fixture'
 
 import { LoginPage } from '../models/Login'
-import { resetDb } from '../cms/database/seed'
-import { seedDB } from '../portal-client/database/seedMongo'
+import { portalUser1 } from '../cms/database/users'
 
 type CustomFixtures = {
   loginPage: LoginPage
@@ -21,14 +20,9 @@ const test = base.extend<TestingLibraryFixtures & CustomFixtures>({
 
 const { describe, expect } = test
 
-test.beforeAll(async () => {
-  await resetDb()
-  await seedDB()
-})
-
 describe('Toggle light/dark mode', () => {
   test('can toggle light/dark mode', async ({ page, loginPage }) => {
-    await loginPage.login('user1', 'user1pass')
+    await loginPage.login(portalUser1.username, portalUser1.password)
     await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
     await expect(page.locator('text=DARK MODE')).toBeVisible()
 

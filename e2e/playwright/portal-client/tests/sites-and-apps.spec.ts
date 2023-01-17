@@ -6,6 +6,7 @@ import {
 
 import { LoginPage } from '../../models/Login'
 import { seedDB } from '../database/seedMongo'
+import { portalUser1 } from '../../cms/database/users'
 
 type CustomFixtures = {
   loginPage: LoginPage
@@ -30,7 +31,7 @@ describe('Sites & Applications', () => {
     loginPage,
   }) => {
     // Login and check that user is in My Space
-    await loginPage.login('user1', 'user1pass')
+    await loginPage.login(portalUser1.username, portalUser1.password)
     await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
 
     // Navigate to /sites-and-applications using the side nav
@@ -67,7 +68,7 @@ describe('Sites & Applications', () => {
     loginPage,
   }) => {
     // Login and check that user is in My Space
-    await loginPage.login('user1', 'user1pass')
+    await loginPage.login(portalUser1.username, portalUser1.password)
     await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
     await expect(page.locator('text=Example Collection')).toBeVisible()
 
@@ -104,7 +105,7 @@ describe('Sites & Applications', () => {
     loginPage,
   }) => {
     // Login and check that user is in My Space
-    await loginPage.login('user1', 'user1pass')
+    await loginPage.login(portalUser1.username, portalUser1.password)
     await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
     await expect(page.locator('text=Example Collection')).toBeVisible()
 
@@ -136,7 +137,7 @@ describe('Sites & Applications', () => {
     loginPage,
   }) => {
     // Login and check that user is in My Space
-    await loginPage.login('user1', 'user1pass')
+    await loginPage.login(portalUser1.username, portalUser1.password)
     await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
     await expect(page.locator('text=Example Collection')).toBeVisible()
 
