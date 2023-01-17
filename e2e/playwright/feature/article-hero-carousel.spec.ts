@@ -117,7 +117,9 @@ test('hero image is displayed by on internal news carousel', async ({
   /* View article on the portal and confirm hero is present */
   await page.goto('http://localhost:3000/news-announcements')
 
-  const carouselCard = page.locator(`div:has-text("${title}") > .grid-row >> nth=0`)
+  const carouselCard = page.locator(
+    `div:has-text("${title}") > .grid-row >> nth=0`
+  )
 
   await expect(carouselCard).toBeVisible()
 
@@ -132,10 +134,14 @@ test('hero image is displayed by on internal news carousel', async ({
     carouselCard.locator('text=View Article').click(),
   ])
 
-  await expect(article.locator(`article >> h2:has-text("${title}")`)).toBeVisible()
+  await expect(
+    article.locator(`article >> h2:has-text("${title}")`)
+  ).toBeVisible()
 
   /* Verify that the hero image is displayed when viewing the article */
-  await expect(article.locator('article >> img[alt="article hero graphic"]')).toBeVisible()
+  await expect(
+    article.locator('article >> img[alt="article hero graphic"]')
+  ).toBeVisible()
 
   /* Return to CMS and log out */
   await page.goto('http://localhost:3001')
