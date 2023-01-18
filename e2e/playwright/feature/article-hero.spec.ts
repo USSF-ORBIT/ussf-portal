@@ -7,15 +7,20 @@ import {
 } from '@playwright-testing-library/test/fixture'
 import { authorUser, managerUser } from '../cms/database/users'
 import { LoginPage } from '../models/Login'
+import { KeystoneListPage } from '../models/KeystoneList'
 
 type CustomFixtures = {
   loginPage: LoginPage
+  keystoneListPage: KeystoneListPage
 }
 
 const test = base.extend<TestingLibraryFixtures & CustomFixtures>({
   ...fixtures,
   loginPage: async ({ page, context }, use) => {
     await use(new LoginPage(page, context))
+  },
+  keystoneListPage: async ({ page, context }, use) => {
+    await use(new KeystoneListPage(page, context))
   },
 })
 
@@ -30,6 +35,7 @@ describe('Article Hero Image', () => {
   test('hero image can be uploaded and saved by an author', async ({
     page,
     loginPage,
+    keystoneListPage,
   }) => {
     test.slow()
 
@@ -84,10 +90,7 @@ describe('Article Hero Image', () => {
 
     /* Navigate back to Articles page and confirm article was created as a draft */
 
-    await page
-      .locator('[aria-label="Side Navigation"] >> text=Articles')
-      .click()
-    await expect(page).toHaveURL('http://localhost:3001/articles')
+    await keystoneListPage.gotoAndSortBy('articles')
 
     await expect(
       page.locator(`tr:has-text("${title}") td:nth-child(3)`)
@@ -99,6 +102,7 @@ describe('Article Hero Image', () => {
   test('hero image can be viewed on published article', async ({
     page,
     loginPage,
+    keystoneListPage,
   }) => {
     /* Log in as a CMS manager */
     await loginPage.login(managerUser.username, managerUser.password)
@@ -112,10 +116,7 @@ describe('Article Hero Image', () => {
     ).toBeVisible()
 
     /* Navigate to the Articles page */
-    await Promise.all([
-      page.waitForNavigation(),
-      page.locator('h3:has-text("Articles")').click(),
-    ])
+    await keystoneListPage.gotoAndSortBy('articles')
 
     /* Publish article */
     await page.locator(`a:has-text("${title}")`).click()

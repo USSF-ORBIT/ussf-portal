@@ -5,15 +5,21 @@ import {
 } from '@playwright-testing-library/test/fixture'
 import { faker } from '@faker-js/faker'
 import { LoginPage } from '../../models/Login'
+import { KeystoneListPage } from '../../models/KeystoneList'
 import { authorUser, managerUser } from '../database/users'
+
 type CustomFixtures = {
   loginPage: LoginPage
+  keystoneListPage: KeystoneListPage
 }
 
 const test = base.extend<TestingLibraryFixtures & CustomFixtures>({
   ...fixtures,
   loginPage: async ({ page, context }, use) => {
     await use(new LoginPage(page, context))
+  },
+  keystoneListPage: async ({ page, context }, use) => {
+    await use(new KeystoneListPage(page, context))
   },
 })
 
@@ -27,7 +33,11 @@ test.beforeAll(async () => {
 })
 
 describe('Articles', () => {
-  test('can be created by an author', async ({ page, loginPage }) => {
+  test('can be created by an author', async ({
+    page,
+    loginPage,
+    keystoneListPage,
+  }) => {
     test.slow()
     await loginPage.login(authorUser.username, authorUser.password)
 
@@ -60,10 +70,7 @@ describe('Articles', () => {
       page.locator('form span:has-text("Create Article")').click(),
     ])
 
-    await page
-      .locator('[aria-label="Side Navigation"] >> text=Articles')
-      .click()
-    await expect(page).toHaveURL('http://localhost:3001/articles')
+    await keystoneListPage.gotoAndSortBy('articles')
     await expect(
       page.locator(`tr:has-text("${title}") td:nth-child(3)`)
     ).toHaveText('Draft')
@@ -71,28 +78,17 @@ describe('Articles', () => {
     await loginPage.logout()
   })
 
-  test('can be published by a manager', async ({ page, loginPage }) => {
+  test('can be published by a manager', async ({
+    page,
+    loginPage,
+    keystoneListPage,
+  }) => {
     test.slow()
     await loginPage.login(managerUser.username, managerUser.password)
 
     await expect(page.locator('text=WELCOME, CHRISTINA HAVEN')).toBeVisible()
 
-    await page.goto('http://localhost:3001')
-    await expect(
-      page.locator(
-        'text=Signed in as CHRISTINA.HAVEN.561698119@testusers.cce.af.mil'
-      )
-    ).toBeVisible()
-
-    await Promise.all([
-      page.waitForNavigation(),
-      page.locator('h3:has-text("Articles")').click(),
-    ])
-
-    await expect(page).toHaveURL('http://localhost:3001/articles')
-    await expect(
-      page.locator(`tr:has-text("${title}") td:nth-child(3)`)
-    ).toHaveText('Draft')
+    await keystoneListPage.gotoAndSortBy('articles')
 
     await Promise.all([
       page.waitForNavigation(),
@@ -106,10 +102,7 @@ describe('Articles', () => {
       page.locator('label:has-text("Published") input')
     ).toBeChecked()
 
-    await page
-      .locator('[aria-label="Side Navigation"] >> text=Articles')
-      .click()
-    await expect(page).toHaveURL('http://localhost:3001/articles')
+    await keystoneListPage.gotoAndSortBy('articles')
     await expect(
       page.locator(`tr:has-text("${title}") td:nth-child(3)`)
     ).toHaveText('Published')

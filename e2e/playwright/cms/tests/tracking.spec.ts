@@ -1,12 +1,19 @@
 import { test as base } from '@playwright/test'
+import { KeystoneListPage } from '../../models/KeystoneList'
 import { LoginPage } from '../../models/Login'
 import { adminUser, defaultUser } from '../database/users'
 
-const test = base.extend<{ loginPage: LoginPage }>({
-  loginPage: async ({ page, context }, use) => {
-    await use(new LoginPage(page, context))
-  },
-})
+const test = base
+  .extend<{ loginPage: LoginPage }>({
+    loginPage: async ({ page, context }, use) => {
+      await use(new LoginPage(page, context))
+    },
+  })
+  .extend<{ keystoneListPage: KeystoneListPage }>({
+    keystoneListPage: async ({ page, context }, use) => {
+      await use(new KeystoneListPage(page, context))
+    },
+  })
 
 const { describe, expect } = test
 
@@ -14,6 +21,7 @@ describe('Event logging', () => {
   test('making changes to the data automatically creates events', async ({
     page,
     loginPage,
+    keystoneListPage,
   }) => {
     await loginPage.login(defaultUser.username, defaultUser.password)
 
@@ -55,17 +63,7 @@ describe('Event logging', () => {
 
     // Sort events in descending order and choose the first
     // This will pull up the most recent event
-    await page.locator('button:has-text("No field")').click()
-
-    await page.locator('input[role="combobox"]').fill('updated')
-    await page.locator('input[role="combobox"]').press('Enter')
-    await expect(page).toHaveURL(
-      'http://localhost:3001/events?sortBy=updatedAt'
-    )
-    // Must re-click 'Updated At' dropdown option to get to descending order
-    await page.locator('button:has-text("Updated At ascending")').click()
-    await page.locator('input[role="combobox"]').fill('updated')
-    await page.locator('input[role="combobox"]').press('Enter')
+    await keystoneListPage.gotoAndSortBy('events')
 
     await Promise.all([
       page.waitForNavigation(),
