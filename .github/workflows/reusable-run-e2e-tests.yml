@@ -86,12 +86,8 @@ jobs:
         run: yarn install --frozen-lockfile
         working-directory: ./e2e-tests/e2e
 
-      - name: Wait for CMS sysinfo to return 200
-        run: yarn wait-on --timeout 60000 http://localhost:3001/api/sysinfo
-        working-directory: ./e2e-tests/e2e
-
-      - name: Wait for Client sysinfo to return 200
-        run: yarn wait-on --timeout 60000 http://localhost:3000/api/sysinfo
+      - name: Wait for CMS & Client sysinfo to return 200
+        run: yarn wait-on --timeout 60000 http://localhost:3001/api/sysinfo http://localhost:3000/api/sysinfo
         working-directory: ./e2e-tests/e2e
 
       - name: Install Playwright

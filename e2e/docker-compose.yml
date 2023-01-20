@@ -57,13 +57,14 @@ services:
       S3_ACCESS_KEY_ID: 'thiscanbeanything'
       S3_SECRET_ACCESS_KEY: 'thiscanbeanything'
       ASSET_BASE_URL: http://localhost:3001
-      USE_S3_STORAGE: 'false'
     stdin_open: true
     depends_on:
       keystone-db:
         condition: service_healthy
       redis:
         condition: service_started
+    volumes:
+      - cms_uploads:/app/public/images
 
   # Required by Portal client
   mongo:
@@ -112,3 +113,5 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+volumes:
+  cms_uploads:

@@ -21,7 +21,7 @@ async function seedCollection(mongoClient, collectionName, jsonData) {
   await collection.insertOne(jsonData)
 }
 
-module.exports.seedDB = async () => {
+module.exports.seedDB = async (reset = true) => {
   // Connection URL
   const uri = `mongodb://localhost:27017`
 
@@ -33,7 +33,11 @@ module.exports.seedDB = async () => {
   try {
     await client.connect()
 
-    await dropCollection(client, 'users')
+    if (reset) {
+      await dropCollection(client, 'users')
+      console.log(`${DB} database reset!`)
+    }
+
     await seedCollection(client, 'users', testUser1)
     await seedCollection(client, 'users', testUser2)
 

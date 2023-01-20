@@ -1,6 +1,6 @@
 # Use Docker for running the application
 
-- Status: accepted
+- Status: Accepted
 - Deciders: @suzubara @abbyoung @esacteksab @noahfirth
 - Date: 2021-08-04
 

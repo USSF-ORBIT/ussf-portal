@@ -3,13 +3,14 @@ import {
   fixtures,
   TestingLibraryFixtures,
 } from '@playwright-testing-library/test/fixture'
-
+import { faker } from '@faker-js/faker'
 import { LoginPage } from '../../models/Login'
-import { resetDb, seedCMSUsers } from '../database/seed'
-import { seedDB } from '../../portal-client/database/seedMongo'
+import { KeystoneListPage } from '../../models/KeystoneList'
+import { authorUser, managerUser } from '../database/users'
 
 type CustomFixtures = {
   loginPage: LoginPage
+  keystoneListPage: KeystoneListPage
 }
 
 const test = base.extend<TestingLibraryFixtures & CustomFixtures>({
@@ -17,20 +18,28 @@ const test = base.extend<TestingLibraryFixtures & CustomFixtures>({
   loginPage: async ({ page, context }, use) => {
     await use(new LoginPage(page, context))
   },
+  keystoneListPage: async ({ page, context }, use) => {
+    await use(new KeystoneListPage(page, context))
+  },
 })
 
 const { describe, expect } = test
+let title: string
+let slug: string
 
 test.beforeAll(async () => {
-  await resetDb()
-  await seedDB()
-  await seedCMSUsers()
+  title = faker.lorem.words()
+  slug = faker.helpers.slugify(title)
 })
 
 describe('Articles', () => {
-  test('can be created by an author', async ({ page, loginPage }) => {
+  test('can be created by an author', async ({
+    page,
+    loginPage,
+    keystoneListPage,
+  }) => {
     test.slow()
-    await loginPage.login('cmsauthor', 'cmsauthorpass')
+    await loginPage.login(authorUser.username, authorUser.password)
 
     await expect(page.locator('text=WELCOME, ETHEL NEAL')).toBeVisible()
 
@@ -52,8 +61,8 @@ describe('Articles', () => {
     await page.keyboard.type('O')
     await page.keyboard.press('Enter')
 
-    await page.locator('#slug').fill('test-article-for-playwright')
-    await page.locator('#title').fill('My Test Article')
+    await page.locator('#slug').fill(`${slug}`)
+    await page.locator('#title').fill(`${title}'`)
     await page.locator('#preview').fill('This is my test article.')
 
     await Promise.all([
@@ -61,43 +70,29 @@ describe('Articles', () => {
       page.locator('form span:has-text("Create Article")').click(),
     ])
 
-    await page
-      .locator('[aria-label="Side Navigation"] >> text=Articles')
-      .click()
-    await expect(page).toHaveURL('http://localhost:3001/articles')
+    await keystoneListPage.gotoAndSortBy('articles')
     await expect(
-      page.locator('tr:has-text("My Test Article") td:nth-child(3)')
+      page.locator(`tr:has-text("${title}") td:nth-child(3)`)
     ).toHaveText('Draft')
 
     await loginPage.logout()
   })
 
-  test('can be published by a manager', async ({ page, loginPage }) => {
+  test('can be published by a manager', async ({
+    page,
+    loginPage,
+    keystoneListPage,
+  }) => {
     test.slow()
-    await loginPage.login('cmsmanager', 'cmsmanagerpass')
+    await loginPage.login(managerUser.username, managerUser.password)
 
     await expect(page.locator('text=WELCOME, CHRISTINA HAVEN')).toBeVisible()
 
-    await page.goto('http://localhost:3001')
-    await expect(
-      page.locator(
-        'text=Signed in as CHRISTINA.HAVEN.561698119@testusers.cce.af.mil'
-      )
-    ).toBeVisible()
+    await keystoneListPage.gotoAndSortBy('articles')
 
     await Promise.all([
       page.waitForNavigation(),
-      page.locator('h3:has-text("Articles")').click(),
-    ])
-
-    await expect(page).toHaveURL('http://localhost:3001/articles')
-    await expect(
-      page.locator('tr:has-text("My Test Article") td:nth-child(3)')
-    ).toHaveText('Draft')
-
-    await Promise.all([
-      page.waitForNavigation(),
-      page.locator('a:has-text("My Test Article")').click(),
+      page.locator(`a:has-text("${title}")`).click(),
     ])
 
     await page.locator('label:has-text("Published")').click()
@@ -107,12 +102,9 @@ describe('Articles', () => {
       page.locator('label:has-text("Published") input')
     ).toBeChecked()
 
-    await page
-      .locator('[aria-label="Side Navigation"] >> text=Articles')
-      .click()
-    await expect(page).toHaveURL('http://localhost:3001/articles')
+    await keystoneListPage.gotoAndSortBy('articles')
     await expect(
-      page.locator('tr:has-text("My Test Article") td:nth-child(3)')
+      page.locator(`tr:has-text("${title}") td:nth-child(3)`)
     ).toHaveText('Published')
     await loginPage.logout()
   })
