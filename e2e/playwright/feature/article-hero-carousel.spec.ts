@@ -50,7 +50,7 @@ test('hero image is displayed by on internal news carousel', async ({
   /** Create a new article *****
 
     Category: InternalNews
-    Title: My Test Article
+    Title: <Generated using Faker>
     Hero Image: placeholder.png 
     ****************************/
 
