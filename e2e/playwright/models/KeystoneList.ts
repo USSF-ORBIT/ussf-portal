@@ -1,14 +1,12 @@
-import { expect, Locator, BrowserContext, Page } from '@playwright/test'
+import { expect, BrowserContext, Page } from '@playwright/test'
 
 export class KeystoneListPage {
   readonly page: Page
   readonly context: BrowserContext
-  readonly filterButton: Locator
 
   constructor(page: Page, context: BrowserContext) {
     this.page = page
     this.context = context
-    this.filterButton = page.locator('text=Log In')
   }
 
   async gotoAndSortBy(
