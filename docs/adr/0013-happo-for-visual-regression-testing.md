@@ -1,6 +1,6 @@
 # Use Happo.io for visual regression testing
 
-* Status: accepted
+* Status: Accepted
 - Deciders: @gidjin @abbyoung @jcbcapps
 * Date: 2022-09-09
 

@@ -1,6 +1,8 @@
 import { PlaywrightTestConfig } from '@playwright/test'
+import path from 'path'
 
 const config: PlaywrightTestConfig = {
+  globalSetup: path.resolve('./playwright/global-setup'),
   use: {
     browserName: 'chromium',
     headless: true,

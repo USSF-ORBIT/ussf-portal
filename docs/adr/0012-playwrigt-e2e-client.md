@@ -1,7 +1,7 @@
 # Use Playwright to end-to-end test the Client
 
-* Status: Proposed
-- Deciders: @gidjin @abbyoung @jcbcapps
+* Status: Accepted
+* Deciders: @gidjin @abbyoung @jcbcapps
 * Date: 2022-08-29
 
 ## Context and Problem Statement

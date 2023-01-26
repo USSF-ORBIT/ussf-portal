@@ -32,3 +32,4 @@ When creating a new ADR, you can copy the [template](./adr/0000-template.md).
 13. [Use Happo.io for visual regression testing](./adr/0013-happo-for-visual-regression-testing.md)
 14. [Use Distroless Images for Running our Application](./adr/0014-distroless-docker-containers.md)
 15. [Feature-specific e2e tests](./adr/0015-feature-specific-e2e-tests.md)
+16. [Use info from CAC as id](./adr/0016-use-info-from-cac-as-id.md)

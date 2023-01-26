@@ -1,6 +1,6 @@
 # Use GitHub flow for releasing the application code
 
-- Status: accepted
+- Status: Accepted
 - Deciders: @suzubara @abbyoung @esacteksab @noahfirth
 - Date: 2021-07-21
 

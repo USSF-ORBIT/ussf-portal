@@ -1,6 +1,6 @@
 # Separate Repo for end-to-end tests
 
-* Status: accepted
+* Status: Accepted
 * Deciders: @abbyoung @esacteksab @jcbcapps @gidjin
 * Date: 2022-07-07
 

@@ -5,8 +5,8 @@ import {
 } from '@playwright-testing-library/test/fixture'
 
 import { LoginPage } from '../models/Login'
-import { resetDb } from '../cms/database/seed'
 import { seedDB } from '../portal-client/database/seedMongo'
+import { portalUser1 } from '../cms/database/users'
 
 type CustomFixtures = {
   loginPage: LoginPage
@@ -22,7 +22,6 @@ const test = base.extend<TestingLibraryFixtures & CustomFixtures>({
 const { describe, expect } = test
 
 test.beforeAll(async () => {
-  await resetDb()
   await seedDB()
 })
 
@@ -33,7 +32,7 @@ describe('SAML flow (with test IdP)', () => {
     expect(response.status()).toBe(401)
 
     // Logged in user visits /api/auth/login and is redirected to /
-    await loginPage.login('user1', 'user1pass')
+    await loginPage.login(portalUser1.username, portalUser1.password)
     await page.request.get('/api/auth/login')
 
     // Request logged in user

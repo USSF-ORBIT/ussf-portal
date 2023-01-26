@@ -5,9 +5,8 @@ import {
 } from '@playwright-testing-library/test/fixture'
 
 import { LoginPage } from '../../models/Login'
-import { resetDb } from '../../cms/database/seed'
 import { seedDB } from '../database/seedMongo'
-
+import { portalUser1 } from '../../cms/database/users'
 type CustomFixtures = {
   loginPage: LoginPage
 }
@@ -26,7 +25,6 @@ const waitFor = (delay: number) => {
 }
 
 test.beforeAll(async () => {
-  await resetDb()
   await seedDB()
 })
 
@@ -36,7 +34,7 @@ describe('MySpace', () => {
     loginPage,
   }) => {
     // Login
-    await loginPage.login('user1', 'user1pass')
+    await loginPage.login(portalUser1.username, portalUser1.password)
     await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
 
     // Create a custom collection
@@ -54,7 +52,7 @@ describe('MySpace', () => {
     loginPage,
   }) => {
     // Login and check that user is in My Space
-    await loginPage.login('user1', 'user1pass')
+    await loginPage.login(portalUser1.username, portalUser1.password)
     await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
     await expect(page.locator('text=Example Collection')).toBeVisible()
 
@@ -77,7 +75,7 @@ describe('MySpace', () => {
     loginPage,
   }) => {
     // Login and check that user is in My Space
-    await loginPage.login('user1', 'user1pass')
+    await loginPage.login(portalUser1.username, portalUser1.password)
     await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
     await expect(page.locator('text=Example Collection')).toBeVisible()
 
@@ -99,66 +97,53 @@ describe('MySpace', () => {
     loginPage,
   }) => {
     // Login and check that user is in My Space
-    await loginPage.login('user1', 'user1pass')
+    await loginPage.login(portalUser1.username, portalUser1.password)
     await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
     await expect(page.locator('text=Example Collection')).toBeVisible()
 
     // Open dropdown and select the 'Add custom link' option and click it
     await page.locator('text=+ Add link').first().click()
-    await page.locator('[data-testid="combo-box-toggle"]').click()
+    await page.locator('[data-testid="combo-box-input"]').click()
+    await page
+      .locator('[data-testid="combo-box-input"]')
+      .fill('Test Custom Link')
     await page.locator('[data-testid="combo-box-option-custom"]').click()
 
-    // Modal
-    await expect(page.locator('#bookmarkLabel >> nth=0')).toBeVisible()
-    await page.locator('#bookmarkLabel').first().fill('My Custom Link')
-    await page.locator('#bookmarkUrl').first().fill('google.com')
     await page
-      .locator('.usa-form > .usa-button-group > li > .usa-button')
-      .first()
+      .locator('[placeholder="https\\:\\/\\/www\\.copy-paste-your-url\\.com"]')
       .click()
+    await page
+      .locator('[placeholder="https\\:\\/\\/www\\.copy-paste-your-url\\.com"]')
+      .fill('example.com')
+    await page.locator('text=Save custom link').click()
 
     // Check that custom link is in the collection
     await expect(
-      page.locator('text=My Custom Link(opens in a new window)')
+      page.locator('text=Test Custom Link(opens in a new window)')
     ).toBeVisible()
 
     // Edit custom link
     await page.locator('[aria-label="Edit this link"]').first().click()
-
+    await page.locator('[placeholder="Example link name"]').click()
     await page
-      .locator(
-        'div.is-visible > div.usa-modal-overlay > div > div.usa-modal__content > div.usa-modal__main > form > input'
-      )
-      .first()
-      .fill('Edited custom link name')
-
-    await page
-      .locator(
-        'div.is-visible > div.usa-modal-overlay > div > div.usa-modal__content > div.usa-modal__main > form > ul.usa-button-group > li > button:has-text("Save custom link")'
-      )
-      .click()
-
+      .locator('[placeholder="Example link name"]')
+      .fill('Updated Custom Link')
+    await page.locator('text=Save custom link').click()
     await expect(
-      page.locator('text=Edited custom link name(opens in a new window)')
+      page.locator('text=Updated Custom Link(opens in a new window)')
     ).toBeVisible()
 
     // Delete custom link
     await page.locator('[aria-label="Edit this link"]').first().click()
-
-    await page
-      .locator(
-        'div.is-visible > div.usa-modal-overlay > div > div.usa-modal__content > div.usa-modal__main > form > ul.usa-button-group > li > button:has-text("Delete")'
-      )
-      .click()
-
+    await page.locator('text=Delete').click()
     await expect(
-      page.locator('text=Edited custom link name(opens in a new window)')
+      page.locator('text=Updated Custom Link(opens in a new window)')
     ).toBeHidden()
   })
 
   test('can edit an existing collection title', async ({ page, loginPage }) => {
     // Login and check that user is in My Space
-    await loginPage.login('user1', 'user1pass')
+    await loginPage.login(portalUser1.username, portalUser1.password)
     await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
     await expect(page.locator('text=Example Collection')).toBeVisible()
 
@@ -178,7 +163,7 @@ describe('MySpace', () => {
     loginPage,
   }) => {
     // Login and check that user is in My Space
-    await loginPage.login('user1', 'user1pass')
+    await loginPage.login(portalUser1.username, portalUser1.password)
     await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
     await expect(page.locator('text=Updated Collection Title')).toBeVisible()
 
@@ -200,28 +185,20 @@ describe('MySpace', () => {
 
   test('can delete an existing collection', async ({ page, loginPage }) => {
     // Login and check that user is in My Space
-    await loginPage.login('user1', 'user1pass')
+    await loginPage.login(portalUser1.username, portalUser1.password)
     await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
     await expect(page.locator('text=Updated Collection Title')).toBeVisible()
 
     // Cancel
     await page.locator('[aria-label="Collection Settings"]').first().click()
     await page.locator('button:has-text("Delete this collection")').click()
-    await page
-      .locator(
-        'div.is-visible > div.usa-modal-overlay > div > div.usa-modal__content > div.usa-modal__main > div.usa-modal__footer > ul > li > button:has-text("Cancel")'
-      )
-      .click()
+    await page.locator('[data-testid="modalFooter"] >> text=Cancel').click()
     await expect(page.locator('text=Updated Collection Title')).toBeVisible()
 
     // Delete
     await page.locator('[aria-label="Collection Settings"]').first().click()
     await page.locator('button:has-text("Delete this collection")').click()
-    await page
-      .locator(
-        'div.is-visible > div.usa-modal-overlay > div > div.usa-modal__content > div.usa-modal__main > div.usa-modal__footer > ul > li > button:has-text("Delete")'
-      )
-      .click()
+    await page.locator('[data-testid="modalFooter"] >> text=Delete').click()
     await expect(page.locator('text=Updated Collection Title')).toBeHidden()
   })
 
@@ -229,18 +206,18 @@ describe('MySpace', () => {
     page,
     loginPage,
   }) => {
-    await loginPage.login('user1', 'user1pass')
+    await loginPage.login(portalUser1.username, portalUser1.password)
     await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
 
     // Add News Section
     await page.locator('text=Add section').click()
     await page.locator('text=Add news section').click()
     await expect(page.locator('text=Recent News')).toBeVisible()
-    await expect(page.locator('[data-testid="tag"] >> nth=0')).toBeVisible()
 
     // Remove News Section
     await page.locator('[aria-label="Section Settings"]').click()
     await page.locator('text=Remove this section').click()
-    await page.locator('#removeSectionModal button:has-text("Delete")').click()
+    await page.locator('[data-testid="modalFooter"] >> text=Delete').click()
+    await expect(page.locator('text=Recent News')).toBeHidden()
   })
 })
