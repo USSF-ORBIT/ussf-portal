@@ -1,6 +1,6 @@
 # Use MongoDB + DocumentDB with Node.js Driver
 
-- Status: Approved
+- Status: Accepted
 - Deciders: @suzubara @abbyoung @esacteksab @noahfirth
 - Date: 2021-11-01
 

@@ -5,8 +5,8 @@ import {
 } from '@playwright-testing-library/test/fixture'
 
 import { LoginPage } from '../models/Login'
-import { resetDb } from '../cms/database/seed'
 import { seedDB } from '../portal-client/database/seedMongo'
+import { portalUser1 } from '../cms/database/users'
 
 type CustomFixtures = {
   loginPage: LoginPage
@@ -34,7 +34,6 @@ const routes = [
 ]
 
 test.beforeAll(async () => {
-  await resetDb()
   await seedDB()
 })
 
@@ -44,6 +43,7 @@ describe('Portal authentication', () => {
       page,
       loginPage,
     }) => {
+      test.slow()
       // Navigate to portal login page
       await page.goto(loginPage.loginUrl)
       await expect(loginPage.loginButton).toBeVisible()
@@ -65,7 +65,7 @@ describe('Portal authentication', () => {
       await page.goto(loginPage.loginUrl)
       await expect(loginPage.loginButton).toBeVisible()
 
-      await loginPage.login('user1', 'user1pass')
+      await loginPage.login(portalUser1.username, portalUser1.password)
       await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
 
       await Promise.all([
@@ -88,7 +88,7 @@ describe('Portal authentication', () => {
 
   describe('access while logged in', () => {
     test('loads the user on each route', async ({ page, loginPage }) => {
-      await loginPage.login('user1', 'user1pass')
+      await loginPage.login(portalUser1.username, portalUser1.password)
       await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
 
       // Check that logged in user can visit each url

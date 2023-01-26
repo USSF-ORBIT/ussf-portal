@@ -1,6 +1,6 @@
 # Use Distroless Images for Running our Application
 
-* Status: accepted
+* Status: Accepted
 - Deciders: @esacteksab @minhlai @gidjin
 * Date: 2022-10-25
 

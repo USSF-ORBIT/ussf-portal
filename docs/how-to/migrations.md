@@ -23,22 +23,24 @@ In our local dev environment, we run migrations via `keystone dev` in our `packa
 
 ### Dev and Staging/Prod
 We host our dev and staging/prod environments on Commercial AWS and Cloud One, respectively. Migrations are run via as startup command in the Dockerfile. Usually it looks something like this:
-```
-CMD ["/nodejs/bin/node /app/node_modules/.bin/prisma migrate deploy && /nodejs/bin/node -r /app/startup/index.js /app/node_modules/.bin/keystone start"]
-```
+
+`CMD ["/nodejs/bin/node /app/node_modules/.bin/prisma migrate deploy && /nodejs/bin/node -r /app/startup/index.js /app/node_modules/.bin/keystone start"]`
+
 The sequence of commands is: `prisma migrate deploy` followed by `keystone start`. 
 
-    Q: Why are there two commands instead of one?
-    A: Because `keystone start` does not do migrations as it wants to be very careful and explicit about when/if migrations are run in prod.
+- Q: Why are there two commands instead of one?
+  
+  A: Because `keystone start` does not do migrations as it wants to be very careful and explicit about when/if migrations are run in prod.
 
-    Q: Why is `prisma migrate deploy` run in the same step as `keystone start`?
-    A: A Dockerfile can run commands before the final startup command, but those commands would be run during build time. We do not have access to the dev/prod database during build time as our Docker Images are built in GitHub Actions runs.
+- Q: Why is `prisma migrate deploy` run in the same step as `keystone start`?
+
+  A: A Dockerfile can run commands before the final startup command, but those commands would be run during build time. We do not have access to the dev/prod database during build time as our Docker Images are built in GitHub Actions runs.
 
 ## How Prisma Migrate tracks the migration state
 Prisma Migrate uses the following pieces of state to track the state of your database schema<sup>[3](https://www.prisma.io/docs/concepts/components/prisma-migrate/mental-model#how-prisma-migrate-tracks-the-migration-state):
 
 - Prisma schema: your source of truth that defines the structure of the database schema.
-- Migrations history: SQL files in your prisma/migrations folder representing the history of changes made to your database schema.- 
+- Migrations history: SQL files in your prisma/migrations folder representing the history of changes made to your database schema.
 - Migrations table: prisma_migrations table in the database that stores metadata for migrations that have been applied to the database.
 - Database schema: the state of the database.
 
@@ -54,7 +56,7 @@ Your migration history is the story of the changes to your data model, and is re
     ```
     The migrations folder is the source of truth for the history of your data model. It should be committed to source control.
 
-- A _prisma_migrations table in the database, which is used to check:
+- A `_prisma_migrations` table in the database, which is used to check:
   - If a migration was run against the database
   - If an applied migration was deleted
   - If an applied migration was changed
@@ -71,7 +73,7 @@ prisma migrate resolve --rolled-back "20201127134938_added_bio_index"
 Rolling back a migration only modifies the logs column of the `_prisma_migrations` table. It does not undo any SQL that may have executed before the migration failed.
 
 If we are unsure of the state of a database schema because of a failed migration we have some options:
-1. Restore the database from a snapshot (not an option of Prod)
+1. Restore the database from a snapshot (not an option for Prod)
 2. Manually complete or undo the migration (via `prisma db execute` which applies a SQL script) and mark it resolved or rolled back. Right now this has to be done in the Dockerfile. Try the migration again with the bug fix.<sup>[3](https://www.prisma.io/docs/guides/database/production-troubleshooting#failed-migration)
 3. A future functionality to run prisma commands against DB?
 
