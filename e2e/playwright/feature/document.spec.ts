@@ -27,12 +27,14 @@ const test = base.extend<TestingLibraryFixtures & CustomFixtures>({
 const { describe, expect } = test
 let documentTitle: string, description: string
 let sectionTitle: string
+let pageTitle: string
 const testfile = path.resolve(__dirname, 'test-file.pdf')
 
 test.beforeAll(async () => {
   documentTitle = faker.lorem.words()
   sectionTitle = faker.lorem.words()
   description = faker.lorem.words()
+  pageTitle = faker.lorem.words()
 })
 
 describe('Document', () => {
@@ -171,12 +173,12 @@ describe('Document', () => {
 
     /** Create a new document page *****
 
-      Title: "USSF Documentation"
+      Title: <Generated using Faker>
       Document Section: <Generated using Faker>
       ****************************/
 
     await page.locator('text=Create Documents Page').click()
-    await page.locator('#pageTitle').fill('USSF Documentation')
+    await page.locator('#pageTitle').fill(pageTitle)
     await page.locator('legend:has-text("Sections")').click()
     await page.keyboard.type(sectionTitle)
     await page.keyboard.press('Enter')
@@ -193,9 +195,7 @@ describe('Document', () => {
 
     await keystoneListPage.gotoAndSortBy('documents-pages')
 
-    await expect(
-      page.locator(`tr:has-text("USSF Documentation")`)
-    ).toBeVisible()
+    await expect(page.locator(`tr:has-text("${pageTitle}")`)).toBeVisible()
 
     await loginPage.logout()
   })
