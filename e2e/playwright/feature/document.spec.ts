@@ -94,20 +94,20 @@ describe.only('Document', () => {
     await loginPage.logout()
   })
 
-  test('document section can be created by an author', async ({
+  test('document section can be created by a manager', async ({
     page,
     loginPage,
     keystoneListPage,
   }) => {
-    /* Log in as a CMS author */
-    await loginPage.login(authorUser.username, authorUser.password)
+    /* Log in as a CMS manager */
+    await loginPage.login(managerUser.username, managerUser.password)
 
-    await expect(page.locator('text=WELCOME, ETHEL NEAL')).toBeVisible()
+    await expect(page.locator('text=WELCOME, CHRISTINA HAVEN')).toBeVisible()
 
     await page.goto('http://localhost:3001')
     await expect(
       page.locator(
-        'text=Signed in as ETHEL.NEAL.643097412@testusers.cce.af.mil'
+        'text=Signed in as CHRISTINA.HAVEN.561698119@testusers.cce.af.mil'
       )
     ).toBeVisible()
 
