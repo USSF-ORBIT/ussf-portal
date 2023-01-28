@@ -35,7 +35,7 @@ test.beforeAll(async () => {
   description = faker.lorem.words()
 })
 
-describe.only('Document', () => {
+describe('Document', () => {
   test('document can be created and saved by an author', async ({
     page,
     loginPage,
