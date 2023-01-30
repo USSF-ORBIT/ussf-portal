@@ -64,7 +64,7 @@ services:
       redis:
         condition: service_started
     volumes:
-      - cms_uploads:/app/public/images
+      - cms_uploads:/app/public
 
   # Required by Portal client
   mongo:
@@ -115,3 +115,4 @@ services:
       retries: 5
 volumes:
   cms_uploads:
+
