@@ -5,7 +5,7 @@ import {
   fixtures,
   TestingLibraryFixtures,
 } from '@playwright-testing-library/test/fixture'
-import { authorUser, managerUser } from '../cms/database/users'
+import { authorUser, defaultUser, managerUser } from '../cms/database/users'
 import { LoginPage } from '../models/Login'
 import { KeystoneListPage } from '../models/KeystoneList'
 
@@ -101,6 +101,7 @@ describe('Document', () => {
     loginPage,
     keystoneListPage,
   }) => {
+    test.slow()
     /* Log in as a CMS manager */
     await loginPage.login(managerUser.username, managerUser.password)
 
@@ -166,10 +167,7 @@ describe('Document', () => {
     ).toBeVisible()
 
     /* Navigate to the Document Pages page */
-    await Promise.all([
-      page.waitForNavigation(),
-      page.locator('h3:has-text("Documents Page")').click(),
-    ])
+    await keystoneListPage.gotoAndSortBy('documents-pages')
 
     /** Create a new document page *****
 
@@ -179,24 +177,67 @@ describe('Document', () => {
 
     await page.locator('text=Create Documents Page').click()
     await page.locator('#pageTitle').fill(pageTitle)
-    await page.locator('legend:has-text("Sections")').click()
-    await page.keyboard.type(sectionTitle)
-    await page.keyboard.press('Enter')
+    await page
+      .locator('text=SectionsSelect...Create related Document Section')
+      .click()
+    await page.locator(`text="${sectionTitle}"`).click()
 
     /* Save new document section  */
-    await Promise.all([
-      page.waitForNavigation(),
-      page.locator('form span:has-text("Create Documents Page")').click(),
-    ])
 
+    await page.locator('form span:has-text("Create Documents Page")').click()
     await expect(page.locator('text=Created Successfully')).toBeVisible()
 
-    /* Navigate back to Articles page and confirm article was created as a draft */
+    /* Navigate back to Documents Page and confirm page was created  */
 
     await keystoneListPage.gotoAndSortBy('documents-pages')
 
     await expect(page.locator(`tr:has-text("${pageTitle}")`)).toBeVisible()
 
     await loginPage.logout()
+  })
+
+  test('documents page can be viewed on the portal by a user', async ({
+    page,
+    loginPage,
+  }) => {
+    /* Log in as a portal user */
+    await loginPage.login(defaultUser.username, defaultUser.password)
+    await expect(page.locator('text=WELCOME, JOHN HENKE')).toBeVisible()
+
+    /* Navigate to the USSF Documentation page */
+    await page.goto('http://localhost:3000/ussf-documentation')
+
+    await expect(page.locator(`h2:has-text("${pageTitle}")`)).toBeVisible()
+    await expect(page.locator(`text="${sectionTitle}"`)).toBeVisible()
+  })
+
+  test('document page can be deleted by a manager', async ({
+    page,
+    loginPage,
+    keystoneListPage,
+  }) => {
+    /* Log in as a CMS manager */
+    await loginPage.login(managerUser.username, managerUser.password)
+
+    await expect(page.locator('text=WELCOME, CHRISTINA HAVEN')).toBeVisible()
+
+    await page.goto('http://localhost:3001')
+    await expect(
+      page.locator(
+        'text=Signed in as CHRISTINA.HAVEN.561698119@testusers.cce.af.mil'
+      )
+    ).toBeVisible()
+
+    await keystoneListPage.gotoAndSortBy('documents-pages')
+
+    await expect(page.locator(`tr:has-text("${pageTitle}")`)).toBeVisible()
+
+    /* Delete page */
+
+    await page.locator(`td:nth-child(2)`).click(),
+      await page.locator('button:has-text("Delete")').click()
+    await page.locator('div[role="dialog"] button:has-text("Delete")').click()
+
+    await expect(page.locator('text=No Documents Pages found')).toBeVisible()
   })
 })
