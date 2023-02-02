@@ -95,7 +95,7 @@ describe('Articles', () => {
       page.locator(`a:has-text("${title}")`).click(),
     ])
 
-    await page.locator('label:has-text("Published")').click()
+    await page.locator('label:has-text("Published") >> nth=0').click()
 
     await page.locator('button:has-text("Save changes")').click()
     await expect(

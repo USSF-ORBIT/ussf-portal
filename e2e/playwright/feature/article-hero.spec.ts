@@ -121,7 +121,7 @@ describe('Article Hero Image', () => {
     /* Publish article */
     await page.locator(`a:has-text("${title}")`).click()
 
-    await page.locator('label:has-text("Published")').check()
+    await page.locator('label:has-text("Published") >> nth=0').check()
 
     await page.locator('button:has-text("Save changes")').click()
 
