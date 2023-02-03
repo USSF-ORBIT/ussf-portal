@@ -34,3 +34,4 @@ When creating a new ADR, you can copy the [template](./adr/0000-template.md).
 15. [Feature-specific e2e tests](./adr/0015-feature-specific-e2e-tests.md)
 16. [Use info from CAC as id](./adr/0016-use-info-from-cac-as-id.md)
 17. [Send AWS Cloudwatch Alarms to Slack](./adr/0017-use-cloudwatch-and-slack-for-alerting.md)
+18. [Disable Unsafe Regex Warning in the CMS Slug validation code](./adr/0018-disable-unsafe-regex-in-cms-slug-code.md)
