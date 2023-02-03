@@ -1,6 +1,6 @@
 # Use info from CAC as id
 
-* Status: Proposed
+* Status: Accepted
 * Deciders: @gidjin @abbyoung @jcbcapps
 * Date: 2023-01-09
 
