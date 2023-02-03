@@ -33,3 +33,4 @@ When creating a new ADR, you can copy the [template](./adr/0000-template.md).
 14. [Use Distroless Images for Running our Application](./adr/0014-distroless-docker-containers.md)
 15. [Feature-specific e2e tests](./adr/0015-feature-specific-e2e-tests.md)
 16. [Use info from CAC as id](./adr/0016-use-info-from-cac-as-id.md)
+17. [Disable Unsafe Regex Warning in the CMS Slug validation code](./adr/0017-disable-unsafe-regex-in-cms-slug-code.md)
