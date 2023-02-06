@@ -3,10 +3,11 @@ import { faker } from '@faker-js/faker'
 
 type ArticleFields = {
   title: string
-  category: string
+  category?: string
   slug?: string
   preview?: string
 }
+
 
 export class KeystoneArticlePage {
   readonly page: Page
@@ -20,7 +21,7 @@ export class KeystoneArticlePage {
   async fillArticleFields({
     slug = undefined,
     title,
-    category,
+    category = 'O',
     preview = undefined,
   }: ArticleFields) {
     await this.page.locator('label[for="category"]').click()
@@ -35,27 +36,18 @@ export class KeystoneArticlePage {
     await this.page.locator('#preview').fill(previewData)
   }
 
-  async fillInternalNewsArticleFields({
-    slug = undefined,
-    title,
-  }: ArticleFields) {
-    await this.fillArticleFields({ slug, title, category: 'I' })
+  async fillInternalNewsArticleFields(articleFields: ArticleFields) {
+    await this.fillArticleFields({ category: 'I', ...articleFields })
   }
 
-  async fillOrbitBlogArticleFields({
-    slug = undefined,
-    title,
-  }: ArticleFields) {
-    await this.fillArticleFields({ slug, title, category: 'O' })
+  async fillOrbitBlogArticleFields(articleFields: ArticleFields) {
+    await this.fillArticleFields({ category: 'O', ...articleFields })
   }
 
-  async createOrbitBlogArticle({
-    slug = undefined,
-    title,
-  }: ArticleFields) {
+  async createOrbitBlogArticle(articleFields: ArticleFields) {
     await this.page.locator('text=Create Article').click()
 
-    await this.fillOrbitBlogArticleFields({ slug, title, category: 'O' })
+    await this.fillOrbitBlogArticleFields(articleFields)
 
     await this.createArticle()
   }
