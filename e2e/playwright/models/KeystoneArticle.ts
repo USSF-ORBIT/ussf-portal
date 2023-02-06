@@ -9,6 +9,18 @@ export class KeystoneArticlePage {
     this.context = context
   }
 
+  async fillInternalNewsArticleFields({slug = undefined, title}: {slug?: string, title: string}) {
+    await this.page.locator('label[for="category"]').click()
+    await this.page.keyboard.type('I')
+    await this.page.keyboard.press('Enter')
+
+    if (slug) {
+      await this.page.locator('#slug').fill(`${slug}`)
+    }
+    await this.page.locator('#title').fill(`${title}`)
+    await this.page.locator('#preview').fill('This is my test article.')
+  }
+
   async fillOrbitBlogArticleFields({slug = undefined, title}: {slug?: string, title: string}) {
     await this.page.locator('label[for="category"]').click()
     await this.page.keyboard.type('O')
