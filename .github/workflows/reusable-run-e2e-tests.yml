@@ -76,7 +76,11 @@ jobs:
         uses: aws-actions/amazon-ecr-login@261a7de32bda11ba01f4d75c4ed6caf3739e54be # tag=v1
 
       - name: Docker compose
-        run: docker compose up -d
+        run: \
+          docker version \
+          docker buildx version \
+          docker compose version \
+          docker compose up -d
         working-directory: ./e2e-tests/e2e
         env:
           CMS_REPO: ${{ steps.login-ecr.outputs.registry }}/keystone
