@@ -75,6 +75,11 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@261a7de32bda11ba01f4d75c4ed6caf3739e54be # tag=v1
 
+      - uses: docker/setup-buildx-action@f03ac48505955848960e80bbb68046aa35c7b9e7 # v2
+        id: buildx
+        with:
+          install: true
+          
       - name: Docker compose
         run: docker compose up -d
         working-directory: ./e2e-tests/e2e
