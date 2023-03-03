@@ -38,8 +38,8 @@ export class KeystoneArticlePage {
     await this.page.locator('#preview').fill(previewData)
 
     if (videoLink) {
-      // As of writing this test, there are only 9 elements on the article creation page. They are
-      // in a consistent order due to the current structure of the Article schema. The 4th one is the
+      // As of writing this test, there are only 9 elements with the aria-haspopup attribute on the article creation page.
+      // They are in a consistent order due to the current structure of the Article schema. The 4th one is the
       // '+' in the body field that opens a dropdown where the user can select the 'Embed Video' option.
       await this.page.locator('[aria-haspopup="true"] >> nth=4').click()
       await this.page.locator('text=Embed Video').click()
