@@ -100,7 +100,8 @@ jobs:
         working-directory: ./e2e-tests/e2e
 
       - name: Run Playwright tests
-        run: yarn playwright test
+        # forbid only will fail build if a test has .only on it
+        run: yarn playwright test --forbid-only
         working-directory: ./e2e-tests/e2e
 
       - name: Upload Playwright test results
