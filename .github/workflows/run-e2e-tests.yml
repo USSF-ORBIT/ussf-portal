@@ -7,6 +7,8 @@ on:
   # configure on pull request events
   pull_request:
     branches: [main]
+  # configure on merge group checks
+  merge_group:
 
 jobs:
   check-e2e-tests:

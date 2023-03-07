@@ -172,3 +172,4 @@ branches:
         apps: []
         users: []
         teams: []
+      # Note: There is currently no API for Merge Queues so it is not able to be used in this settings.yml. It is enabled in the GH console and the settings will be ported here when they become available.
