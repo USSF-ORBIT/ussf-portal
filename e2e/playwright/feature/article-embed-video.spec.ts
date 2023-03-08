@@ -59,8 +59,14 @@ test('can create an article with an embedded video', async ({
   await page.goto(`http://localhost:3000/articles/${slug}`)
   await expect(page.locator(`text=${title}`)).toBeVisible()
 
-  await expect(page.locator(`text=${title}`)).toBeVisible()
   await expect(
     page.frameLocator('iframe').locator('[aria-label="Play"]')
   ).toBeVisible()
+
+  // We want to check that the embed IDs match
+  const embedId = (await page.locator('iframe').getAttribute('src'))?.split(
+    '/embed/'
+  )[1]
+  const videoLinkId = videoLink.split('/')[3]
+  expect(embedId).toBe(videoLinkId)
 })
