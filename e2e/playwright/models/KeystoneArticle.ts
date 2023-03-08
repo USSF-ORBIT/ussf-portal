@@ -24,7 +24,7 @@ export class KeystoneArticlePage {
     title,
     category = 'O',
     preview = undefined,
-    videoLink = '',
+    videoLink = undefined,
   }: ArticleFields) {
     await this.page.locator('label[for="category"]').click()
     await this.page.keyboard.type(category)
