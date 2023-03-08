@@ -30,7 +30,7 @@ const test = base.extend<TestingLibraryFixtures & CustomFixtures>({
 
 const { describe, expect } = test
 
-describe.only('orbit blog', () => {
+describe('orbit blog', () => {
   const title = faker.lorem.words()
   const slug = faker.helpers.slugify(title)
 
@@ -162,7 +162,7 @@ describe.only('orbit blog', () => {
   })
 })
 
-describe.only('internal news', () => {
+describe('internal news', () => {
   const title = faker.lorem.words()
   const slug = faker.helpers.slugify(title)
 
