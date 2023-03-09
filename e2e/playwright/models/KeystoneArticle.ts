@@ -42,7 +42,7 @@ export class KeystoneArticlePage {
       // They are in a consistent order due to the current structure of the Article schema. The 4th one is the
       // '+' in the body field that opens a dropdown where the user can select the 'Embed Video' option.
       await this.page.locator('[aria-haspopup="true"] >> nth=4').click()
-      await this.page.locator('text=Embed Video').click()
+      await this.page.locator('text=Embed YouTube Video').click()
       await this.page.locator('button >> text=Edit').click()
       // Same as the above comment, there is a consistent order of input fields due to the structure
       // of the Article schema. The 4th and 5th are for adding a video title and the link for the video, respectively.
