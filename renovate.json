@@ -17,6 +17,13 @@
       "labels": ["node"]
     },
     {
+      "description": "Group minor and patch updates for devDependencies into a single PR",
+      "groupName": "devDependencies (non-major)",
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "labels": ["devDependencies"]
+    },
+    {
       "description": "Group minor and patch updates for NPM into a single PR",
       "groupName": "dependencies",
       "managers": ["npm"],
