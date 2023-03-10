@@ -8,6 +8,7 @@ repository:
   has_wiki: true
   default_branch: main
   allow_squash_merge: true
+  squash_merge_commit_title: PR_TITLE # ensure PR title is used as squash merge message
   # This will allow merge commits on branches, but only squash merges allowed on main (below)
   allow_merge_commit: true
   allow_rebase_merge: true

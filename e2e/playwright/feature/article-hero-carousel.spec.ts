@@ -8,10 +8,12 @@ import {
 import { authorUser, managerUser } from '../cms/database/users'
 import { LoginPage } from '../models/Login'
 import { KeystoneListPage } from '../models/KeystoneList'
+import { KeystoneArticlePage } from '../models/KeystoneArticle'
 
 type CustomFixtures = {
   loginPage: LoginPage
   keystoneListPage: KeystoneListPage
+  keystoneArticlePage: KeystoneArticlePage
 }
 
 const test = base.extend<TestingLibraryFixtures & CustomFixtures>({
@@ -21,6 +23,9 @@ const test = base.extend<TestingLibraryFixtures & CustomFixtures>({
   },
   keystoneListPage: async ({ page, context }, use) => {
     await use(new KeystoneListPage(page, context))
+  },
+  keystoneArticlePage: async ({ page, context }, use) => {
+    await use(new KeystoneArticlePage(page, context))
   },
 })
 
@@ -36,6 +41,7 @@ test('hero image is displayed by on internal news carousel', async ({
   page,
   loginPage,
   keystoneListPage,
+  keystoneArticlePage,
 }) => {
   test.slow()
   /* Log in as a CMS author */
@@ -62,10 +68,7 @@ test('hero image is displayed by on internal news carousel', async ({
     ****************************/
 
   await page.locator('text=Create Article').click()
-  await page.locator('label[for="category"]').click()
-  await page.keyboard.type('I')
-  await page.keyboard.press('Enter')
-  await page.locator('#title').fill(title)
+  await keystoneArticlePage.fillInternalNewsArticleFields({ title })
 
   /* Use fileChooser to upload a hero image */
   const [fileChooser] = await Promise.all([
@@ -75,10 +78,7 @@ test('hero image is displayed by on internal news carousel', async ({
   await fileChooser.setFiles(path.resolve(__dirname, 'placeholder.png'))
 
   /* Create article */
-  await Promise.all([
-    page.waitForNavigation(),
-    page.locator('form span:has-text("Create Article")').click(),
-  ])
+  await keystoneArticlePage.createArticle()
 
   /* Confirm image has successfully uploaded and saved */
   await expect(
@@ -114,9 +114,7 @@ test('hero image is displayed by on internal news carousel', async ({
   /* Publish article */
   await page.locator(`a:has-text("${title}")`).click()
 
-  await page.locator('label:has-text("Published")').check()
-
-  await page.locator('button:has-text("Save changes")').click()
+  await keystoneArticlePage.publishArticle()
 
   /* View article on the portal and confirm hero is present */
   await page.goto('http://localhost:3000/news-announcements')

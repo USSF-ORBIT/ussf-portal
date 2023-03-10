@@ -8,10 +8,12 @@ import {
 import { authorUser, managerUser } from '../cms/database/users'
 import { LoginPage } from '../models/Login'
 import { KeystoneListPage } from '../models/KeystoneList'
+import { KeystoneArticlePage } from '../models/KeystoneArticle'
 
 type CustomFixtures = {
   loginPage: LoginPage
   keystoneListPage: KeystoneListPage
+  keystoneArticlePage: KeystoneArticlePage
 }
 
 const test = base.extend<TestingLibraryFixtures & CustomFixtures>({
@@ -21,6 +23,9 @@ const test = base.extend<TestingLibraryFixtures & CustomFixtures>({
   },
   keystoneListPage: async ({ page, context }, use) => {
     await use(new KeystoneListPage(page, context))
+  },
+  keystoneArticlePage: async ({ page, context }, use) => {
+    await use(new KeystoneArticlePage(page, context))
   },
 })
 
@@ -36,9 +41,8 @@ describe('Article Hero Image', () => {
     page,
     loginPage,
     keystoneListPage,
+    keystoneArticlePage,
   }) => {
-    test.slow()
-
     /* Log in as a CMS author */
     await loginPage.login(authorUser.username, authorUser.password)
 
@@ -65,10 +69,7 @@ describe('Article Hero Image', () => {
       ****************************/
 
     await page.locator('text=Create Article').click()
-    await page.locator('label[for="category"]').click()
-    await page.keyboard.type('O')
-    await page.keyboard.press('Enter')
-    await page.locator('#title').fill(title)
+    await keystoneArticlePage.fillOrbitBlogArticleFields({title})
 
     /* Use fileChooser to upload a hero image */
     const [fileChooser] = await Promise.all([
@@ -78,10 +79,7 @@ describe('Article Hero Image', () => {
     await fileChooser.setFiles(path.resolve(__dirname, 'placeholder.png'))
 
     /* Create article */
-    await Promise.all([
-      page.waitForNavigation(),
-      page.locator('form span:has-text("Create Article")').click(),
-    ])
+    await keystoneArticlePage.createArticle()
 
     /* Confirm image has successfully uploaded and saved */
     await expect(
@@ -99,10 +97,12 @@ describe('Article Hero Image', () => {
     /* Log out as CMS author */
     await loginPage.logout()
   })
+
   test('hero image can be viewed on published article', async ({
     page,
     loginPage,
     keystoneListPage,
+    keystoneArticlePage,
   }) => {
     /* Log in as a CMS manager */
     await loginPage.login(managerUser.username, managerUser.password)
@@ -121,9 +121,7 @@ describe('Article Hero Image', () => {
     /* Publish article */
     await page.locator(`a:has-text("${title}")`).click()
 
-    await page.locator('label:has-text("Published")').check()
-
-    await page.locator('button:has-text("Save changes")').click()
+    await keystoneArticlePage.publishArticle()
 
     /* View article on the portal and confirm hero is present */
     await page.goto('http://localhost:3000/about-us/orbit-blog/')

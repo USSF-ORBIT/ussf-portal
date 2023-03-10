@@ -6,11 +6,13 @@ import {
 import { faker } from '@faker-js/faker'
 import { LoginPage } from '../../models/Login'
 import { KeystoneListPage } from '../../models/KeystoneList'
+import { KeystoneArticlePage } from '../../models/KeystoneArticle'
 import { authorUser, managerUser } from '../database/users'
 
 type CustomFixtures = {
   loginPage: LoginPage
   keystoneListPage: KeystoneListPage
+  keystoneArticlePage: KeystoneArticlePage
 }
 
 const test = base.extend<TestingLibraryFixtures & CustomFixtures>({
@@ -20,6 +22,9 @@ const test = base.extend<TestingLibraryFixtures & CustomFixtures>({
   },
   keystoneListPage: async ({ page, context }, use) => {
     await use(new KeystoneListPage(page, context))
+  },
+  keystoneArticlePage: async ({ page, context }, use) => {
+    await use(new KeystoneArticlePage(page, context))
   },
 })
 
@@ -37,8 +42,8 @@ describe('Articles', () => {
     page,
     loginPage,
     keystoneListPage,
+    keystoneArticlePage,
   }) => {
-    test.slow()
     await loginPage.login(authorUser.username, authorUser.password)
 
     await expect(page.locator('text=WELCOME, ETHEL NEAL')).toBeVisible()
@@ -55,20 +60,7 @@ describe('Articles', () => {
       page.locator('h3:has-text("Articles")').click(),
     ])
 
-    await page.locator('text=Create Article').click()
-
-    await page.locator('label[for="category"]').click()
-    await page.keyboard.type('O')
-    await page.keyboard.press('Enter')
-
-    await page.locator('#slug').fill(`${slug}`)
-    await page.locator('#title').fill(`${title}'`)
-    await page.locator('#preview').fill('This is my test article.')
-
-    await Promise.all([
-      page.waitForNavigation(),
-      page.locator('form span:has-text("Create Article")').click(),
-    ])
+    await keystoneArticlePage.createOrbitBlogArticle({slug, title})
 
     await keystoneListPage.gotoAndSortBy('articles')
     await expect(
@@ -82,8 +74,8 @@ describe('Articles', () => {
     page,
     loginPage,
     keystoneListPage,
+    keystoneArticlePage,
   }) => {
-    test.slow()
     await loginPage.login(managerUser.username, managerUser.password)
 
     await expect(page.locator('text=WELCOME, CHRISTINA HAVEN')).toBeVisible()
@@ -95,12 +87,7 @@ describe('Articles', () => {
       page.locator(`a:has-text("${title}")`).click(),
     ])
 
-    await page.locator('label:has-text("Published")').click()
-
-    await page.locator('button:has-text("Save changes")').click()
-    await expect(
-      page.locator('label:has-text("Published") input')
-    ).toBeChecked()
+    await keystoneArticlePage.publishArticle()
 
     await keystoneListPage.gotoAndSortBy('articles')
     await expect(
