@@ -99,7 +99,7 @@ jobs:
         run: npx playwright install --with-deps
         working-directory: ./e2e-tests/e2e
 
-      - name: Run Playwright tests
+      - name: Run Playwright tests across all browsers
         # forbid only will fail build if a test has .only on it
         run: yarn playwright test --forbid-only
         working-directory: ./e2e-tests/e2e

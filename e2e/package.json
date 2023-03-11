@@ -12,8 +12,12 @@
     "services:up": "LOCAL_BUILD='-local' docker compose up --build --force-recreate --remove-orphans",
     "services:down": "docker compose down",
     "e2e:install": "yarn --cwd playwright/ install && cd playwright/ && npx playwright install",
-    "e2e:test": "yarn --cwd playwright/ playwright test",
-    "e2e:debug": "PWDEBUG=1 yarn --cwd playwright/ playwright test --headed",
+    "e2e:all": "yarn --cwd playwright/ playwright test --forbid-only",
+    "e2e:test": "yarn --cwd playwright/ playwright test --project feature-chromium --project cms-chromium --project client-chromium",
+    "e2e:debug": "PWDEBUG=1 yarn --cwd playwright/ playwright test --headed --project feature-chromium --project cms-chromium --project client-chromium",
+    "e2e:chrome": "yarn --cwd playwright/ playwright test --project feature-chrome --project cms-chrome --project client-chrome",
+    "e2e:firefox": "yarn --cwd playwright/ playwright test --project feature-firefox --project cms-firefox --project client-firefox",
+    "e2e:msedge": "yarn --cwd playwright/ playwright test --project feature-msedge --project cms-msedge --project client-msedge",
     "e2e:codegen": "yarn --cwd playwright/ playwright codegen localhost:3001"
   },
   "devDependencies": {
