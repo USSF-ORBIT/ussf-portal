@@ -47,7 +47,7 @@ jobs:
           # checkout the branch that started this pull request or stay on main if no such branch
           /usr/bin/git checkout --progress --force -B ${{github.head_ref}} origin/${{github.head_ref}} || echo "staying on main"
 
-      - name: Checkout portal client ${{github.event.merge_group.head_ref} or main
+      - name: Checkout portal client ${{github.event.merge_group.head_ref}} or main
         if: ${{ github.event_name == 'merge_group' }}
         working-directory: ./ussf-portal-client
         run: |
