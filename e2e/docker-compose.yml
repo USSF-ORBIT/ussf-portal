@@ -71,7 +71,7 @@ services:
   # Required by Portal client
   mongo:
     container_name: mongo
-    image: mongo:4.0.0
+    image: mongo:6.0.4
     restart: always
     environment:
       MONGO_INITDB_DATABASE: mongo-e2e
