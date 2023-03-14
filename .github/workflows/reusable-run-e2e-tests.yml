@@ -106,7 +106,7 @@ jobs:
 
       - name: Upload Playwright test results
         if: always()
-        uses: actions/upload-artifact@6673cd052c4cd6fcf4b4e6e60ea986c889389535 # tag=v3
+        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3
         with:
           name: playwright-results
           path: ./e2e-tests/e2e/test-results
@@ -118,7 +118,7 @@ jobs:
           dest: "./docker-logs"
 
       - name: Upload logs
-        uses: actions/upload-artifact@6673cd052c4cd6fcf4b4e6e60ea986c889389535 # tag=v3
+        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3
         if: always()
         with:
           name: container-logs
