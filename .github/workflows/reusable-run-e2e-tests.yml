@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Clone E2E tests repo
-        uses: actions/checkout@e2f20e631ae6d7dd3b768f56a5d2af784dd54791 # tag=v3
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
         with:
           repository: USSF-ORBIT/ussf-portal
           path: ./e2e-tests
@@ -25,7 +25,7 @@ jobs:
           /usr/bin/git checkout --progress --force -B ${{github.head_ref}} origin/${{github.head_ref}} || echo "staying on main"
 
       - name: Clone portal client
-        uses: actions/checkout@e2f20e631ae6d7dd3b768f56a5d2af784dd54791 # tag=v3
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
         with:
           repository: USSF-ORBIT/ussf-portal-client
           path: ./ussf-portal-client
@@ -39,7 +39,7 @@ jobs:
           /usr/bin/git checkout --progress --force -B ${{github.head_ref}} origin/${{github.head_ref}} || echo "staying on main"
 
       - name: Clone cms
-        uses: actions/checkout@e2f20e631ae6d7dd3b768f56a5d2af784dd54791 # tag=v3
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
         with:
           repository: USSF-ORBIT/ussf-portal-cms
           path: ./ussf-portal-cms
@@ -57,7 +57,7 @@ jobs:
         id: engines
 
       - name: Set up node
-        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516 # tag=v3
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
         with:
           node-version: ${{ steps.engines.outputs.nodeVersion }}
 
@@ -106,19 +106,19 @@ jobs:
 
       - name: Upload Playwright test results
         if: always()
-        uses: actions/upload-artifact@6673cd052c4cd6fcf4b4e6e60ea986c889389535 # tag=v3
+        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3
         with:
           name: playwright-results
           path: ./e2e-tests/e2e/test-results
 
       - name: Docker logs
-        uses: jwalton/gh-docker-logs@a8cb5301950dd4d2b86619cd487b3b281526b178 # v2.2.0
+        uses: jwalton/gh-docker-logs@59c9656cd3cb7542525f3dce7ae2f44c0ff85d66 # v2.2.1
         if: ${{ always() }}
         with:
           dest: "./docker-logs"
 
       - name: Upload logs
-        uses: actions/upload-artifact@6673cd052c4cd6fcf4b4e6e60ea986c889389535 # tag=v3
+        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3
         if: always()
         with:
           name: container-logs
