@@ -102,7 +102,7 @@ services:
   # Required by CMS
   keystone-db:
     container_name: keystone-db
-    image: postgres:14.3
+    image: postgres:14.7
     restart: always
     ports:
       - '5432:5432'
