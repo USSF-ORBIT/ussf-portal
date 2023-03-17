@@ -19,7 +19,7 @@ const test = base.extend<TestingLibraryFixtures & CustomFixtures>({
 
 const { expect } = test
 
-test.only('can add/remove Featured Shortcuts section to My Space', async ({
+test('can add/remove Featured Shortcuts section to My Space', async ({
   page,
   loginPage,
 }) => {
