@@ -37,7 +37,7 @@ test('can add/remove Featured Shortcuts section to My Space', async ({
   // Cannot add Featured Shortcuts twice
   await page.locator('text=Add section').click()
   const button = page.locator('text=Add Featured Shortcuts section')
-  expect(button).toBeDisabled()
+  await expect(button).toBeDisabled()
 
   // Remove Featured Shortcuts
   await page.locator('[aria-label="Section Settings"]').first().click()
