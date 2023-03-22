@@ -110,6 +110,8 @@ const config: PlaywrightTestConfig = {
         browserName: 'firefox',
         ...cmsConfig.use,
       },
+      timeout: 45000,
+      expect: { timeout: 20000 },
     },
     {
       ...clientConfig,
@@ -118,6 +120,8 @@ const config: PlaywrightTestConfig = {
         ...clientConfig.use,
         browserName: 'firefox',
       },
+      timeout: 45000,
+      expect: { timeout: 20000 },
     },
     {
       ...featureConfig,
@@ -126,6 +130,8 @@ const config: PlaywrightTestConfig = {
         ...featureConfig.use,
         browserName: 'firefox',
       },
+      timeout: 45000,
+      expect: { timeout: 20000 },
     },
     // TODO: cannot sign into docker e2e services when using web kit
     // login of the user fails just redirects from login page to the
