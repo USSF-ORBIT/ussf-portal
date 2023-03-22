@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Clone E2E tests repo
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+        uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f # v3
         with:
           repository: USSF-ORBIT/ussf-portal
           path: ./e2e-tests
@@ -33,7 +33,7 @@ jobs:
           /usr/bin/git checkout --progress --force -B ${{github.event.merge_group.head_ref}} origin/${{github.event.merge_group.head_ref}} || echo "staying on main"
 
       - name: Clone portal client
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+        uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f # v3
         with:
           repository: USSF-ORBIT/ussf-portal-client
           path: ./ussf-portal-client
@@ -55,7 +55,7 @@ jobs:
           /usr/bin/git checkout --progress --force -B ${{github.event.merge_group.head_ref}} origin/${{github.event.merge_group.head_ref}} || echo "staying on main"
 
       - name: Clone cms
-        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3
+        uses: actions/checkout@24cb9080177205b6e8c946b17badbe402adc938f # v3
         with:
           repository: USSF-ORBIT/ussf-portal-cms
           path: ./ussf-portal-cms
