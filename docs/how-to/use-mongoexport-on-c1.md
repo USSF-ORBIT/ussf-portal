@@ -26,4 +26,5 @@ Note: the db name in Test is `test` and `portal` in Prod
 7. Examine the file. If the export worked in Test, you can move on to Prod.
 
 ## Exfiltrating the Data from Cloud One
-As the Cloud One Bastion Hosts do not have Internet Access, we need to use DoD Safe to exfiltrate the data from the zone. Follow the documentation at [Download a file from Cloud One](download-file-from-c1.md).
+As the Cloud One Bastion Hosts do not have Internet Access, we need to use DoD Safe to exfiltrate the data from the zone. Follow the documentation at [Download a file from Cloud One](transfer-file-to-from-c1-dod-safe.md#downloading-a-file-from-cloud-one
+).
