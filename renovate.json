@@ -7,17 +7,24 @@
     "packages:eslint",
     "packages:jsUnitTest"
   ],
+  "labels": ["dependencies"],
   "packageRules": [
     {
-      "rebaseWhen": "behind-base-branch",
-      "matchUpdateTypes": ["patch", "minor", "pin", "digest"],
-      "automerge": true,
-      "lockFileMaintenance": { "enabled": true },
-      "labels": ["dependencies"]
+      "description": "Group minor and patch updates for Node into a single PR",
+      "groupName": "node",
+      "matchSourceUrls": ["https://github.com/nodejs/node"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "labels": ["node"]
     },
     {
-      "automerge": true,
-      "description": "Group minor and patch updates into a single PR",
+      "description": "Group minor and patch updates for devDependencies into a single PR",
+      "groupName": "devDependencies (non-major)",
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "labels": ["devDependencies"]
+    },
+    {
+      "description": "Group minor and patch updates for NPM into a single PR",
       "groupName": "dependencies",
       "managers": ["npm"],
       "matchUpdateTypes": ["minor", "patch"]
@@ -28,9 +35,22 @@
       "enabled": false
     },
     {
+      "description": "Group minor and patch updates for github-actions into a single PR",
       "groupName": "github-actions",
-      "managers": ["github-actions"],
+      "matchManagers": ["github-actions"],
       "matchUpdateTypes": ["minor", "patch"],
+      "labels": ["github-actions"]
+    },
+    {
+      "description": "Group minor and patch updates for docker-compose files into a single PR",
+      "groupName": "docker-compose",
+      "managers": ["docker-compose"],
+      "matchUpdateTypes": ["minor", "patch"]
+    },
+    {
+      "rebaseWhen": "behind-base-branch",
+      "matchUpdateTypes": ["patch", "minor", "pin", "digest"],
+      "lockFileMaintenance": { "enabled": true },
       "labels": ["dependencies"]
     }
   ],
