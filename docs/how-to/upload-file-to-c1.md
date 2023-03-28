@@ -11,7 +11,7 @@ Cloud One Bastion Hosts are `Windows x86-64 based virtual machines`. There is al
 You can also do a direct download of the file from `DoD SAFE` if you have previously created a dropoff request. 
 
 ## Uploading the file via Artifactory
-1. Prepare the file for upload. Be aware that if the file is meant to be run in the Bastion host, it must be a portal binary for `Windows x86-64`. If the file requires Administrative Privileges to install something, it will not run in the Windows VM. Consider zipping the file as well.
+1. Prepare the file for upload. Be aware that if the file is meant to be run in the Bastion host, it must be a portable binary for `Windows x86-64`. If the file requires Administrative Privileges to install something, it will not run in the Windows VM. Consider zipping the file as well.
 2. Navigate to Dev Artifactory and change repositories to `Artifactory/Artifacts/PORTALIncoming` in the left navigation.
 3. Click `⤒ Deploy` in the top right and click "Drop file or Select File" and select the file to upload. You may also click and drop a file. 
 4. When the file is uploaded, edit the `Target Path` field by deleting the leading `/` as this will attempt to deploy the file to the Root repository (which will be denied).

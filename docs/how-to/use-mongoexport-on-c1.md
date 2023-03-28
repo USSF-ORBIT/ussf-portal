@@ -17,10 +17,10 @@ In order to export MongoDB (DocumentDB on AWS), we need to have access to a host
 3. Take note of the `mongo shell` command to connect to the cluster. We will be taking several of the options and using them in `mongoexport`. Particularly we will be copying the values/flags `ssl, host, sslCAFile, and username`.
 4. In AWS Console, navigate to the System Manager service and open the Parameter Store. Select `/{{ env }}/portal-client/db/docdb/user/muser/pwd` and take note of the password. Keep this tab open as you will need to paste this password when prompted by the `mongoexport` command.
 5. Open Powershell and navigate to the directory where you unzipped `mongoexport`. You can use `cd` to change directory. Try `.\mongoexport.exe --help` to see available options if you wish to further modify the command.
-6. Enter the following command, filling in the values. When prompted, paste or type in the password. `Right Click` to paste the password in the Powershell prompt on a macbook keyboard in the Windows VM.
+6. Enter the following command, filling in the values. When prompted, paste or type in the password. `Right Click` to paste the password in the Powershell prompt on a macbook in the Windows VM.
 
 ```
-.\mongoexport.exe --ssl --sslCAFile {{ CA certificate filename}} --host="{{ host }}" --db={{ db name }} --collection=users --username={{ username }} --out={{ output filename }} 
+.\mongoexport.exe --ssl --sslCAFile {{ CA certificate filename}} --host="{{ host }}" --db={{ db name }} --collection=users --username={{ username }} --out={{ output filename }} --jsonArray
 ```
 Note: the db name in Test is `test` and `portal` in Prod
 7. Examine the file. If the export worked in Test, you can move on to Prod.

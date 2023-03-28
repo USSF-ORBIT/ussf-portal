@@ -19,7 +19,7 @@ Cloud One Bastion Hosts are `Windows x86-64 based virtual machines` and have no 
 9.  Download the file.
 
 ## Uploading a File to Cloud One
-1. Prepare the file for upload. Be aware that if the file is meant to be run in the Bastion host, it must be a portal binary for `Windows x86-64`. If the file requires Administrative Privileges to install something, it will not run in the Windows VM. Consider zipping the file as well.
+1. Prepare the file for upload. Be aware that if the file is meant to be run in the Bastion host, it must be a portable binary for `Windows x86-64`. If the file requires Administrative Privileges to install something, it will not run in the Windows VM. Consider zipping the file as well.
 2. Open [DoD Safe](https://safe.apps.mil/) and select `Request a Drop-off`
 3. Add your Name and Email to the recipients in the fields under `Who do you want to send the request to:`. You can add any other emails you want if you are working with others.
 4. Fill out the Subject and Body of the Request if applicable.
