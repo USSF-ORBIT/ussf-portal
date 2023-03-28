@@ -81,7 +81,7 @@ services:
   # Shared between CMS and Portal client
   redis:
     container_name: portal_redis
-    image: redis:6.2
+    image: redis:7.0
     ports:
       - '6379:6379'
 
