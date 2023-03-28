@@ -126,7 +126,7 @@ jobs:
         run: npx playwright install --with-deps
         working-directory: ./e2e-tests/e2e
 
-      - name: Run Playwright tests across all browsers
+      - name: Run Playwright tests on ${{ matrix.browser }} browser
         # forbid only will fail build if a test has .only on it
         run: yarn e2e:${{ matrix.browser }} --forbid-only
         working-directory: ./e2e-tests/e2e
