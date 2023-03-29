@@ -8,18 +8,22 @@
     "packages:jsUnitTest"
   ],
   "labels": ["dependencies"],
+  "lockFileMaintenance": {
+    "enabled": true
+  },
   "packageRules": [
     {
-      "description": "Group minor and patch updates for Node into a single PR",
+      "description": "Group updates for Node.js into a single PR",
       "groupName": "node",
-      "matchDepNames": ["node"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "lockFileMaintenance": { "enabled": true },
-      "labels": ["node"]
+      "labels": ["node"],
+      "commitMessageTopic": "Node.js",
+      "matchPackageNames": ["node"],
+      "matchPackagePatterns": ["/node$"]
     },
     {
       "description": "Group minor and patch updates for devDependencies into a single PR",
-      "groupName": "devDependencies (non-major)",
+      "groupName": "devDependencies",
+      "managers": ["npm"],
       "matchDepTypes": ["devDependencies"],
       "matchUpdateTypes": ["minor", "patch"],
       "labels": ["devDependencies"]
@@ -29,7 +33,6 @@
       "groupName": "dependencies",
       "managers": ["npm"],
       "matchUpdateTypes": ["minor", "patch"],
-      "lockFileMaintenance": { "enabled": true },
       "labels": ["npm Dependencies"]
     },
     {
@@ -54,7 +57,6 @@
     {
       "rebaseWhen": "behind-base-branch",
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
-      "lockFileMaintenance": { "enabled": true },
       "labels": ["dependencies"]
     }
   ],
