@@ -7,7 +7,7 @@ This documentation assumes a couple of things.
 1. You have `jq` installed.
    You can install it via brew `brew install jq`
 2. You have a file with data from the user collection in JSON format.
-   TODO: link to instructions on generating export file
+   1. If the data is in Cloud One DocumentDB, [follow documentation on how to export mongodb on C1.](use-mongoexport-on-c1.md#use-mongoexport-on-cloud-one)
 
 Tips: [JQ Manual](https://stedolan.github.io/jq/manual/) for details on built in functions and what they do. If you want to experiment not on the cli you can use [JQ Play's](https://jqplay.org) web interface to try things out quickly.
 
