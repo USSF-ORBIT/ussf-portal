@@ -8,6 +8,9 @@ permissions:
   contents: read
 jobs:
   run-e2e-tests:
+    strategy:
+      matrix:
+        browser: ["chromium", "firefox", "chrome", "msedge"]
     runs-on: ubuntu-latest
     steps:
       - name: Clone E2E tests repo
@@ -123,9 +126,8 @@ jobs:
         run: npx playwright install --with-deps
         working-directory: ./e2e-tests/e2e
 
-      - name: Run Playwright tests across all browsers
-        # forbid only will fail build if a test has .only on it
-        run: yarn playwright test --forbid-only
+      - name: Run Playwright tests on ${{ matrix.browser }} browser
+        run: yarn e2e:${{ matrix.browser }} --forbid-only
         working-directory: ./e2e-tests/e2e
 
       - name: Upload Playwright test results
