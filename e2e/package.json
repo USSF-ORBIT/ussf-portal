@@ -15,6 +15,7 @@
     "e2e:all": "yarn --cwd playwright/ playwright test --forbid-only",
     "e2e:test": "yarn --cwd playwright/ playwright test --project feature-chromium --project cms-chromium --project client-chromium",
     "e2e:debug": "PWDEBUG=1 yarn --cwd playwright/ playwright test --headed --project feature-chromium --project cms-chromium --project client-chromium",
+    "e2e:chromium": "yarn --cwd playwright/ playwright test --project feature-chromium --project cms-chromium --project client-chromium",
     "e2e:chrome": "yarn --cwd playwright/ playwright test --project feature-chrome --project cms-chrome --project client-chrome",
     "e2e:firefox": "yarn --cwd playwright/ playwright test --project feature-firefox --project cms-firefox --project client-firefox",
     "e2e:msedge": "yarn --cwd playwright/ playwright test --project feature-msedge --project cms-msedge --project client-msedge",
