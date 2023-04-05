@@ -7,20 +7,33 @@
     "packages:eslint",
     "packages:jsUnitTest"
   ],
+  "labels": ["dependencies"],
+  "lockFileMaintenance": {
+    "enabled": true
+  },
   "packageRules": [
     {
-      "rebaseWhen": "behind-base-branch",
-      "matchUpdateTypes": ["patch", "minor", "pin", "digest"],
-      "automerge": true,
-      "lockFileMaintenance": { "enabled": true },
-      "labels": ["dependencies"]
+      "description": "Group updates for Node.js into a single PR",
+      "groupName": "node",
+      "labels": ["node"],
+      "commitMessageTopic": "Node.js",
+      "matchPackageNames": ["node"],
+      "matchPackagePatterns": ["/node$"]
     },
     {
-      "automerge": true,
-      "description": "Group minor and patch updates into a single PR",
+      "description": "Group minor and patch updates for devDependencies into a single PR",
+      "groupName": "devDependencies",
+      "managers": ["npm"],
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "labels": ["devDependencies"]
+    },
+    {
+      "description": "Group minor and patch updates for NPM into a single PR",
       "groupName": "dependencies",
       "managers": ["npm"],
-      "matchUpdateTypes": ["minor", "patch"]
+      "matchUpdateTypes": ["minor", "patch"],
+      "labels": ["npm Dependencies"]
     },
     {
       "managers": ["dockerfile"],
@@ -28,9 +41,22 @@
       "enabled": false
     },
     {
+      "description": "Group minor and patch updates for github-actions into a single PR",
       "groupName": "github-actions",
-      "managers": ["github-actions"],
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["minor", "patch", "digest"],
+      "labels": ["github-actions"]
+    },
+    {
+      "description": "Group minor and patch updates for docker-compose files into a single PR",
+      "groupName": "docker-compose",
+      "managers": ["docker-compose"],
       "matchUpdateTypes": ["minor", "patch"],
+      "labels": ["docker-compose"]
+    },
+    {
+      "rebaseWhen": "behind-base-branch",
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
       "labels": ["dependencies"]
     }
   ],
