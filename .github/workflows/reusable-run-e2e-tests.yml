@@ -21,7 +21,7 @@ jobs:
           fetch-depth: 0 # fetch all branch information, needed to checkout the branch if present later
 
       - name: Checkout E2E ${{github.head_ref}} or main
-        if: (github.event_name == 'push' || github.event_name == 'pull_request') &&  !startsWith(github.head_ref, 'renovate'))
+        if: (github.event_name == 'push' || github.event_name == 'pull_request') &&  !startsWith(github.head_ref, 'renovate')
         working-directory: ./e2e-tests
         run: |
           # checkout the branch that started this pull request or stay on main if no such branch
@@ -35,7 +35,7 @@ jobs:
           fetch-depth: 0 # fetch all branch information, needed to checkout the branch if present later
 
       - name: Checkout portal client ${{github.head_ref}} or main
-        if: (github.event_name == 'push' || github.event_name == 'pull_request') &&  !startsWith(github.head_ref, 'renovate'))
+        if: (github.event_name == 'push' || github.event_name == 'pull_request') &&  !startsWith(github.head_ref, 'renovate')
         working-directory: ./ussf-portal-client
         run: |
           # checkout the branch that started this pull request or stay on main if no such branch
@@ -49,7 +49,7 @@ jobs:
           fetch-depth: 0 # fetch all branch information, needed to checkout the branch if present later
 
       - name: Checkout cms ${{github.head_ref}} or main
-        if: (github.event_name == 'push' || github.event_name == 'pull_request') &&  !startsWith(github.head_ref, 'renovate'))
+        if: (github.event_name == 'push' || github.event_name == 'pull_request') &&  !startsWith(github.head_ref, 'renovate')
         working-directory: ./ussf-portal-cms
         run: |
           # checkout the branch that started this pull request or stay on main if no such branch
