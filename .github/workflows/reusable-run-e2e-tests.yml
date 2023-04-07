@@ -13,71 +13,47 @@ jobs:
         browser: ["chromium", "firefox", "chrome", "msedge"]
     runs-on: ubuntu-latest
     steps:
-      - name: Clone E2E tests repo
+      - name: Clone E2E tests repo # defaults to checking out the reference or SHA for the event that triggered this workflow. Otherwise, uses the default branch.
         uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3 # v3
         with:
           repository: USSF-ORBIT/ussf-portal
           path: ./e2e-tests
           fetch-depth: 0 # fetch all branch information, needed to checkout the branch if present later
-          ref: main # checkout main by default
 
       - name: Checkout E2E ${{github.head_ref}} or main
-        if: ${{ github.event_name == 'push' || github.event_name == 'pull_request' }}
+        if: (github.event_name == 'push' || github.event_name == 'pull_request') && !startsWith(github.head_ref, 'renovate')
         working-directory: ./e2e-tests
         run: |
           # checkout the branch that started this pull request or stay on main if no such branch
           /usr/bin/git checkout --progress --force -B ${{github.head_ref}} origin/${{github.head_ref}} || echo "staying on main"
 
-      - name: Checkout E2E ${{github.event.merge_group.head_ref}} or main
-        if: ${{ github.event_name == 'merge_group' }}
-        working-directory: ./e2e-tests
-        run: |
-          # checkout the branch that started this pull request or stay on main if no such branch
-          /usr/bin/git checkout --progress --force -B ${{github.event.merge_group.head_ref}} origin/${{github.event.merge_group.head_ref}} || echo "staying on main"
-
-      - name: Clone portal client
+      - name: Clone portal client  # defaults to checking out the reference or SHA for the event that triggered this workflow. Otherwise, uses the default branch.
         uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3 # v3
         with:
           repository: USSF-ORBIT/ussf-portal-client
           path: ./ussf-portal-client
           fetch-depth: 0 # fetch all branch information, needed to checkout the branch if present later
-          ref: main # checkout main by default
 
       - name: Checkout portal client ${{github.head_ref}} or main
-        if: ${{ github.event_name == 'push' || github.event_name == 'pull_request' }}
+        if: (github.event_name == 'push' || github.event_name == 'pull_request') && !startsWith(github.head_ref, 'renovate')
         working-directory: ./ussf-portal-client
         run: |
           # checkout the branch that started this pull request or stay on main if no such branch
           /usr/bin/git checkout --progress --force -B ${{github.head_ref}} origin/${{github.head_ref}} || echo "staying on main"
 
-      - name: Checkout portal client ${{github.event.merge_group.head_ref}} or main
-        if: ${{ github.event_name == 'merge_group' }}
-        working-directory: ./ussf-portal-client
-        run: |
-          # checkout the branch that started this pull request or stay on main if no such branch
-          /usr/bin/git checkout --progress --force -B ${{github.event.merge_group.head_ref}} origin/${{github.event.merge_group.head_ref}} || echo "staying on main"
-
-      - name: Clone cms
+      - name: Clone cms  # defaults to checking out the reference or SHA for the event that triggered this workflow. Otherwise, uses the default branch.
         uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3 # v3
         with:
           repository: USSF-ORBIT/ussf-portal-cms
           path: ./ussf-portal-cms
           fetch-depth: 0 # fetch all branch information, needed to checkout the branch if present later
-          ref: main # checkout main by default
 
       - name: Checkout cms ${{github.head_ref}} or main
-        if: ${{ github.event_name == 'push' || github.event_name == 'pull_request' }}
+        if: (github.event_name == 'push' || github.event_name == 'pull_request') && !startsWith(github.head_ref, 'renovate')
         working-directory: ./ussf-portal-cms
         run: |
           # checkout the branch that started this pull request or stay on main if no such branch
           /usr/bin/git checkout --progress --force -B ${{github.head_ref}} origin/${{github.head_ref}} || echo "staying on main"
-
-      - name: Checkout cms ${{github.event.merge_group.head_ref}} or main
-        if: ${{ github.event_name == 'merge_group' }}
-        working-directory: ./ussf-portal-cms
-        run: |
-          # checkout the branch that started this pull request or stay on main if no such branch
-          /usr/bin/git checkout --progress --force -B ${{github.event.merge_group.head_ref}} origin/${{github.event.merge_group.head_ref}} || echo "staying on main"
 
       - name: Read Node.js version from package.json
         run: echo "nodeVersion=$(node -p "require('./e2e-tests/e2e/package.json').engines.node")" >> $GITHUB_OUTPUT
