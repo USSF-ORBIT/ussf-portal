@@ -13,12 +13,16 @@
   },
   "packageRules": [
     {
-      "description": "Group updates for Node.js into a single PR",
-      "groupName": "node",
-      "labels": ["node"],
-      "commitMessageTopic": "Node.js",
-      "matchPackageNames": ["node"],
-      "matchPackagePatterns": ["/node$"]
+      "rebaseWhen": "behind-base-branch",
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "labels": ["dependencies"]
+    },
+    {
+      "description": "Group minor and patch updates for NPM into a single PR",
+      "groupName": "dependencies",
+      "managers": ["npm"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "labels": ["npm Dependencies"]
     },
     {
       "description": "Group minor and patch updates for devDependencies into a single PR",
@@ -27,13 +31,6 @@
       "matchDepTypes": ["devDependencies"],
       "matchUpdateTypes": ["minor", "patch"],
       "labels": ["devDependencies"]
-    },
-    {
-      "description": "Group minor and patch updates for NPM into a single PR",
-      "groupName": "dependencies",
-      "managers": ["npm"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "labels": ["npm Dependencies"]
     },
     {
       "managers": ["dockerfile"],
@@ -55,9 +52,12 @@
       "labels": ["docker-compose"]
     },
     {
-      "rebaseWhen": "behind-base-branch",
-      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
-      "labels": ["dependencies"]
+      "description": "Group updates for Node.js into a single PR",
+      "groupName": "node",
+      "labels": ["node"],
+      "commitMessageTopic": "Node.js",
+      "matchPackageNames": ["node"],
+      "matchPackagePatterns": ["/node$"]
     }
   ],
   "ignorePresets": [":prHourlyLimit2"]
