@@ -28,20 +28,20 @@ test('can add/remove Guardian Ideal section to My Space', async ({
 
   await expect(page.locator('text=WELCOME, FLOYD KING')).toBeVisible()
 
-  // Add Guardian Ideal to My Space
-  await page.locator('text=Add section').click()
-  await page.locator('text=Add Guardian Ideal section').click()
-
-  await expect(
-    page.locator('text=Connect in a Collaborative Environment')
-  ).toBeVisible()
-
   // Remove Guardian Ideal
-  await page.locator('[aria-label="Section Settings"]').first().click()
+  await page.locator('[aria-label="Section Settings"]').last().click()
   await page.locator('text=Remove Guardian Ideal section').click()
   await page.locator('[data-testid="modalFooter"] >> text=Delete').click()
 
   await expect(
     page.locator('text=Connect in a Collaborative Environment')
   ).toBeHidden()
+
+  // Add Guardian Ideal to My Space
+  await page.locator('[aria-label="Add section"]').click()
+  await page.locator('text=Add Guardian Ideal section').click()
+
+  await expect(
+    page.locator('text=Connect in a Collaborative Environment')
+  ).toBeVisible()
 })
