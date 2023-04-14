@@ -16,7 +16,7 @@
 - [How To Upload a File to C1](./how-to/upload-file-to-c1.md)
 - [How To Use jq to Collect Stats on MongoDb User Data](./how-to/use-jq-to-collect-stats-on-mongo-db-data.md)
 - [How To Use mongoexport on C1](./how-to/use-mongoexport-on-c1.md)
-
+- [How to manually trigger a Happo comparison](./how-to/run-happo-comparison-manually.md)
 
 ## Architectural Decision Records
 
