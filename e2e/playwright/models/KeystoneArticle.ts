@@ -8,6 +8,8 @@ type ArticleFields = {
   slug?: string
   preview?: string
   videoLink?: string
+  label?: string
+  tag?: string
 }
 
 export class KeystoneArticlePage {
@@ -25,6 +27,8 @@ export class KeystoneArticlePage {
     category = 'O',
     preview = undefined,
     videoLink = undefined,
+    label = undefined,
+    tag = undefined,
   }: ArticleFields) {
     await this.page.locator('label[for="category"]').click()
     await this.page.keyboard.type(category)
@@ -49,6 +53,18 @@ export class KeystoneArticlePage {
       await this.page.locator('input >> nth=4').fill('My Test Video Title')
       await this.page.locator('input >> nth=5').fill(videoLink)
       await this.page.locator('text=Done').click()
+    }
+
+    if (label) {
+      await this.page.getByRole('group', { name: 'Labels' }).click()
+      await this.page.keyboard.type(label)
+      await this.page.keyboard.press('Enter')
+    }
+
+    if (tag) {
+      await this.page.getByRole('group', { name: 'Tags' }).click()
+      await this.page.keyboard.type(tag)
+      await this.page.keyboard.press('Enter')
     }
   }
 
