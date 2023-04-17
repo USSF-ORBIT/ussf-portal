@@ -25,7 +25,7 @@ const test = base.extend<TestingLibraryFixtures & CustomFixtures>({
 
 const { expect } = test
 
-test.only('can view filtered article results with a specific tag or label', async ({
+test('can view filtered article results with a specific tag or label', async ({
   page,
   loginPage,
   keystoneArticlePage,
