@@ -9,6 +9,7 @@
 ## How-tos
 
 - [How To Update Github Actions](./how-to/updating-github-actions.md)
+- [How to test a release](./how-to/release-testing.md)
 - [How to Release](./how-to/releasing.md)
 - [How to manage JS dependencies](./how-to/dependencies.md)
 - [How to run and/or update the e2e tests](./how-to/run-or-update-e2e-tests.md)
