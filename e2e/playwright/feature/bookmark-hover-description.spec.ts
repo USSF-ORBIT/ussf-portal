@@ -28,7 +28,7 @@ describe('Hovering over a bookmark in MySpace', () => {
     await loginPage.login(portalUser1.username, portalUser1.password)
     await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
 
-    await page.locator('text=vMPF').hover()
+    await page.locator('text=vMPF').first().hover()
     await page.locator('[data-testid="triggerElement"]').hover()
     await expect(
       page.locator('text=View your deployment band and other MPF information.')
