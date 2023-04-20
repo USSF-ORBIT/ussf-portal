@@ -8,15 +8,17 @@
 
 ## How-tos
 
-- [How To Update Github Actions](./how-to/updating-github-actions.md)
+- [How to Update Github Actions](./how-to/updating-github-actions.md)
+- [How to test a release](./how-to/release-testing.md)
 - [How to Release](./how-to/releasing.md)
 - [How to manage JS dependencies](./how-to/dependencies.md)
 - [How to run and/or update the e2e tests](./how-to/run-or-update-e2e-tests.md)
-- [How To Transfer a File To and From C1 using DoD SAFE](./how-to/transfer-file-to-from-c1-dod-safe.md)
-- [How To Upload a File to C1](./how-to/upload-file-to-c1.md)
-- [How To Use jq to Collect Stats on MongoDb User Data](./how-to/use-jq-to-collect-stats-on-mongo-db-data.md)
-- [How To Use mongoexport on C1](./how-to/use-mongoexport-on-c1.md)
+- [How to Transfer a File To and From C1 using DoD SAFE](./how-to/transfer-file-to-from-c1-dod-safe.md)
+- [How to Upload a File to C1](./how-to/upload-file-to-c1.md)
+- [How to Use jq to Collect Stats on MongoDb User Data](./how-to/use-jq-to-collect-stats-on-mongo-db-data.md)
+- [How to Use mongoexport on C1](./how-to/use-mongoexport-on-c1.md)
 - [How to manually trigger a Happo comparison](./how-to/run-happo-comparison-manually.md)
+- [How to review a pull request](./how-to/review-pull-request.md)
 
 ## Architectural Decision Records
 
