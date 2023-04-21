@@ -8,8 +8,8 @@ services:
       dockerfile: Dockerfile
       target: e2e
       cache_from:
-        - '${PORTAL_REPO}:builder'
-        - '${PORTAL_REPO}:e2e'
+        - '${ECR_REGISTRY}/docker-build-cache:portal-client-builder'
+        - '${ECR_REGISTRY}/docker-build-cache:portal-client-e2e'
     restart: always
     ports:
       - '3000:3000'
