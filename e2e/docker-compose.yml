@@ -8,8 +8,8 @@ services:
       dockerfile: Dockerfile
       target: e2e
       cache_from:
-        - '${PORTAL_REPO}:builder'
-        - '${PORTAL_REPO}:e2e'
+        - '${ECR_REGISTRY}/docker-build-cache:portal-client-builder'
+        - '${ECR_REGISTRY}/docker-build-cache:portal-client-e2e'
     restart: always
     ports:
       - '3000:3000'
@@ -40,8 +40,8 @@ services:
       dockerfile: Dockerfile
       target: 'e2e${LOCAL_BUILD}'
       cache_from:
-        - '${CMS_REPO}:builder'
-        - '${CMS_REPO}:e2e'
+        - '${ECR_REGISTRY}/docker-build-cache:keystone-builder'
+        - '${ECR_REGISTRY}/docker-build-cache:keystone-e2e'
     restart: always
     ports:
       - '3001:3001'
