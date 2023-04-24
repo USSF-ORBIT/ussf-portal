@@ -1,8 +1,8 @@
 # Stricter lint checks and how to add exceptions when needed
 
-- Status: Draft
+- Status: Accepted
 - Deciders: @gidjin @abbyoung @jcbcapps @minhlai
-- Date: 2023-04-21
+- Date: 2023-04-24
 
 ## Context and Problem Statement
 
