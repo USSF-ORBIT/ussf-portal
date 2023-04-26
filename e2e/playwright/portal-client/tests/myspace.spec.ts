@@ -38,7 +38,7 @@ describe('MySpace', () => {
     await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
 
     // Create a custom collection
-    await page.locator('text=Add section').click()
+    await page.locator('text=Add widget').click()
     await page.locator('text=Create new collection').click()
     await page
       .locator('[placeholder="Name this collection"]')
@@ -202,21 +202,21 @@ describe('MySpace', () => {
     await expect(page.locator('text=Updated Collection Title')).toBeHidden()
   })
 
-  test('can add/remove the News Section to My Space', async ({
+  test('can add/remove the News Widget to My Space', async ({
     page,
     loginPage,
   }) => {
     await loginPage.login(portalUser1.username, portalUser1.password)
     await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
 
-    // Add News Section
-    await page.locator('text=Add section').click()
-    await page.locator('text=Add news section').click()
+    // Add News Widget
+    await page.locator('text=Add widget').click()
+    await page.locator('text=Add news widget').click()
     await expect(page.locator('text=Recent News')).toBeVisible()
 
-    // Remove News Section
-    await page.locator('[aria-label="Section Settings"]').click()
-    await page.locator('text=Remove this section').click()
+    // Remove News Widget
+    await page.locator('[aria-label="Widget Settings"]').click()
+    await page.locator('text=Remove this widget').click()
     await page.locator('[data-testid="modalFooter"] >> text=Delete').click()
     await expect(page.locator('text=Recent News')).toBeHidden()
   })
