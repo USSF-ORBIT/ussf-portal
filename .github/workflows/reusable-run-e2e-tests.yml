@@ -181,7 +181,7 @@ jobs:
           branch: sc-1947/build-docker-once-and-share-with-jobs
           name: keystone-cms
           path: /tmp/keystone-cms
-          repo: ussf-portal-cms
+          repo: USSF-ORBIT/ussf-portal-cms
           if_no_artifact_found: warn
 
       - name: Download portal-client cache dir
