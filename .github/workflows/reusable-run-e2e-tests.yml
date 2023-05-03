@@ -106,6 +106,13 @@ jobs:
         with:
           name: portal-client
           path: /tmp/portal-client
+
+      - name: ls cache dirs
+        run: |
+          ls -l /tmp/keystone-cms
+          ls -l /tmp/portal-client
+          cat /tmp/keystone-cms/index.json | jq
+          cat /tmp/portal-client/index.json | jq
   # run e2e tests on each browser, using build artifacts from the build job
   run-e2e-tests:
     strategy:
@@ -197,6 +204,8 @@ jobs:
         run: |
           ls -l /tmp/keystone-cms
           ls -l /tmp/portal-client
+          cat /tmp/keystone-cms/index.json | jq
+          cat /tmp/portal-client/index.json | jq
 
       # - name: Load images
       #   run: |
