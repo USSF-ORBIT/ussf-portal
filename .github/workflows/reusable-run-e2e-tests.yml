@@ -175,6 +175,9 @@ jobs:
           docker load --input /tmp/portal-client-e2e.tar
           docker image ls -a
 
+      - name: test caching
+        run: touch ./ussf-portal-cms/test-file.txt
+
       - name: Docker compose
         run: docker compose up -d
         working-directory: ./e2e-tests/e2e
