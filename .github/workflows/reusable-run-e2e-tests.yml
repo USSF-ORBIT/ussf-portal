@@ -63,8 +63,9 @@ jobs:
         with:
           context: ./ussf-portal-cms
           tags: keystone-cms:e2e
-          cache-to: type=inline
-          outputs: type=docker,dest=/tmp/keystone-cms-e2e.tar
+          # cache-to: type=inline
+          cache-to: type=local,mode=max,dest=/tmp/keystone-cms
+          # outputs: type=docker,dest=/tmp/keystone-cms-e2e.tar
           target: e2e
           cache-from: |
             ${{ steps.login-ecr.outputs.registry }}/docker-build-cache:keystone-builder
@@ -75,24 +76,36 @@ jobs:
         with:
           context: ./ussf-portal-client
           tags: portal-client:e2e
-          cache-to: type=inline
-          outputs: type=docker,dest=/tmp/portal-client-e2e.tar
+          # cache-to: type=inline
+          cache-to: type=local,mode=max,dest=/tmp/portal-client
+          # outputs: type=docker,dest=/tmp/portal-client-e2e.tar
           target: e2e
           cache-from: |
             ${{ steps.login-ecr.outputs.registry }}/docker-build-cache:portal-client-builder
             ${{ steps.login-ecr.outputs.registry }}/docker-build-cache:portal-client-e2e
 
-      - name: Upload keystone-cms-e2e
-        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3
-        with:
-          name: keystone-cms-e2e
-          path: /tmp/keystone-cms-e2e.tar
+      # - name: Upload keystone-cms-e2e
+      #   uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3
+      #   with:
+      #     name: keystone-cms-e2e
+      #     path: /tmp/keystone-cms-e2e.tar
 
-      - name: Upload portal-client-e2e.tar
+      # - name: Upload portal-client-e2e.tar
+      #   uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3
+      #   with:
+      #     name: portal-client-e2e
+      #     path: /tmp/portal-client-e2e.tar
+      - name: Upload keystone-cms cache dir
         uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3
         with:
-          name: portal-client-e2e
-          path: /tmp/portal-client-e2e.tar
+          name: keystone-cms
+          path: /tmp/keystone-cms
+
+      - name: Upload portal-client cache dir
+        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3
+        with:
+          name: portal-client
+          path: /tmp/portal-client
   # run e2e tests on each browser, using build artifacts from the build job
   run-e2e-tests:
     strategy:
@@ -157,26 +170,42 @@ jobs:
         with:
           install: true
 
-      - name: Download keystone-cms-builder
+      # - name: Download keystone-cms-builder
+      #   uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3
+      #   with:
+      #     name: keystone-cms-e2e
+      #     path: /tmp
+
+      # - name: Download portal-client-e2e.tar
+      #   uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3
+      #   with:
+      #     name: portal-client-e2e
+      #     path: /tmp
+      - name: Download keystone-cms cache dir
         uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3
         with:
-          name: keystone-cms-e2e
+          name: keystone-cms
           path: /tmp
 
-      - name: Download portal-client-e2e.tar
+      - name: Download portal-client cache dir
         uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3
         with:
-          name: portal-client-e2e
+          name: portal-client
           path: /tmp
 
-      - name: Load images
+      - name: ls cache dirs
         run: |
-          docker load --input /tmp/keystone-cms-e2e.tar
-          docker load --input /tmp/portal-client-e2e.tar
-          docker image ls -a
+          ls -l /tmp/keystone-cms
+          ls -l /tmp/portal-client
 
-      - name: test caching
-        run: touch ./ussf-portal-cms/test-file.txt
+      # - name: Load images
+      #   run: |
+      #     docker load --input /tmp/keystone-cms-e2e.tar
+      #     docker load --input /tmp/portal-client-e2e.tar
+      #     docker image ls -a
+
+      # - name: test caching
+      #   run: touch ./ussf-portal-cms/test-file.txt
 
       - name: Docker compose
         run: docker compose up -d
