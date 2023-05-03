@@ -185,13 +185,13 @@ jobs:
         uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3
         with:
           name: keystone-cms
-          path: /tmp
+          path: /tmp/keystone-cms
 
       - name: Download portal-client cache dir
         uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3
         with:
           name: portal-client
-          path: /tmp
+          path: /tmp/portal-client
 
       - name: ls cache dirs
         run: |
