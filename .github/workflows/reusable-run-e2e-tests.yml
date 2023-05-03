@@ -64,7 +64,7 @@ jobs:
           context: ./ussf-portal-cms
           tags: keystone-cms:e2e
           # cache-to: type=inline
-          cache-to: type=local,mode=max,dest=/tmp/keystone-cms
+          cache-to: type=local,mode=max,dest=/tmp/keystone-cms,tag=e2e
           # outputs: type=docker,dest=/tmp/keystone-cms-e2e.tar
           target: e2e
           cache-from: |
@@ -77,7 +77,7 @@ jobs:
           context: ./ussf-portal-client
           tags: portal-client:e2e
           # cache-to: type=inline
-          cache-to: type=local,mode=max,dest=/tmp/portal-client
+          cache-to: type=local,mode=max,dest=/tmp/portal-client,tag=e2e
           # outputs: type=docker,dest=/tmp/portal-client-e2e.tar
           target: e2e
           cache-from: |
