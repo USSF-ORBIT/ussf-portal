@@ -3,7 +3,7 @@ services:
   # Portal client
   client:
     container_name: client
-    image: portal-client:e2e
+    # image: portal-client:e2e
     build:
       context: ../../ussf-portal-client/
       dockerfile: Dockerfile
