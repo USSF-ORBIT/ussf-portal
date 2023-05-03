@@ -58,48 +58,33 @@ jobs:
         with:
           install: true
 
-      - name: Build Keystone to e2e Stage
-        uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671 # v4
-        with:
-          context: ./ussf-portal-cms
-          tags: keystone-cms:e2e
-          # cache-to: type=inline
-          cache-to: type=local,mode=max,dest=/tmp/keystone-cms,tag=e2e
-          # outputs: type=docker,dest=/tmp/keystone-cms-e2e.tar
-          target: e2e
-          cache-from: |
-            ${{ steps.login-ecr.outputs.registry }}/docker-build-cache:keystone-builder
-            ${{ steps.login-ecr.outputs.registry }}/docker-build-cache:keystone-e2e
+      # - name: Build Keystone to e2e Stage
+      #   uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671 # v4
+      #   with:
+      #     context: ./ussf-portal-cms
+      #     tags: keystone-cms:e2e
+      #     cache-to: type=local,mode=max,dest=/tmp/keystone-cms,tag=e2e
+      #     target: e2e
+      #     cache-from: |
+      #       ${{ steps.login-ecr.outputs.registry }}/docker-build-cache:keystone-builder
+      #       ${{ steps.login-ecr.outputs.registry }}/docker-build-cache:keystone-e2e
 
       - name: Build Portal to e2e State
         uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671 # v4
         with:
           context: ./ussf-portal-client
           tags: portal-client:e2e
-          # cache-to: type=inline
           cache-to: type=local,mode=max,dest=/tmp/portal-client,tag=e2e
-          # outputs: type=docker,dest=/tmp/portal-client-e2e.tar
           target: e2e
           cache-from: |
             ${{ steps.login-ecr.outputs.registry }}/docker-build-cache:portal-client-builder
             ${{ steps.login-ecr.outputs.registry }}/docker-build-cache:portal-client-e2e
 
-      # - name: Upload keystone-cms-e2e
+      # - name: Upload keystone-cms cache dir
       #   uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3
       #   with:
-      #     name: keystone-cms-e2e
-      #     path: /tmp/keystone-cms-e2e.tar
-
-      # - name: Upload portal-client-e2e.tar
-      #   uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3
-      #   with:
-      #     name: portal-client-e2e
-      #     path: /tmp/portal-client-e2e.tar
-      - name: Upload keystone-cms cache dir
-        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3
-        with:
-          name: keystone-cms
-          path: /tmp/keystone-cms
+      #     name: keystone-cms
+      #     path: /tmp/keystone-cms
 
       - name: Upload portal-client cache dir
         uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3
@@ -107,11 +92,15 @@ jobs:
           name: portal-client
           path: /tmp/portal-client
 
+      # - name: ls cache dirs
+      #   run: |
+      #     ls -l /tmp/keystone-cms
+      #     ls -l /tmp/portal-client
+      #     cat /tmp/keystone-cms/index.json | jq
+      #     cat /tmp/portal-client/index.json | jq
       - name: ls cache dirs
         run: |
-          ls -l /tmp/keystone-cms
           ls -l /tmp/portal-client
-          cat /tmp/keystone-cms/index.json | jq
           cat /tmp/portal-client/index.json | jq
   # run e2e tests on each browser, using build artifacts from the build job
   run-e2e-tests:
@@ -163,36 +152,36 @@ jobs:
           # checkout the branch that started this pull request or stay on main if no such branch
           /usr/bin/git checkout --progress --force -B ${{github.head_ref}} origin/${{github.head_ref}} || echo "staying on main"
 
-      - name: Read Node.js version from package.json
-        run: echo "nodeVersion=$(node -p "require('./e2e-tests/e2e/package.json').engines.node")" >> $GITHUB_OUTPUT
-        id: engines
+      # - name: Read Node.js version from package.json
+      #   run: echo "nodeVersion=$(node -p "require('./e2e-tests/e2e/package.json').engines.node")" >> $GITHUB_OUTPUT
+      #   id: engines
 
-      - name: Set up node
-        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
-        with:
-          node-version: ${{ steps.engines.outputs.nodeVersion }}
+      # - name: Set up node
+      #   uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
+      #   with:
+      #     node-version: ${{ steps.engines.outputs.nodeVersion }}
 
       - uses: docker/setup-buildx-action@4b4e9c3e2d4531116a6f8ba8e71fc6e2cb6e6c8c # v2
         id: buildx
         with:
           install: true
 
-      # - name: Download keystone-cms-builder
+      # - name: Download keystone-cms cache dir
       #   uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3
       #   with:
-      #     name: keystone-cms-e2e
-      #     path: /tmp
+      #     name: keystone-cms
+      #     path: /tmp/keystone-cms
 
-      # - name: Download portal-client-e2e.tar
-      #   uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3
-      #   with:
-      #     name: portal-client-e2e
-      #     path: /tmp
-      - name: Download keystone-cms cache dir
-        uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3
+      - name: Download artifact
+        uses: dawidd6/action-download-artifact@246dbf436b23d7c49e21a7ab8204ca9ecd1fe615 # v2
         with:
+          workflow: cache-to-ecr.yml
+          workflow_conclusion: success
+          branch: sc-1947/build-docker-once-and-share-with-jobs
           name: keystone-cms
           path: /tmp/keystone-cms
+          repo: ussf-portal-cms
+          if_no_artifact_found: warn
 
       - name: Download portal-client cache dir
         uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3
@@ -220,14 +209,20 @@ jobs:
         run: docker compose up -d
         working-directory: ./e2e-tests/e2e
 
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
-        working-directory: ./e2e-tests/e2e
-
       - name: Wait for CMS & Client sysinfo to return 200
         run: yarn wait-on --timeout 60000 http://localhost:3001/api/sysinfo http://localhost:3000/api/sysinfo
         working-directory: ./e2e-tests/e2e
 
+      - name: Set up node
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
+        with:
+          node-version-file: ./e2e-tests/e2e/.node-version
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+        working-directory: ./e2e-tests/e2e
+        
       - name: Install Playwright
         run: npx playwright install --with-deps
         working-directory: ./e2e-tests/e2e
