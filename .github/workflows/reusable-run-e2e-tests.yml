@@ -175,6 +175,7 @@ jobs:
       - name: Download artifact
         uses: dawidd6/action-download-artifact@246dbf436b23d7c49e21a7ab8204ca9ecd1fe615 # v2
         with:
+          github_token: ${{secrets.ACTION_DOWNLOAD_ARTIFACT_GITHUB_TOKEN}}
           workflow: cache-to-ecr.yml
           workflow_conclusion: success
           branch: sc-1947/build-docker-once-and-share-with-jobs
