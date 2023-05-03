@@ -210,10 +210,6 @@ jobs:
         run: docker compose up -d
         working-directory: ./e2e-tests/e2e
 
-      - name: Wait for CMS & Client sysinfo to return 200
-        run: yarn wait-on --timeout 60000 http://localhost:3001/api/sysinfo http://localhost:3000/api/sysinfo
-        working-directory: ./e2e-tests/e2e
-
       - name: Set up node
         uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
         with:
@@ -228,6 +224,10 @@ jobs:
         run: npx playwright install --with-deps
         working-directory: ./e2e-tests/e2e
 
+      - name: Wait for CMS & Client sysinfo to return 200
+        run: yarn wait-on --timeout 60000 http://localhost:3001/api/sysinfo http://localhost:3000/api/sysinfo
+        working-directory: ./e2e-tests/e2e
+        
       - name: Run Playwright tests on ${{ matrix.browser }} browser
         run: yarn e2e:${{ matrix.browser }} --forbid-only
         working-directory: ./e2e-tests/e2e
