@@ -164,7 +164,7 @@ jobs:
       - uses: actions/cache/save@v3
         if: steps.restore-keystone-cache.outputs.cache-hit != 'true'
         with:
-          path: /tmp/keystone-client
+          path: /tmp/keystone-cms
           key: ${{ runner.os }}-docker-${{ hashFiles('./e2e-tests/keystone-manifest/index.json') }}
 
       - name: ls cache dirs
