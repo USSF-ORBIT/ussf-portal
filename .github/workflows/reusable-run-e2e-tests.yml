@@ -99,7 +99,7 @@ jobs:
           cat ./e2e-tests/portal-manifest/index.json | jq
 
       - uses: actions/cache/restore@v3
-        id: restore-cache
+        id: restore-client-cache
         with:
           path: /tmp/portal-client
           key: ${{ runner.os }}-docker-${{ hashFiles('./e2e-tests/portal-manifest/index.json') }}
@@ -107,7 +107,7 @@ jobs:
 
       - name: Download portal-client cache
         uses: dawidd6/action-download-artifact@246dbf436b23d7c49e21a7ab8204ca9ecd1fe615 # v2
-        if: steps.restore-cache.outputs.cache-hit != 'true'
+        if: steps.restore-client-cache.outputs.cache-hit != 'true'
         with:
           github_token: ${{secrets.ACTION_DOWNLOAD_ARTIFACT_GITHUB_TOKEN}}
           workflow: cache-to-ecr.yml
@@ -125,8 +125,32 @@ jobs:
           path: /tmp/portal-client
           key: ${{ runner.os }}-docker-${{ hashFiles('./e2e-tests/portal-manifest/index.json') }}
 
-      - name: Download artifact
+      - name: Download keystone-cms image manifest
         uses: dawidd6/action-download-artifact@246dbf436b23d7c49e21a7ab8204ca9ecd1fe615 # v2
+        with:
+          github_token: ${{secrets.ACTION_DOWNLOAD_ARTIFACT_GITHUB_TOKEN}}
+          workflow: cache-to-ecr.yml
+          workflow_conclusion: success
+          branch: test/experiment-with-docker-cache-from-remote-docker-build-artifacts
+          name: keystone-cms-index
+          path: ./e2e-tests/keystone-manifest
+          repo: USSF-ORBIT/ussf-portal-cms
+          if_no_artifact_found: warn
+
+      - name: ls cache dirs
+        run: |
+          ls -l ./e2e-tests/keystone-manifest
+          cat ./e2e-tests/keystone-manifest/index.json | jq
+
+      - uses: actions/cache/restore@v3
+        id: restore-keystone-cache
+        with:
+          path: /tmp/keystone-cms
+          key: ${{ runner.os }}-docker-${{ hashFiles('./e2e-tests/keystone-manifest/index.json') }}
+
+      - name: Download keystone-cms cache
+        uses: dawidd6/action-download-artifact@246dbf436b23d7c49e21a7ab8204ca9ecd1fe615 # v2
+        if: steps.restore-keystone-cache.outputs.cache-hit != 'true'
         with:
           github_token: ${{secrets.ACTION_DOWNLOAD_ARTIFACT_GITHUB_TOKEN}}
           workflow: cache-to-ecr.yml
