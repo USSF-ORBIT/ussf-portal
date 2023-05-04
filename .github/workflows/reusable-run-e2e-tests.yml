@@ -93,8 +93,28 @@ jobs:
       #     name: portal-client
       #     path: /tmp/portal-client
 
+      - name: Download portal-client image manifest
+        uses: dawidd6/action-download-artifact@246dbf436b23d7c49e21a7ab8204ca9ecd1fe615 # v2
+        with:
+          github_token: ${{secrets.ACTION_DOWNLOAD_ARTIFACT_GITHUB_TOKEN}}
+          workflow: cache-to-ecr.yml
+          workflow_conclusion: success
+          branch: sc-1947/build-docker-once-and-share-with-jobs
+          name: portal-client-index
+          path: /tmp/portal-client
+          repo: USSF-ORBIT/ussf-portal-client
+          if_no_artifact_found: warn
+
+      - uses: actions/cache/restore@v3
+        id: restore-cache
+        with:
+          path: /tmp/portal-client
+          key: ${{ runner.os }}-${{ hashFiles('/tmp/portal-client/index.json') }}
+
+
       - name: Download portal-client cache
         uses: dawidd6/action-download-artifact@246dbf436b23d7c49e21a7ab8204ca9ecd1fe615 # v2
+        if: steps.restore-cache.outputs.cache-hit != 'true'
         with:
           github_token: ${{secrets.ACTION_DOWNLOAD_ARTIFACT_GITHUB_TOKEN}}
           workflow: cache-to-ecr.yml
@@ -105,17 +125,12 @@ jobs:
           repo: USSF-ORBIT/ussf-portal-client
           if_no_artifact_found: warn
 
-      - name: Download portal-client image manifest
-        uses: dawidd6/action-download-artifact@246dbf436b23d7c49e21a7ab8204ca9ecd1fe615 # v2
+      - uses: actions/cache/save@v3
+        id: save-cache
+        if: steps.restore-cache.outputs.cache-hit != 'true'
         with:
-          github_token: ${{secrets.ACTION_DOWNLOAD_ARTIFACT_GITHUB_TOKEN}}
-          workflow: cache-to-ecr.yml
-          workflow_conclusion: success
-          branch: sc-1947/build-docker-once-and-share-with-jobs
-          name: portal-client-index
-          path: /tmp/
-          repo: USSF-ORBIT/ussf-portal-client
-          if_no_artifact_found: warn
+          path: /tmp/portal-client
+          key: ${{ runner.os }}-${{ hashFiles('/tmp/portal-client/index.json') }}
 
       - name: ls cache dirs
         run: |
