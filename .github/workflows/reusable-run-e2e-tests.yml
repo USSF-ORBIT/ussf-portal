@@ -137,10 +137,10 @@ jobs:
           repo: USSF-ORBIT/ussf-portal-cms
           if_no_artifact_found: warn
 
-      - name: ls cache dirs
-        run: |
-          ls -l ./e2e-tests/keystone-manifest
-          cat ./e2e-tests/keystone-manifest/index.json | jq
+      # - name: ls cache dirs
+      #   run: |
+      #     ls -l ./e2e-tests/keystone-manifest
+      #     cat ./e2e-tests/keystone-manifest/index.json | jq
 
       - uses: actions/cache/restore@v3
         id: restore-keystone-cache
