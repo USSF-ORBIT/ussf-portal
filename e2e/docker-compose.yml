@@ -44,8 +44,11 @@ services:
       target: 'e2e${LOCAL_BUILD}'
       cache_from:
         - 'type=local,src=/tmp/keystone-cms,tag=e2e'
+        - 'type=gha,scope=$GITHUB_REF_NAME-keystone-cms:e2e,mode=max'
         # - 'keystone-cms:builder'
         # - 'keystone-cms:e2e'
+      cache_to:
+        - 'type=gha,scope=$GITHUB_REF_NAME-keystone-cms:e2e,mode=max'
     ports:
       - '3001:3001'
     environment:
