@@ -105,8 +105,21 @@ jobs:
           repo: USSF-ORBIT/ussf-portal-client
           if_no_artifact_found: warn
 
+      - name: Download artifact
+        uses: dawidd6/action-download-artifact@246dbf436b23d7c49e21a7ab8204ca9ecd1fe615 # v2
+        with:
+          github_token: ${{secrets.ACTION_DOWNLOAD_ARTIFACT_GITHUB_TOKEN}}
+          workflow: cache-to-ecr.yml
+          workflow_conclusion: success
+          branch: sc-1947/build-docker-once-and-share-with-jobs
+          name: portal-client-index
+          path: /tmp/
+          repo: USSF-ORBIT/ussf-portal-client
+          if_no_artifact_found: warn
+
       - name: ls cache dirs
         run: |
+          ls -l /tmp/
           ls -l /tmp/keystone-cms
           ls -l /tmp/portal-client
           cat /tmp/keystone-cms/index.json | jq
@@ -124,6 +137,12 @@ jobs:
       - name: Docker compose
         run: docker compose up -d --build
         working-directory: ./e2e-tests/e2e
+
+      - name: ls cache dirs
+        run: |
+          ls -l /tmp/
+          ls -l /tmp/new-portal-client
+          cat /tmp/new-portal-client/index.json | jq
 
       - name: Set up node
         uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
