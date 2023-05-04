@@ -81,7 +81,7 @@ jobs:
           github_token: ${{secrets.ACTION_DOWNLOAD_ARTIFACT_GITHUB_TOKEN}}
           workflow: cache-to-ecr.yml
           workflow_conclusion: success
-          branch: sc-1947/build-docker-once-and-share-with-jobs
+          branch: test/experiment-with-docker-cache-from-remote-docker-build-artifacts
           name: keystone-cms
           path: /tmp/keystone-cms
           repo: USSF-ORBIT/ussf-portal-cms
@@ -99,7 +99,7 @@ jobs:
           github_token: ${{secrets.ACTION_DOWNLOAD_ARTIFACT_GITHUB_TOKEN}}
           workflow: cache-to-ecr.yml
           workflow_conclusion: success
-          branch: sc-1947/build-docker-once-and-share-with-jobs
+          branch: test/experiment-with-docker-cache-from-remote-docker-build-artifacts
           name: portal-client-index
           path: /tmp/portal-client
           repo: USSF-ORBIT/ussf-portal-client
@@ -109,7 +109,7 @@ jobs:
         id: restore-cache
         with:
           path: /tmp/portal-client
-          key: ${{ runner.os }}-${{ hashFiles('/tmp/portal-client/index.json') }}
+          key: ${{ runner.os }}-docker-${{ hashFiles('/tmp/portal-client/index.json') }}
 
 
       - name: Download portal-client cache
@@ -119,7 +119,7 @@ jobs:
           github_token: ${{secrets.ACTION_DOWNLOAD_ARTIFACT_GITHUB_TOKEN}}
           workflow: cache-to-ecr.yml
           workflow_conclusion: success
-          branch: sc-1947/build-docker-once-and-share-with-jobs
+          branch: test/experiment-with-docker-cache-from-remote-docker-build-artifacts
           name: portal-client
           path: /tmp/portal-client
           repo: USSF-ORBIT/ussf-portal-client
@@ -130,7 +130,7 @@ jobs:
         if: steps.restore-cache.outputs.cache-hit != 'true'
         with:
           path: /tmp/portal-client
-          key: ${{ runner.os }}-${{ hashFiles('/tmp/portal-client/index.json') }}
+          key: ${{ runner.os }}-docker-${{ hashFiles('/tmp/portal-client/index.json') }}
 
       - name: ls cache dirs
         run: |
