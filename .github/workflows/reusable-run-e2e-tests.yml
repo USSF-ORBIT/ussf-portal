@@ -185,7 +185,7 @@ jobs:
       #   run: touch ./ussf-portal-cms/test-file.txt
 
       - name: Docker compose
-        run: docker compose up -d --build
+        run: docker compose up -d
         working-directory: ./e2e-tests/e2e
 
       - name: Set up node
