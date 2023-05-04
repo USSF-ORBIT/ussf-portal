@@ -89,21 +89,20 @@ jobs:
           workflow_conclusion: success
           branch: test/experiment-with-docker-cache-from-remote-docker-build-artifacts
           name: portal-client-index
-          path: /tmp/portal-client
+          path: ./e2e-tests/portal-manifest
           repo: USSF-ORBIT/ussf-portal-client
           if_no_artifact_found: warn
 
       - name: ls cache dirs
         run: |
-          ls -l /tmp/
-          ls -l /tmp/portal-client
-          cat /tmp/portal-client/index.json | jq
+          ls -l ./e2e-tests/portal-manifest
+          cat ./e2e-tests/portal-manifest/index.json | jq
 
       - uses: actions/cache/restore@v3
         id: restore-cache
         with:
           path: /tmp/portal-client
-          key: ${{ runner.os }}-docker-${{ hashFiles('/tmp/portal-client/index.json') }}
+          key: ${{ runner.os }}-docker-${{ hashFiles('./e2e-tests/portal-manifest/index.json') }}
 
 
       - name: Download portal-client cache
@@ -124,7 +123,7 @@ jobs:
         if: steps.restore-cache.outputs.cache-hit != 'true'
         with:
           path: /tmp/portal-client
-          key: ${{ runner.os }}-docker-${{ hashFiles('/tmp/portal-client/index.json') }}
+          key: ${{ runner.os }}-docker-${{ hashFiles('./e2e-tests/portal-manifest/index.json') }}
 
       - name: Download artifact
         uses: dawidd6/action-download-artifact@246dbf436b23d7c49e21a7ab8204ca9ecd1fe615 # v2
