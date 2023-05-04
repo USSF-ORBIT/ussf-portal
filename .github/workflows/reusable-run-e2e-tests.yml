@@ -75,18 +75,6 @@ jobs:
       #     name: keystone-cms
       #     path: /tmp/keystone-cms
 
-      - name: Download artifact
-        uses: dawidd6/action-download-artifact@246dbf436b23d7c49e21a7ab8204ca9ecd1fe615 # v2
-        with:
-          github_token: ${{secrets.ACTION_DOWNLOAD_ARTIFACT_GITHUB_TOKEN}}
-          workflow: cache-to-ecr.yml
-          workflow_conclusion: success
-          branch: test/experiment-with-docker-cache-from-remote-docker-build-artifacts
-          name: keystone-cms
-          path: /tmp/keystone-cms
-          repo: USSF-ORBIT/ussf-portal-cms
-          if_no_artifact_found: warn
-
       # - name: Download portal-client cache dir
       #   uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3
       #   with:
@@ -104,6 +92,12 @@ jobs:
           path: /tmp/portal-client
           repo: USSF-ORBIT/ussf-portal-client
           if_no_artifact_found: warn
+
+      - name: ls cache dirs
+        run: |
+          ls -l /tmp/
+          ls -l /tmp/portal-client
+          cat /tmp/portal-client/index.json | jq
 
       - uses: actions/cache/restore@v3
         id: restore-cache
@@ -132,6 +126,18 @@ jobs:
           path: /tmp/portal-client
           key: ${{ runner.os }}-docker-${{ hashFiles('/tmp/portal-client/index.json') }}
 
+      - name: Download artifact
+        uses: dawidd6/action-download-artifact@246dbf436b23d7c49e21a7ab8204ca9ecd1fe615 # v2
+        with:
+          github_token: ${{secrets.ACTION_DOWNLOAD_ARTIFACT_GITHUB_TOKEN}}
+          workflow: cache-to-ecr.yml
+          workflow_conclusion: success
+          branch: test/experiment-with-docker-cache-from-remote-docker-build-artifacts
+          name: keystone-cms
+          path: /tmp/keystone-cms
+          repo: USSF-ORBIT/ussf-portal-cms
+          if_no_artifact_found: warn
+          
       - name: ls cache dirs
         run: |
           ls -l /tmp/
