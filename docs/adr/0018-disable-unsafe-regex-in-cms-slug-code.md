@@ -77,5 +77,6 @@ Tell the linter to ignore the rule and add a comment as well as an ADR to docume
 - [Detailed article about catastrophic backtrace](https://www.regular-expressions.info/catastrophic.html) **long**
 - [PR that fixed this](https://github.com/USSF-ORBIT/ussf-portal-cms/pull/258)
   - See the [src/lists/Article.ts](https://github.com/USSF-ORBIT/ussf-portal-cms/pull/258/files#diff-649e60de90721db0f671d39718f28e9534c1d7328c8ee4d32363b1c6f5ea52dc) changes on lines 25-29 and 237-248.
+- [Regex Denial of Service Tool](https://devina.io/redos-checker) - Enter the regex in question to find problems and receive an attack string that could trigger the issue (if any). 
 
 <!-- markdownlint-disable-file MD013 -->
