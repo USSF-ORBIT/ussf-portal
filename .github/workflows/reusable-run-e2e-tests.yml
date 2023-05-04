@@ -220,7 +220,17 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
         working-directory: ./e2e-tests/e2e
-        
+
+      - name: Read Playwright version from package.json
+        run: echo "version=$(node -p "require('./e2e-tests/e2e/package.json').devDependencies.@playwright/test")" >> $GITHUB_OUTPUT
+        id: playwright-version
+
+      - uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: '@playwright/test:${{ steps.playwright-version.outputs.version }}'
+
       - name: Install Playwright
         run: npx playwright install --with-deps
         working-directory: ./e2e-tests/e2e
