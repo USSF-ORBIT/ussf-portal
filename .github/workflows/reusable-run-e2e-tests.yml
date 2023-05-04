@@ -119,7 +119,6 @@ jobs:
           if_no_artifact_found: warn
 
       - uses: actions/cache/save@v3
-        id: save-cache
         if: steps.restore-client-cache.outputs.cache-hit != 'true'
         with:
           path: /tmp/portal-client
@@ -163,7 +162,6 @@ jobs:
           if_no_artifact_found: warn
 
       - uses: actions/cache/save@v3
-        id: save-cache
         if: steps.restore-keystone-cache.outputs.cache-hit != 'true'
         with:
           path: /tmp/keystone-client
