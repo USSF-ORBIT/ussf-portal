@@ -120,7 +120,7 @@ jobs:
 
       - uses: actions/cache/save@v3
         id: save-cache
-        if: steps.restore-cache.outputs.cache-hit != 'true'
+        if: steps.restore-client-cache.outputs.cache-hit != 'true'
         with:
           path: /tmp/portal-client
           key: ${{ runner.os }}-docker-${{ hashFiles('./e2e-tests/portal-manifest/index.json') }}
@@ -142,7 +142,8 @@ jobs:
       #     ls -l ./e2e-tests/keystone-manifest
       #     cat ./e2e-tests/keystone-manifest/index.json | jq
 
-      - uses: actions/cache/restore@v3
+      - name: Attempt to restore keystone-cms image cache
+        uses: actions/cache/restore@v3
         id: restore-keystone-cache
         with:
           path: /tmp/keystone-cms
@@ -160,7 +161,14 @@ jobs:
           path: /tmp/keystone-cms
           repo: USSF-ORBIT/ussf-portal-cms
           if_no_artifact_found: warn
-          
+
+      - uses: actions/cache/save@v3
+        id: save-cache
+        if: steps.restore-keystone-cache.outputs.cache-hit != 'true'
+        with:
+          path: /tmp/keystone-client
+          key: ${{ runner.os }}-docker-${{ hashFiles('./e2e-tests/keystone-manifest/index.json') }}
+
       - name: ls cache dirs
         run: |
           ls -l /tmp/
