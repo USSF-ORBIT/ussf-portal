@@ -10,8 +10,6 @@ services:
       target: e2e
       cache_from:
         - 'type=local,src=/tmp/portal-client,tag=e2e'
-      cache_to:
-        - 'type=local,src=/tmp/new-portal-client,tag=e2e'
     restart: always
     ports:
       - '3000:3000'
