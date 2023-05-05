@@ -19,7 +19,7 @@ const test = base.extend<TestingLibraryFixtures & CustomFixtures>({
 
 const { expect } = test
 
-test('can add/remove Featured Shortcuts section to My Space', async ({
+test('can add/remove Featured Shortcuts widget to My Space', async ({
   page,
   loginPage,
 }) => {
@@ -29,20 +29,20 @@ test('can add/remove Featured Shortcuts section to My Space', async ({
   await expect(page.locator('text=WELCOME, FLOYD KING')).toBeVisible()
 
   // Remove Default Featured Shortcuts
-  await page.locator('[aria-label="Section Settings"]').first().click()
-  await page.locator('text=Remove Featured Shortcuts section').click()
+  await page.locator('[aria-label="Widget Settings"]').first().click()
+  await page.locator('text=Remove Featured Shortcuts widget').click()
   await page.locator('[data-testid="modalFooter"] >> text=Delete').click()
 
   await expect(page.locator('Featured Apps')).toBeHidden()
 
   // Add Featured Shortcuts to My Space
-  await page.locator('[aria-label="Add section"]').click()
-  await page.locator('text=Add Featured Shortcuts section').click()
+  await page.locator('[aria-label="Add widget"]').click()
+  await page.locator('text=Add Featured Shortcuts widget').click()
 
   await expect(page.locator('text=Featured Shortcuts')).toBeVisible()
 
   // Cannot add Featured Shortcuts twice
-  await page.locator('[aria-label="Add section"]').click()
-  const button = page.locator('text=Add Featured Shortcuts section')
+  await page.locator('[aria-label="Add widget"]').click()
+  const button = page.locator('text=Add Featured Shortcuts widget')
   await expect(button).toBeDisabled()
 })

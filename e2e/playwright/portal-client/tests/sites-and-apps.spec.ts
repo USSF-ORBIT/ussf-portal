@@ -72,8 +72,8 @@ describe('Sites & Applications', () => {
     await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
     await expect(page.locator('text=Example Collection')).toBeVisible()
 
-    // Click 'Add Section' and navigate to /sites-and-applications
-    await page.locator('text=Add section').click()
+    // Click 'Add Widget' and navigate to /sites-and-applications
+    await page.locator('text=Add widget').click()
     await page.locator('text=Select collection from template').click()
     await expect(page).toHaveURL(
       'http://localhost:3000/sites-and-applications?selectMode=true'
