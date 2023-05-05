@@ -168,7 +168,7 @@ branches:
             "lint-e2e-tests"
           ]
       # Required. Allow owners to by pass restrictions for PRs that are just release notes or github settings changes which do not affect tests
-      # Enforce all configured restrictions for administrators. Set to true to enforce required status checks for repository administrators. Set to null to disable.
+      # Enforce all configured restrictions for administrators. Set to true to enforce required status checks for repository administrators.
       enforce_admins: false
       # Commits pushed to matching branches must have verified signatures. Set to false to disable.
       required_signatures: true
