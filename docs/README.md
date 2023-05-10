@@ -43,3 +43,4 @@ When creating a new ADR, you can copy the [template](./adr/0000-template.md).
 17. [Send AWS Cloudwatch Alarms to Slack](./adr/0017-use-cloudwatch-and-slack-for-alerting.md)
 18. [Disable Unsafe Regex Warning in the CMS Slug validation code](./adr/0018-disable-unsafe-regex-in-cms-slug-code.md)
 19. [Enable stricter lint checks and how to add exceptions](./adr/0019-stricter-lint-checks-and-how-to-add-exceptions.md)
+20. [Use AWS Certificate Manager for DoD TLS Certificates](./adr/0020-use-aws-certificate-manager-for-dod-tls-certs.md)
