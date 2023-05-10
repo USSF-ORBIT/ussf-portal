@@ -33,7 +33,6 @@ Chosen option: "Switch to using AWS Certificate Manager (ACM)", because it is th
 ### Negative Consequences 
 
 * There is a cost associated with the other services that support the expiry reminders such as EventBridge, CloudWatch, and SNS.
-* We have to modify the existing scripts and documentation regarding how to rotate the TLS Certs on AWS.
 
 ## Pros and Cons of the Options
 
@@ -42,7 +41,8 @@ Chosen option: "Switch to using AWS Certificate Manager (ACM)", because it is th
 Continue using AWS IAM Certificate Manager, and build another means of detecting certificate expirations.
 
 * Good, because other than notifying on cert expirations, IAM has worked.
-* Good, because IAM can be used for certificates in all regions but this is not likely to affect us as we are building an application for US service members and our certificates will always come from the DoD.
+* Good, because IAM can be used for certificates in all regions.
+  * This is not likely to affect us as we are building an application for US service members and our certificates will always come from the DoD.
 * Good, because there are no additional costs though the costs are minor.
 * Bad, because it would require additional engineering work to create an AWS Lambda or Fargate Task for detecting Certificate Expirations.
 * Bad, because any solution we engineer will not be as well supported as the AWS services that can perform what we need.
@@ -55,8 +55,11 @@ Switch to using AWS Certificate Manager (ACM), and use AWS' built-in feature.
 * Good, because we can use all AWS services (EventBridge, CloudWatch, and SNS) to detect cert expirations and notifications.
 * Good, because we do not have to write or maintain any code.
 * Good, because ACM is the recommendation from AWS.
-* Bad, because ACM does not support certificates from regions outside its [support regions](https://docs.aws.amazon.com/general/latest/gr/acm.html). This is not likely to affect us as we are building an application for US service members and our certificates will always come from the DoD.
+* Good, because it is simple to have the Application Load Balancer (ALB) cutover to using the ACM managed TLS certificate after it has been uploaded.
+* Bad, because ACM does not support certificates from regions outside its [support regions](https://docs.aws.amazon.com/general/latest/gr/acm.html).
+  * This is not likely to affect us as we are building an application for US service members and our certificates will always come from the DoD.
 * Bad, because there are additional costs in using those AWS Services though they are minor.
+* Bad, because we have to modify the existing scripts and documentation regarding how to rotate the TLS Certs on AWS.
 
 ## Links
 
