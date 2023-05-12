@@ -1,6 +1,6 @@
 # Use AWS Certificate Manager for DoD TLS Certificates
 
-* Status: proposed
+* Status: accepted
 * Deciders: @gidjin @abbyoung @jcbcapps @minhlai
 * Date: 05/10/2023
 
