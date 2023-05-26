@@ -39,15 +39,13 @@ describe('Drag and drop feature', () => {
     await expect(
       page.locator('[aria-label="Drag Handle"]').first()
     ).toBeFocused()
-    await page.keyboard.press('Space')
-    await page.keyboard.press('ArrowDown')
-    await page.keyboard.press('Space')
+
+    await page.locator('[aria-label="Drag Handle"]').first().press('Space')
+    await page.locator('[aria-label="Drag Handle"]').first().press('ArrowDown')
+    await page.locator('[aria-label="Drag Handle"]').first().press('Space')
+
     await expect(
       page.locator('ol > li > div > div > div > a').first()
     ).toHaveText('MyPay(opens in a new window)')
-
-    // An attempt was made to create a test that uses the mouse and click events
-    // to perform the same action, but Playwright doesn't like the drag and drop
-    // library that we are using :(
   })
 })
