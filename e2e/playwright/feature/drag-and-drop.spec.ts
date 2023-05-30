@@ -34,15 +34,22 @@ describe('Drag and drop feature', () => {
     await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
     await expect(page.locator('text=Example Collection')).toBeVisible()
 
-    // Use keyboard to drag and drop
-    await page.locator('[aria-label="Drag Handle"]').first().focus()
-    await expect(
-      page.locator('[aria-label="Drag Handle"]').first()
-    ).toBeFocused()
+    const dragHandle = page
+      .getByRole('listitem')
+      .filter({ hasText: 'Webmail(opens in a new window)' })
+      .getByRole('button', { name: 'Drag Handle' })
 
-    await page.locator('[aria-label="Drag Handle"]').first().press('Space')
-    await page.locator('[aria-label="Drag Handle"]').first().press('ArrowDown')
-    await page.locator('[aria-label="Drag Handle"]').first().press('Space')
+    const dragTo = page
+      .getByRole('listitem')
+      .filter({
+        hasText: 'MyPay(opens in a new window)',
+      })
+      .getByRole('button', { name: 'Drag Handle' })
+
+    await dragHandle.hover()
+    await page.mouse.down()
+    await dragTo.hover()
+    await page.mouse.up()
 
     await expect(
       page.locator('ol > li > div > div > div > a').first()
