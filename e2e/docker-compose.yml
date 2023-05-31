@@ -3,14 +3,12 @@ services:
   # Portal client
   client:
     container_name: client
-    image: portal-client:e2e
     build:
       context: ../../ussf-portal-client/
       dockerfile: Dockerfile
       target: e2e
       cache_from:
-        - 'portal-client:builder'
-        - 'portal-client:e2e'
+        - 'type=local,src=/tmp/portal-client,tag=e2e'
     restart: always
     ports:
       - '3000:3000'
@@ -36,14 +34,12 @@ services:
 
   cms:
     container_name: keystone-cms
-    image: keystone-cms:e2e
     build:
       context: ../../ussf-portal-cms/
       dockerfile: Dockerfile
       target: 'e2e${LOCAL_BUILD}'
       cache_from:
-        - 'keystone-cms:builder'
-        - 'keystone-cms:e2e'
+        - 'type=local,src=/tmp/keystone-cms,tag=e2e'
     ports:
       - '3001:3001'
     environment:

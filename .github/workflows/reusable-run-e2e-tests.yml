@@ -23,23 +23,21 @@ jobs:
           repo: USSF-ORBIT/ussf-portal-client
           if_no_artifact_found: warn
 
-      - name: Set portal index.json file variable for extracting json
-        id: set_portal_var
+      - name: Get docker image digest from portal-client manifest
+        id: portal_manifest
         run: |
-          content=`cat /tmp/portal-manifest/index.json`
-          echo "index=$content" >> $GITHUB_OUTPUT
+          digest=$(cat /tmp/portal-manifest/index.json | jq -r '.manifests[0].digest')
+          echo "portal_client_docker_tag=${digest##sha256:}" >> $GITHUB_OUTPUT
 
       - name: Lookup if portal-client image build cache is available
         uses: actions/cache/restore@v3
         id: restore-client-cache
-        env:
-          DIGEST: ${{fromJson(steps.set_portal_var.outputs.index).manifests[0].digest}}
         with:
           path: /tmp/portal-client
-          key: ${{ runner.os }}-docker-portal-client-${{ env.DIGEST }}
+          key: ${{ runner.os }}-docker-portal-client-${{ steps.portal_manifest.outputs.portal_client_docker_tag }}
           lookup-only: true
 
-      - name: Download portal-client cache
+      - name: If portal-client build cache not found locally, download portal-client build cache
         uses: dawidd6/action-download-artifact@246dbf436b23d7c49e21a7ab8204ca9ecd1fe615 # v2
         if: steps.restore-client-cache.outputs.cache-hit != 'true'
         with:
@@ -52,13 +50,12 @@ jobs:
           repo: USSF-ORBIT/ussf-portal-client
           if_no_artifact_found: warn
 
-      - uses: actions/cache/save@v3
+      - name: If portal-client build cache not found locally, save it to this repo's GHA cache
+        uses: actions/cache/save@v3
         if: steps.restore-client-cache.outputs.cache-hit != 'true'
-        env:
-          DIGEST: ${{fromJson(steps.set_portal_var.outputs.index).manifests[0].digest}}
         with:
           path: /tmp/portal-client
-          key: ${{ runner.os }}-docker-portal-client-${{ env.DIGEST }}
+          key: ${{ runner.os }}-docker-portal-client-${{ steps.portal_manifest.outputs.portal_client_docker_tag }}
 
       - name: Download keystone-cms image manifest
         uses: dawidd6/action-download-artifact@246dbf436b23d7c49e21a7ab8204ca9ecd1fe615 # v2
@@ -72,23 +69,21 @@ jobs:
           repo: USSF-ORBIT/ussf-portal-cms
           if_no_artifact_found: warn
 
-      - name: Set keystone index.json file variable for extracting json
-        id: set_keystone_var
+      - name: Get docker image digest from keystone-cms manifest
+        id: keystone_manifest
         run: |
-          content=`cat /tmp/keystone-manifest/index.json`
-          echo "index=$content" >> $GITHUB_OUTPUT
+          digest=$(cat /tmp/keystone-manifest/index.json | jq -r '.manifests[0].digest')
+          echo "keystone_cms_docker_tag=${digest##sha256:}" >> $GITHUB_OUTPUT
 
       - name: Lookup if keystone-cms image build cache is available
         uses: actions/cache/restore@v3
         id: restore-keystone-cache
-        env:
-          DIGEST: ${{fromJson(steps.set_keystone_var.outputs.index).manifests[0].digest}}
         with:
           path: /tmp/keystone-cms
-          key: ${{ runner.os }}-docker-keystone-cms-${{ env.DIGEST }}
+          key: ${{ runner.os }}-docker-keystone-cms-${{ steps.keystone_manifest.outputs.keystone_cms_docker_tag }}
           lookup-only: true
 
-      - name: Download keystone-cms cache
+      - name: If keystone-cms build cache not found locally, download keystone-cms build cache
         uses: dawidd6/action-download-artifact@246dbf436b23d7c49e21a7ab8204ca9ecd1fe615 # v2
         if: steps.restore-keystone-cache.outputs.cache-hit != 'true'
         with:
@@ -101,14 +96,15 @@ jobs:
           repo: USSF-ORBIT/ussf-portal-cms
           if_no_artifact_found: warn
 
-      - uses: actions/cache/save@v3
+      - name: If keystone-cms build cache not found locally, save keystone-cms build cache to this repo's GHA cache
+        uses: actions/cache/save@v3
         if: steps.restore-keystone-cache.outputs.cache-hit != 'true'
-        env:
-          DIGEST: ${{fromJson(steps.set_keystone_var.outputs.index).manifests[0].digest}}
         with:
           path: /tmp/keystone-cms
-          key: ${{ runner.os }}-docker-keystone-cms-${{ env.DIGEST }}
-
+          key: ${{ runner.os }}-docker-keystone-cms-${{ steps.keystone_manifest.outputs.keystone_cms_docker_tag }}
+    outputs:
+      keystone-cms-docker-tag: ${{ steps.keystone_manifest.outputs.keystone_cms_docker_tag }}
+      portal-client-docker-tag: ${{ steps.portal_manifest.outputs.portal_client_docker_tag }}
 
   # run e2e tests on each browser, using build artifacts from the build job
   run-e2e-tests:
@@ -173,24 +169,6 @@ jobs:
         id: buildx
         with:
           install: true
-
-      - name: Download keystone-cms-builder
-        uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3
-        with:
-          name: keystone-cms-e2e
-          path: /tmp
-
-      - name: Download portal-client-e2e.tar
-        uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3
-        with:
-          name: portal-client-e2e
-          path: /tmp
-
-      - name: Load images
-        run: |
-          docker load --input /tmp/keystone-cms-e2e.tar
-          docker load --input /tmp/portal-client-e2e.tar
-          docker image ls -a
 
       - name: Docker compose
         run: docker compose up -d
