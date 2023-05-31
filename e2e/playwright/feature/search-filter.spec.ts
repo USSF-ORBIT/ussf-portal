@@ -61,7 +61,7 @@ describe('Filter search results', () => {
 
     await page.getByRole('button', { name: 'Filter' }).click()
     await expect(page.getByTestId('search-input')).toHaveValue(
-      `category:application category:documentation label:${label} Test query`
+      `category:application category:documentation label:"${label}" Test query`
     )
   })
 
