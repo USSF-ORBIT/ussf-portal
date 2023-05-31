@@ -35,7 +35,7 @@ When creating a new ADR, you can copy the [template](./adr/0000-template.md).
 9. [Authentication & authorization strategy across platforms](./adr/0009-platform-auth-architecture.md)
 10. [Use Playwright to end-to-end test the CMS](./adr/0010-playwright-e2e-cms.md)
 11. [Separate Repo for end-to-end tests](./adr/0011-separate-repo-for-e2e-tests.md)
-12. [Use Playwright to end-to-end test the Client](./adr/0012-playwrigt-e2e-client.md)
+12. [Use Playwright to end-to-end test the Client](./adr/0012-playwright-e2e-client.md)
 13. [Use Happo.io for visual regression testing](./adr/0013-happo-for-visual-regression-testing.md)
 14. [Use Distroless Images for Running our Application](./adr/0014-distroless-docker-containers.md)
 15. [Feature-specific e2e tests](./adr/0015-feature-specific-e2e-tests.md)
@@ -44,3 +44,5 @@ When creating a new ADR, you can copy the [template](./adr/0000-template.md).
 18. [Disable Unsafe Regex Warning in the CMS Slug validation code](./adr/0018-disable-unsafe-regex-in-cms-slug-code.md)
 19. [Enable stricter lint checks and how to add exceptions](./adr/0019-stricter-lint-checks-and-how-to-add-exceptions.md)
 20. [Use AWS Certificate Manager for DoD TLS Certificates](./adr/0020-use-aws-certificate-manager-for-dod-tls-certs.md)
+21. [Use Github Actions Cache for Docker Builds in CI/CD](./adr/0021-github-actions-cache-for-docker-builds.md)
+
