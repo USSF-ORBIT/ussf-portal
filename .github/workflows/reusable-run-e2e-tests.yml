@@ -170,17 +170,19 @@ jobs:
         with:
           install: true
 
-      - uses: actions/cache/restore@v3
+      - name: Restore portal-client Docker build cache
+        uses: actions/cache/restore@v3
         id: restore-client-cache
         with:
           path: /tmp/portal-client
           key: ${{ runner.os }}-docker-portal-client-${{ needs.get-build-cache.outputs.portal-client-docker-tag }}
 
-      - uses: actions/cache/restore@v3
+      - name: Restore keystone-cms Docker build cache
+        uses: actions/cache/restore@v3
         id: restore-keystone-cache
         with:
           path: /tmp/keystone-cms
-          key: ${{ runner.os }}-docker-portal-client-${{ needs.get-build-cache.outputs.keystone-cms-docker-tag }}
+          key: ${{ runner.os }}-docker-keystone-cms-${{ needs.get-build-cache.outputs.keystone-cms-docker-tag }}
 
       - name: Docker compose
         run: docker compose up -d
