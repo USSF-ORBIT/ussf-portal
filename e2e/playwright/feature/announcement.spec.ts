@@ -81,5 +81,5 @@ test('announcements can be seen in carousel and accessible page', async ({
 
   // Confirm the page loads and the new announcement is visible
   expect(announcementsPage.url()).toBe('http://localhost:3000/announcements')
-  expect(announcementsPage.locator(`text=${title}`)).toBeVisible()
+  await expect(announcementsPage.locator(`text=${title}`)).toBeVisible()
 })
