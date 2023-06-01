@@ -34,20 +34,25 @@ describe('Drag and drop feature', () => {
     await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
     await expect(page.locator('text=Example Collection')).toBeVisible()
 
-    // Use keyboard to drag and drop
-    await page.locator('[aria-label="Drag Handle"]').first().focus()
-    await expect(
-      page.locator('[aria-label="Drag Handle"]').first()
-    ).toBeFocused()
-    await page.keyboard.press('Space')
-    await page.keyboard.press('ArrowDown')
-    await page.keyboard.press('Space')
+    const dragHandle = page
+      .getByRole('listitem')
+      .filter({ hasText: 'Webmail(opens in a new window)' })
+      .getByRole('button', { name: 'Drag Handle' })
+
+    const dragTo = page
+      .getByRole('listitem')
+      .filter({
+        hasText: 'MyPay(opens in a new window)',
+      })
+      .getByRole('button', { name: 'Drag Handle' })
+
+    await dragHandle.hover()
+    await page.mouse.down()
+    await dragTo.hover()
+    await page.mouse.up()
+
     await expect(
       page.locator('ol > li > div > div > div > a').first()
     ).toHaveText('MyPay(opens in a new window)')
-
-    // An attempt was made to create a test that uses the mouse and click events
-    // to perform the same action, but Playwright doesn't like the drag and drop
-    // library that we are using :(
   })
 })
