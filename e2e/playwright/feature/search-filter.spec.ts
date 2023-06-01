@@ -51,17 +51,16 @@ describe('Filter search results', () => {
     /* Navigate back to the portal and the /search page */
     await page.goto('http://localhost:3000/search')
 
-    /* Select filter options */
-    await page.getByText('Application').click()
-    await page.getByText('Documentation').click()
-    await page.getByTestId('label-dropdown').selectOption(label)
-
     /* Enter a search query */
     await page.getByTestId('search-input').fill('Test query')
 
+    /* Select filter options */
+    await page.getByTestId('fieldset').getByText('News').click()
+    await page.getByTestId('label-dropdown').selectOption(label)
+
     await page.getByRole('button', { name: 'Filter' }).click()
     await expect(page.getByTestId('search-input')).toHaveValue(
-      `category:application category:documentation label:"${label}" Test query`
+      `label:"${label}" category:news Test query`
     )
   })
 
