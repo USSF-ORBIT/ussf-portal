@@ -25,7 +25,7 @@ test.beforeAll(async () => {
 })
 
 describe('Drag and drop feature', () => {
-  test('can use the keyboard to drag and drop a bookmark', async ({
+  test('can use the mouse to drag and drop a bookmark', async ({
     page,
     loginPage,
   }) => {
