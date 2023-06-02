@@ -48,6 +48,8 @@ describe('Filter search results', () => {
     await page.getByText('Audience', { exact: true }).click()
     await page.getByRole('button', { name: 'Create Label' }).click()
 
+    await expect(page.getByText('Created By')).toBeVisible()
+
     /* Navigate back to the portal and the /search page */
     await page.goto('http://localhost:3000/search')
 
