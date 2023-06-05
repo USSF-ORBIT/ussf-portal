@@ -63,4 +63,5 @@ Compliance with this decision will be validated through code reviews and automat
 ## Links
 
 * [eslint no-console documentation](https://eslint.org/docs/latest/rules/no-console#when-not-to-use-it)
+* [example of this configuration from another project](https://github.com/Enterprise-CMCS/managed-care-review/blob/b8ba0d6621cbf1d30a63b7995df41f2168df47c4/services/app-web/.eslintrc#L37-L38)
 * [ADR 0019](./0019-stricter-lint-checks-and-how-to-add-exceptions.md)
