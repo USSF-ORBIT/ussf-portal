@@ -8,98 +8,111 @@ permissions:
   contents: read
 jobs:
   # builds docker images once and saves them as artifacts for parallel e2e job to use
-  build:
+  get-build-cache:
     runs-on: ubuntu-latest
     steps:
-      - name: Clone portal client  # defaults to checking out the reference or SHA for the event that triggered this workflow. Otherwise, uses the default branch.
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3
+      - name: Download portal-client image manifest
+        uses: dawidd6/action-download-artifact@246dbf436b23d7c49e21a7ab8204ca9ecd1fe615 # v2
         with:
-          repository: USSF-ORBIT/ussf-portal-client
-          path: ./ussf-portal-client
-          fetch-depth: 0 # fetch all branch information, needed to checkout the branch if present later
+          github_token: ${{secrets.ACTION_DOWNLOAD_ARTIFACT_GITHUB_TOKEN}}
+          workflow: build-docker-cache-artifacts.yml
+          workflow_conclusion: success
+          branch: main
+          name: portal-client-index
+          path: /tmp/portal-manifest
+          repo: USSF-ORBIT/ussf-portal-client
+          if_no_artifact_found: warn
 
-      - name: Checkout portal client ${{github.head_ref}} or main
-        if: (github.event_name == 'push' || github.event_name == 'pull_request') && !startsWith(github.head_ref, 'renovate')
-        working-directory: ./ussf-portal-client
+      - name: Get docker image digest from portal-client manifest
+        id: portal_manifest
         run: |
-          # checkout the branch that started this pull request or stay on main if no such branch
-          /usr/bin/git checkout --progress --force -B ${{github.head_ref}} origin/${{github.head_ref}} || echo "staying on main"
+          digest=$(cat /tmp/portal-manifest/index.json | jq -r '.manifests[0].digest')
+          echo "portal_client_docker_tag=${digest##sha256:}" >> $GITHUB_OUTPUT
 
-      - name: Clone cms  # defaults to checking out the reference or SHA for the event that triggered this workflow. Otherwise, uses the default branch.
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3
+      - name: Lookup if portal-client image build cache is available
+        uses: actions/cache/restore@v3
+        id: restore-client-cache
         with:
-          repository: USSF-ORBIT/ussf-portal-cms
-          path: ./ussf-portal-cms
-          fetch-depth: 0 # fetch all branch information, needed to checkout the branch if present later
+          path: /tmp/portal-client
+          key: ${{ runner.os }}-docker-portal-client-${{ steps.portal_manifest.outputs.portal_client_docker_tag }}
+          lookup-only: true
 
-      - name: Checkout cms ${{github.head_ref}} or main
-        if: (github.event_name == 'push' || github.event_name == 'pull_request') && !startsWith(github.head_ref, 'renovate')
-        working-directory: ./ussf-portal-cms
+      - name: If portal-client build cache not found locally, download portal-client build cache
+        uses: dawidd6/action-download-artifact@246dbf436b23d7c49e21a7ab8204ca9ecd1fe615 # v2
+        if: steps.restore-client-cache.outputs.cache-hit != 'true'
+        with:
+          github_token: ${{secrets.ACTION_DOWNLOAD_ARTIFACT_GITHUB_TOKEN}}
+          workflow: build-docker-cache-artifacts.yml
+          workflow_conclusion: success
+          branch: main
+          name: portal-client
+          path: /tmp/portal-client
+          repo: USSF-ORBIT/ussf-portal-client
+          if_no_artifact_found: warn
+
+      - name: If portal-client build cache not found locally, save it to this repo's GHA cache
+        uses: actions/cache/save@v3
+        if: steps.restore-client-cache.outputs.cache-hit != 'true'
+        with:
+          path: /tmp/portal-client
+          key: ${{ runner.os }}-docker-portal-client-${{ steps.portal_manifest.outputs.portal_client_docker_tag }}
+
+      - name: Download keystone-cms image manifest
+        uses: dawidd6/action-download-artifact@246dbf436b23d7c49e21a7ab8204ca9ecd1fe615 # v2
+        with:
+          github_token: ${{secrets.ACTION_DOWNLOAD_ARTIFACT_GITHUB_TOKEN}}
+          workflow: build-docker-cache-artifacts.yml
+          workflow_conclusion: success
+          branch: main
+          name: keystone-cms-index
+          path: /tmp/keystone-manifest
+          repo: USSF-ORBIT/ussf-portal-cms
+          if_no_artifact_found: warn
+
+      - name: Get docker image digest from keystone-cms manifest
+        id: keystone_manifest
         run: |
-          # checkout the branch that started this pull request or stay on main if no such branch
-          /usr/bin/git checkout --progress --force -B ${{github.head_ref}} origin/${{github.head_ref}} || echo "staying on main"
+          digest=$(cat /tmp/keystone-manifest/index.json | jq -r '.manifests[0].digest')
+          echo "keystone_cms_docker_tag=${digest##sha256:}" >> $GITHUB_OUTPUT
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@e1e17a757e536f70e52b5a12b2e8d1d1c60e04ef # v2
+      - name: Lookup if keystone-cms image build cache is available
+        uses: actions/cache/restore@v3
+        id: restore-keystone-cache
         with:
-          aws-access-key-id: ${{ secrets.GHA_ECR_AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.GHA_ECR_AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-west-2
-          role-to-assume: ${{ secrets.GHA_ECR_ROLE_ASSUMPTION }}
-          role-skip-session-tagging: true
-          role-duration-seconds: "3600"
+          path: /tmp/keystone-cms
+          key: ${{ runner.os }}-docker-keystone-cms-${{ steps.keystone_manifest.outputs.keystone_cms_docker_tag }}
+          lookup-only: true
 
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@2f9f10ea3fa2eed41ac443fee8bfbd059af2d0a4 # v1
-
-      - uses: docker/setup-buildx-action@4b4e9c3e2d4531116a6f8ba8e71fc6e2cb6e6c8c # v2
-        id: buildx
+      - name: If keystone-cms build cache not found locally, download keystone-cms build cache
+        uses: dawidd6/action-download-artifact@246dbf436b23d7c49e21a7ab8204ca9ecd1fe615 # v2
+        if: steps.restore-keystone-cache.outputs.cache-hit != 'true'
         with:
-          install: true
+          github_token: ${{secrets.ACTION_DOWNLOAD_ARTIFACT_GITHUB_TOKEN}}
+          workflow: build-docker-cache-artifacts.yml
+          workflow_conclusion: success
+          branch: main
+          name: keystone-cms
+          path: /tmp/keystone-cms
+          repo: USSF-ORBIT/ussf-portal-cms
+          if_no_artifact_found: warn
 
-      - name: Build Keystone to e2e Stage
-        uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671 # v4
+      - name: If keystone-cms build cache not found locally, save keystone-cms build cache to this repo's GHA cache
+        uses: actions/cache/save@v3
+        if: steps.restore-keystone-cache.outputs.cache-hit != 'true'
         with:
-          context: ./ussf-portal-cms
-          tags: keystone-cms:e2e
-          cache-to: type=inline
-          outputs: type=docker,dest=/tmp/keystone-cms-e2e.tar
-          target: e2e
-          cache-from: |
-            ${{ steps.login-ecr.outputs.registry }}/docker-build-cache:keystone-builder
-            ${{ steps.login-ecr.outputs.registry }}/docker-build-cache:keystone-e2e
+          path: /tmp/keystone-cms
+          key: ${{ runner.os }}-docker-keystone-cms-${{ steps.keystone_manifest.outputs.keystone_cms_docker_tag }}
+    outputs:
+      keystone-cms-docker-tag: ${{ steps.keystone_manifest.outputs.keystone_cms_docker_tag }}
+      portal-client-docker-tag: ${{ steps.portal_manifest.outputs.portal_client_docker_tag }}
 
-      - name: Build Portal to e2e State
-        uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671 # v4
-        with:
-          context: ./ussf-portal-client
-          tags: portal-client:e2e
-          cache-to: type=inline
-          outputs: type=docker,dest=/tmp/portal-client-e2e.tar
-          target: e2e
-          cache-from: |
-            ${{ steps.login-ecr.outputs.registry }}/docker-build-cache:portal-client-builder
-            ${{ steps.login-ecr.outputs.registry }}/docker-build-cache:portal-client-e2e
-
-      - name: Upload keystone-cms-e2e
-        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3
-        with:
-          name: keystone-cms-e2e
-          path: /tmp/keystone-cms-e2e.tar
-
-      - name: Upload portal-client-e2e.tar
-        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3
-        with:
-          name: portal-client-e2e
-          path: /tmp/portal-client-e2e.tar
   # run e2e tests on each browser, using build artifacts from the build job
   run-e2e-tests:
     strategy:
       matrix:
         browser: ["chromium", "firefox", "chrome", "msedge"]
     runs-on: ubuntu-latest
-    needs: build
+    needs: get-build-cache
     steps:
       - name: Clone E2E tests repo # defaults to checking out the reference or SHA for the event that triggered this workflow. Otherwise, uses the default branch.
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3
@@ -157,23 +170,19 @@ jobs:
         with:
           install: true
 
-      - name: Download keystone-cms-builder
-        uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3
+      - name: Restore portal-client Docker build cache
+        uses: actions/cache/restore@v3
+        id: restore-client-cache
         with:
-          name: keystone-cms-e2e
-          path: /tmp
+          path: /tmp/portal-client
+          key: ${{ runner.os }}-docker-portal-client-${{ needs.get-build-cache.outputs.portal-client-docker-tag }}
 
-      - name: Download portal-client-e2e.tar
-        uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3
+      - name: Restore keystone-cms Docker build cache
+        uses: actions/cache/restore@v3
+        id: restore-keystone-cache
         with:
-          name: portal-client-e2e
-          path: /tmp
-
-      - name: Load images
-        run: |
-          docker load --input /tmp/keystone-cms-e2e.tar
-          docker load --input /tmp/portal-client-e2e.tar
-          docker image ls -a
+          path: /tmp/keystone-cms
+          key: ${{ runner.os }}-docker-keystone-cms-${{ needs.get-build-cache.outputs.keystone-cms-docker-tag }}
 
       - name: Docker compose
         run: docker compose up -d

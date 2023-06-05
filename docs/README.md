@@ -44,3 +44,4 @@ When creating a new ADR, you can copy the [template](./adr/0000-template.md).
 18. [Disable Unsafe Regex Warning in the CMS Slug validation code](./adr/0018-disable-unsafe-regex-in-cms-slug-code.md)
 19. [Enable stricter lint checks and how to add exceptions](./adr/0019-stricter-lint-checks-and-how-to-add-exceptions.md)
 20. [Use AWS Certificate Manager for DoD TLS Certificates](./adr/0020-use-aws-certificate-manager-for-dod-tls-certs.md)
+21. [Disable eslint no-console warning](./adr/0021-disable-no-console-eslint-warning.md)
