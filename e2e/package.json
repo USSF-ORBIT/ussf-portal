@@ -38,7 +38,7 @@
     "eslint-plugin-security": "1.7.1",
     "lint-staged": "13.2.1",
     "luxon": "3.3.0",
-    "mkdirp": "1.0.4",
+    "mkdirp": "3.0.1",
     "mongodb": "4.15.0",
     "pg": "8.10.0",
     "prettier": "2.8.7",
