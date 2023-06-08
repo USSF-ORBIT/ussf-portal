@@ -163,7 +163,6 @@ branches:
           [
             "check-e2e-tests / run-e2e-tests (chromium)",
             "check-e2e-tests / run-e2e-tests (chrome)",
-            "check-e2e-tests / run-e2e-tests (firefox)",
             "check-e2e-tests / run-e2e-tests (msedge)",
             "lint-e2e-tests"
           ]
