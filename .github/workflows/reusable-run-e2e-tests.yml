@@ -110,7 +110,7 @@ jobs:
   run-e2e-tests:
     strategy:
       matrix:
-        browser: ["chromium", "firefox", "chrome", "msedge"]
+        browser: [ "chromium", "chrome", "msedge" ]
     runs-on: ubuntu-latest
     needs: get-build-cache
     steps:
@@ -128,7 +128,7 @@ jobs:
           # checkout the branch that started this pull request or stay on main if no such branch
           /usr/bin/git checkout --progress --force -B ${{github.head_ref}} origin/${{github.head_ref}} || echo "staying on main"
 
-      - name: Clone portal client  # defaults to checking out the reference or SHA for the event that triggered this workflow. Otherwise, uses the default branch.
+      - name: Clone portal client # defaults to checking out the reference or SHA for the event that triggered this workflow. Otherwise, uses the default branch.
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3
         with:
           repository: USSF-ORBIT/ussf-portal-client
@@ -142,7 +142,7 @@ jobs:
           # checkout the branch that started this pull request or stay on main if no such branch
           /usr/bin/git checkout --progress --force -B ${{github.head_ref}} origin/${{github.head_ref}} || echo "staying on main"
 
-      - name: Clone cms  # defaults to checking out the reference or SHA for the event that triggered this workflow. Otherwise, uses the default branch.
+      - name: Clone cms # defaults to checking out the reference or SHA for the event that triggered this workflow. Otherwise, uses the default branch.
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3
         with:
           repository: USSF-ORBIT/ussf-portal-cms
