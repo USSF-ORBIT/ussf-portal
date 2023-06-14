@@ -39,7 +39,7 @@ test.beforeAll(async () => {
   await seedDB()
 })
 
-describe.only('Unique page titles', () => {
+describe('Unique page titles', () => {
   describe('access while logged in', () => {
     test('renders correct page title per page', async ({ page, loginPage }) => {
       await loginPage.login(portalUser1.username, portalUser1.password)
