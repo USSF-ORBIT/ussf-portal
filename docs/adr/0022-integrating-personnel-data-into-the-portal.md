@@ -16,7 +16,6 @@ The project needs to read personnel data, but currently does not have access to 
 - Need to provide solution for accessing personnel data
 - Avoiding significant investment in Excel processing that will eventually be replaced by an API
 - Need for flexibility to switch to API backend in the future without much rework
-- Scalability and maintainability of the code
 
 ## Considered Options
 
