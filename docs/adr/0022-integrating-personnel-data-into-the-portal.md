@@ -5,7 +5,7 @@
 - Date: 2023-06-13
 
 Technical Story: [Determine how we will ingest personnel data spreadsheets](https://app.shortcut.com/orbit-truss/story/2051/determine-how-we-will-ingest-personnel-data-spreadsheets-in-order-to-display-data-on-the-portal)
-
+Epic Story: [Personnel data ingestion w/ static data](https://app.shortcut.com/orbit-truss/epic/2068)
 
 ## Context and Problem Statement
 
