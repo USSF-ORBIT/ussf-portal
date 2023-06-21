@@ -115,7 +115,7 @@ jobs:
     needs: get-build-cache
     steps:
       - name: Clone E2E tests repo # defaults to checking out the reference or SHA for the event that triggered this workflow. Otherwise, uses the default branch.
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3
         with:
           repository: USSF-ORBIT/ussf-portal
           path: ./e2e-tests
@@ -129,7 +129,7 @@ jobs:
           /usr/bin/git checkout --progress --force -B ${{github.head_ref}} origin/${{github.head_ref}} || echo "staying on main"
 
       - name: Clone portal client # defaults to checking out the reference or SHA for the event that triggered this workflow. Otherwise, uses the default branch.
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3
         with:
           repository: USSF-ORBIT/ussf-portal-client
           path: ./ussf-portal-client
@@ -143,7 +143,7 @@ jobs:
           /usr/bin/git checkout --progress --force -B ${{github.head_ref}} origin/${{github.head_ref}} || echo "staying on main"
 
       - name: Clone cms # defaults to checking out the reference or SHA for the event that triggered this workflow. Otherwise, uses the default branch.
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3
         with:
           repository: USSF-ORBIT/ussf-portal-cms
           path: ./ussf-portal-cms
@@ -165,7 +165,7 @@ jobs:
         with:
           node-version: ${{ steps.engines.outputs.nodeVersion }}
 
-      - uses: docker/setup-buildx-action@4b4e9c3e2d4531116a6f8ba8e71fc6e2cb6e6c8c # v2
+      - uses: docker/setup-buildx-action@ecf95283f03858871ff00b787d79c419715afc34 # v2
         id: buildx
         with:
           install: true
