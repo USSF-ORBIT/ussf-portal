@@ -1,6 +1,6 @@
 import { test as base } from '@playwright/test'
 import { faker } from '@faker-js/faker'
-import { DateTime } from 'luxon'
+
 import {
   fixtures,
   TestingLibraryFixtures,
@@ -26,7 +26,7 @@ const test = base.extend<TestingLibraryFixtures & CustomFixtures>({
 
 const { expect } = test
 
-test('announcement published with future date cannot be seen', async ({
+test('announcements can be seen in carousel and accessible page', async ({
   page,
   loginPage,
   keystoneAnnouncementPage,
@@ -49,29 +49,37 @@ test('announcement published with future date cannot be seen', async ({
 
   const title = faker.lorem.words()
 
-  const futureDate = DateTime.now().plus({ weeks: 5 })
-
   // Create announcement
   await page.locator('text=Create Announcement').click()
   await expect(page).toHaveURL('http://localhost:3001/announcements/create')
   await page.locator('input[type="text"]').fill(title)
   await page.locator('button:has-text("Create Announcement")').click()
 
-  // Publish announcement with a future date
-  await keystoneAnnouncementPage.publishAnnouncement({
-    publishedDate: futureDate,
-  })
+  // Publish announcement
+  await keystoneAnnouncementPage.publishAnnouncement()
 
-  // Check that the announcement has the proper date
-  await expect(
-    page.locator(`text=${futureDate.toFormat('MM/dd/yyyy')}`)
-  ).toBeVisible()
-  await expect(page.locator(`input[placeholder="00:00"]`)).toHaveValue(
-    futureDate.toFormat('HH:mm')
-  )
-
-  // Navigate to portal and verify that the announcement is not visible
+  // Navigate to portal and verify that the announcement is visible
   await page.goto('http://localhost:3000/')
   await expect(page.locator('text=WELCOME, CHRISTINA HAVEN')).toBeVisible()
-  await expect(page.locator(title)).toBeHidden()
+
+  await expect(
+    page.getByRole('heading', { level: 4, name: title })
+  ).toBeVisible()
+
+  // Focus the screen reader-only link
+  const accessibleLink = page.locator(
+    'a:has-text("Latest Announcements in Accessible Format (opens in a new tab)")'
+  )
+  await accessibleLink.focus()
+
+  // Wait for the Latest Announcements page to load
+  const popupPromise = page.waitForEvent('popup')
+  await page.keyboard.press('Enter')
+
+  const announcementsPage = await popupPromise
+  await announcementsPage.waitForLoadState()
+
+  // Confirm the page loads and the new announcement is visible
+  expect(announcementsPage.url()).toBe('http://localhost:3000/announcements')
+  await expect(announcementsPage.locator(`text=${title}`)).toBeVisible()
 })

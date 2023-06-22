@@ -45,17 +45,26 @@ describe('Sites & Applications', () => {
     await expect(page.locator('text=Finance & Travel')).toBeVisible()
     await expect(page.locator('text=Public Military Websites')).toBeVisible()
 
-    // Toggle sorting
-    await page.locator('text=Sort alphabetically').click()
-    await expect(page.locator('text=Sort alphabetically')).toBeDisabled()
+    // Toggle sorting to Alpha view
+    await page.getByTestId('navDropDownButton').click()
+    await page.getByRole('button', { name: 'Alphabetically' }).click()
+    await expect(
+      page.getByRole('button', { name: 'Alphabetically' })
+    ).toBeVisible()
+    await expect(page.getByRole('button', { name: 'By type' })).toBeHidden()
     await expect(
       page.locator(
         'text=Provides direct Civil Engineer information management support to active Air Force units, the Air National Guard, and the Air Force Reserve, during peace and war, at fixed main bases, bare bases, and deployed locations.'
       )
     ).toBeVisible()
 
-    await page.locator('text=Sort by type').click()
-    await expect(page.locator('text=Sort by type')).toBeDisabled()
+    // Toggle sorting to Type view
+    await page.getByTestId('navDropDownButton').click()
+    await page.getByRole('button', { name: 'By type' }).click()
+    await expect(page.getByRole('button', { name: 'By type' })).toBeVisible()
+    await expect(
+      page.getByRole('button', { name: 'Alphabetically' })
+    ).toBeHidden()
     await expect(
       page.locator(
         'text=Provides direct Civil Engineer information management support to active Air Force units, the Air National Guard, and the Air Force Reserve, during peace and war, at fixed main bases, bare bases, and deployed locations.'
@@ -114,7 +123,9 @@ describe('Sites & Applications', () => {
     await expect(page).toHaveURL('http://localhost:3000/sites-and-applications')
 
     // Add the ACES bookmark to a new collection in My Space
-    await page.locator('text=Sort alphabetically').click()
+    await page.getByTestId('navDropDownButton').click()
+    await page.getByRole('button', { name: 'Alphabetically' }).click()
+
     await page
       .locator(
         'text=ACES(opens in a new window)Provides direct Civil Engineer information management >> [data-testid="button"]'
@@ -146,7 +157,9 @@ describe('Sites & Applications', () => {
     await expect(page).toHaveURL('http://localhost:3000/sites-and-applications')
 
     // Add 'Air University' bookmark to 'Example Collection' in My space
-    await page.locator('text=Sort alphabetically').click()
+
+    await page.getByTestId('navDropDownButton').click()
+    await page.getByRole('button', { name: 'Alphabetically' }).click()
     await page
       .locator(
         'text=Air University(opens in a new window)A center for professional military educatio >> [data-testid="button"]'

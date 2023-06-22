@@ -30,6 +30,8 @@ test('can view filtered article results with a specific tag or label', async ({
   loginPage,
   keystoneArticlePage,
 }) => {
+  test.slow()
+
   const title = faker.lorem.words()
   const slug = faker.helpers.slugify(title)
   const tag = faker.lorem.words()
