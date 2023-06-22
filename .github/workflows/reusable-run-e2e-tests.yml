@@ -30,7 +30,7 @@ jobs:
           echo "portal_client_docker_tag=${digest##sha256:}" >> $GITHUB_OUTPUT
 
       - name: Lookup if portal-client image build cache is available
-        uses: actions/cache/restore@v3
+        uses: actions/cache/restore@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3
         id: restore-client-cache
         with:
           path: /tmp/portal-client
@@ -51,7 +51,7 @@ jobs:
           if_no_artifact_found: warn
 
       - name: If portal-client build cache not found locally, save it to this repo's GHA cache
-        uses: actions/cache/save@v3
+        uses: actions/cache/save@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3
         if: steps.restore-client-cache.outputs.cache-hit != 'true'
         with:
           path: /tmp/portal-client
@@ -76,7 +76,7 @@ jobs:
           echo "keystone_cms_docker_tag=${digest##sha256:}" >> $GITHUB_OUTPUT
 
       - name: Lookup if keystone-cms image build cache is available
-        uses: actions/cache/restore@v3
+        uses: actions/cache/restore@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3
         id: restore-keystone-cache
         with:
           path: /tmp/keystone-cms
@@ -97,7 +97,7 @@ jobs:
           if_no_artifact_found: warn
 
       - name: If keystone-cms build cache not found locally, save keystone-cms build cache to this repo's GHA cache
-        uses: actions/cache/save@v3
+        uses: actions/cache/save@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3
         if: steps.restore-keystone-cache.outputs.cache-hit != 'true'
         with:
           path: /tmp/keystone-cms
@@ -171,14 +171,14 @@ jobs:
           install: true
 
       - name: Restore portal-client Docker build cache
-        uses: actions/cache/restore@v3
+        uses: actions/cache/restore@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3
         id: restore-client-cache
         with:
           path: /tmp/portal-client
           key: ${{ runner.os }}-docker-portal-client-${{ needs.get-build-cache.outputs.portal-client-docker-tag }}
 
       - name: Restore keystone-cms Docker build cache
-        uses: actions/cache/restore@v3
+        uses: actions/cache/restore@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3
         id: restore-keystone-cache
         with:
           path: /tmp/keystone-cms
