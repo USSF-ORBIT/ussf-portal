@@ -49,7 +49,7 @@ test('announcement published with future date cannot be seen', async ({
 
   const title = faker.lorem.words()
 
-  const futureDate = DateTime.now().plus({ weeks: 5 })
+  const futureDate = DateTime.now().plus({ month: 1 })
 
   // Create announcement
   await page.locator('text=Create Announcement').click()
