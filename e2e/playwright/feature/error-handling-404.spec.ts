@@ -40,7 +40,12 @@ describe('article was deleted', () => {
   const announcementTitle = faker.lorem.words()
   const slug = faker.helpers.slugify(title)
 
-  test('404 link in Call-To-Action when article deleted', async ({page, loginPage, keystoneAnnouncementPage, keystoneListPage, keystoneArticlePage }) => {
+  // This test is marked as skip because it is inconsistent.
+  // 1. the pull down selector `react-select-15-input` is dynamically created and can change
+  // 2. the article pull down itself is sometimes not present when this test is run because the whole page is still loading. It's unclear why the page is loading still or what to wait for since waiting for the create button to load fully doesn't resolve things.
+  //
+  // Maybe once we have more custom ui with consistent ids we can update this test to work consistently. I'm leaving it here so that it will have a head start.
+  test.skip('404 link in Call-To-Action when article deleted', async ({page, loginPage, keystoneAnnouncementPage, keystoneListPage, keystoneArticlePage }) => {
     // login as manager
     await loginPage.login(managerUser.username, managerUser.password)
     await expect(page.locator('text=WELCOME, CHRISTINA HAVEN')).toBeVisible()
@@ -92,8 +97,10 @@ describe('article was deleted', () => {
     // await page.getByText(title, { exact: true }).click()
     const createAnnoucnementButton = page.locator('button:has-text("Create Announcement")')
     await expect(createAnnoucnementButton).toBeVisible()
+    // NOTE: This selector isn't consistent, so we cannot rely on it
     await page.locator('#react-select-15-input').fill(title)
     await page.locator('#react-select-15-input').press('Enter')
+    // NOTE: Sometimes when the test gets here the page isn't finished loading
     await page.locator('button:has-text("Done")').click()
     // await page.waitForSelector('button:has-text("Done")')
     // const doneBtn = page.locator('button:has-text("Done")')

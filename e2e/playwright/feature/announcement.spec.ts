@@ -14,6 +14,8 @@ import { KeystoneArticlePage } from '../models/KeystoneArticle'
 type CustomFixtures = {
   loginPage: LoginPage
   keystoneAnnouncementPage: KeystoneAnnouncementPage
+  keystoneListPage: KeystoneListPage
+  keystoneArticlePage: KeystoneArticlePage
 }
 
 const test = base.extend<TestingLibraryFixtures & CustomFixtures>({
@@ -92,7 +94,12 @@ test('announcements can be seen in carousel and accessible page', async ({
   await expect(announcementsPage.locator(`text=${title}`)).toBeVisible()
 })
 
-describe('announcment with call to action', () => {
+// This test is marked as skip because it is inconsistent.
+// 1. the pull down selector `react-select-15-input` is dynamically created and can change
+// 2. the article pull down itself is sometimes not present when this test is run because the whole page is still loading. It's unclear why the page is loading still or what to wait for since waiting for the create button to load fully doesn't resolve things.
+//
+// Maybe once we have more custom ui with consistent ids we can update this test to work consistently. I'm leaving it here so that it will have a head start.
+describe.skip('announcment with call to action', () => {
   const title = faker.lorem.words()
   const announcementTitle = faker.lorem.words()
   const slug = faker.helpers.slugify(title)
@@ -172,5 +179,10 @@ describe('announcment with call to action', () => {
 
     // logout of portal user
     await page.locator('[data-testid="header"] [data-testid="button"]').click()
+  })
+
+  // This is a test I wanted to add but did not because of the issues with the CTA in the above test. It would be similar but would use a custom url instead of an article.
+  test('using custom url', async () => {
+    test.fixme()
   })
 })
