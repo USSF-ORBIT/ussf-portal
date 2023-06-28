@@ -77,6 +77,8 @@ describe('article was deleted', () => {
     await page.locator('input[type="text"]').fill(announcementTitle)
 
     // Add a CTA linking to an article
+    // need to wait for the cta create form to load all the way
+    await page.waitForSelector('button:has-text("Create Announcement")')
     // TODO: Is there a better selector for this button?
     await page.locator('.css-b3pn3b > .css-150h8ib').click()
     await page.getByRole('button', { name: 'Call To Action' }).click()
@@ -92,7 +94,12 @@ describe('article was deleted', () => {
     await expect(createAnnoucnementButton).toBeVisible()
     await page.locator('#react-select-15-input').fill(title)
     await page.locator('#react-select-15-input').press('Enter')
-    await page.getByRole('button', { name: 'Done' }).click()
+    await page.locator('button:has-text("Done")').click()
+    // await page.waitForSelector('button:has-text("Done")')
+    // const doneBtn = page.locator('button:has-text("Done")')
+    // //await doneBtn.scrollIntoViewIfNeeded()
+    // await doneBtn.click()
+
     await createAnnoucnementButton.click()
 
     // Publish announcement
@@ -104,6 +111,7 @@ describe('article was deleted', () => {
     await page.locator(`a:has-text("${title}")`).click()
     await page.getByRole('button', { name: 'Delete' }).click()
     await page.getByRole('dialog', { name: 'Delete Confirmation' }).getByRole('button', { name: 'Delete' }).click()
+    await expect(page.locator('text=Deleted Article item successfully')).toBeVisible()
 
     //   Verify the article 404's now
     const articlePageResponse = await page.request.get(
