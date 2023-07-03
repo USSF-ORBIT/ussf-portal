@@ -29,7 +29,7 @@ test('can add/remove Guardian Ideal widget to My Space', async ({
   await expect(page.locator('text=WELCOME, FLOYD KING')).toBeVisible()
 
   // Remove Guardian Ideal
-  await page.locator('[aria-label="Guardian Ideals Widget Settings"]').click()
+  await page.locator('[aria-label="Guardian Ideal Widget Settings"]').click()
   await page.locator('text=Remove Guardian Ideal widget').click()
   await page.locator('[data-testid="modalFooter"] >> text=Delete').click()
 
