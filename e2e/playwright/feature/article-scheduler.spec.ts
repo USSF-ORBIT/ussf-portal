@@ -56,7 +56,7 @@ test('orbit blog article published with future date cannot be seen', async ({
   const title = faker.lorem.words()
   const slug = faker.helpers.slugify(title)
 
-  const futureDate = DateTime.now().plus({ weeks: 5 })
+  const futureDate = DateTime.now().plus({ hours: 2 })
 
   // Create article
   await keystoneArticlePage.createOrbitBlogArticle({ title, slug })
@@ -125,7 +125,7 @@ test('internal news article published with future date cannot be seen', async ({
 
   const title = faker.lorem.words()
   const slug = faker.helpers.slugify(title)
-  const futureDate = DateTime.now().plus({ weeks: 5 })
+  const futureDate = DateTime.now().plus({ hours: 2 })
 
   // Create article
   await keystoneArticlePage.createInternalNewsArticle({ title, slug })
