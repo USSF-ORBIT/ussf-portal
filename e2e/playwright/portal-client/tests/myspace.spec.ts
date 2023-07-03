@@ -60,7 +60,7 @@ describe('MySpace', () => {
     await expect(
       page.locator('text=Webmail(opens in a new window)')
     ).toBeVisible()
-    await page.locator('[aria-label="Remove this link"]').first().click()
+    await page.locator('[aria-label="remove Webmail from collection"]').click()
     await expect(
       page.locator('text=Webmail(opens in a new window)')
     ).toBeHidden()
@@ -123,7 +123,7 @@ describe('MySpace', () => {
     ).toBeVisible()
 
     // Edit custom link
-    await page.locator('[aria-label="Edit this link"]').first().click()
+    await page.locator('[aria-label="edit Test Custom Link bookmark"]').click()
     await page.locator('[placeholder="Example link name"]').click()
     await page
       .locator('[placeholder="Example link name"]')
@@ -134,7 +134,7 @@ describe('MySpace', () => {
     ).toBeVisible()
 
     // Delete custom link
-    await page.locator('[aria-label="Edit this link"]').first().click()
+    await page.locator('[aria-label="edit Updated Custom Link bookmark"]').click()
     await page.locator('text=Delete').click()
     await expect(
       page.locator('text=Updated Custom Link(opens in a new window)')
@@ -149,13 +149,23 @@ describe('MySpace', () => {
 
     // Update Example Collection title
     await page.locator('[aria-label="Collection Settings"]').first().click()
-    await page.locator('text=Edit collection title').click()
+    await page.locator('text=Edit Example Collection collection title').click()
     await page
       .locator('[placeholder="Name this collection"]')
       .fill('Updated Collection Title')
     await page.locator('text=Save name').click()
 
     await expect(page.locator('text=Updated Collection Title')).toBeVisible()
+
+    // Change back so other tests don't depend on this update
+    await page.locator('[aria-label="Collection Settings"]').first().click()
+    await page.locator('text=Edit Updated Collection Title collection title').click()
+    await page
+      .locator('[placeholder="Name this collection"]')
+      .fill('Example Collection')
+    await page.locator('text=Save name').click()
+
+    await expect(page.locator('text=Example Collection')).toBeVisible()
   })
 
   test('can remove multiple links at once from an existing collection', async ({
@@ -165,12 +175,11 @@ describe('MySpace', () => {
     // Login and check that user is in My Space
     await loginPage.login(portalUser1.username, portalUser1.password)
     await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
-    await expect(page.locator('text=Updated Collection Title')).toBeVisible()
+    await expect(page.locator('text=Example Collection')).toBeVisible()
 
-    // This line is repeated because after the first click, the first 'x' disappears
-    // and the second bookmark in the collection becomes the first
-    await page.locator('[aria-label="Remove this link"]').first().click()
-    await page.locator('[aria-label="Remove this link"]').first().click()
+    await page.locator('[aria-label="remove Webmail from collection"]').click()
+
+    await page.locator('[aria-label="remove MyPay from collection"]').click()
 
     await expect(
       page.locator('text=Webmail(opens in a new window)')
@@ -187,19 +196,19 @@ describe('MySpace', () => {
     // Login and check that user is in My Space
     await loginPage.login(portalUser1.username, portalUser1.password)
     await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
-    await expect(page.locator('text=Updated Collection Title')).toBeVisible()
+    await expect(page.locator('text=Example Collection')).toBeVisible()
 
     // Cancel
     await page.locator('[aria-label="Collection Settings"]').first().click()
-    await page.locator('button:has-text("Delete this collection")').click()
+    await page.locator('button:has-text("Delete Example Collection collection")').click()
     await page.locator('[data-testid="modalFooter"] >> text=Cancel').click()
-    await expect(page.locator('text=Updated Collection Title')).toBeVisible()
+    await expect(page.locator('text=Example Collection')).toBeVisible()
 
     // Delete
     await page.locator('[aria-label="Collection Settings"]').first().click()
-    await page.locator('button:has-text("Delete this collection")').click()
+    await page.locator('button:has-text("Delete Example Collection collection")').click()
     await page.locator('[data-testid="modalFooter"] >> text=Delete').click()
-    await expect(page.locator('text=Updated Collection Title')).toBeHidden()
+    await expect(page.locator('text=Example Collection')).toBeHidden()
   })
 
   test('can add/remove the News Widget to My Space', async ({
@@ -215,8 +224,8 @@ describe('MySpace', () => {
     await expect(page.locator('text=Recent News')).toBeVisible()
 
     // Remove News Widget
-    await page.locator('[aria-label="Widget Settings"]').click()
-    await page.locator('text=Remove this widget').click()
+    await page.locator('[aria-label="Recent News Widget Settings"]').click()
+    await page.locator('text=Remove Recent News widget').click()
     await page.locator('[data-testid="modalFooter"] >> text=Delete').click()
     await expect(page.locator('text=Recent News')).toBeHidden()
   })
