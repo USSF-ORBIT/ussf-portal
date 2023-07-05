@@ -9,7 +9,7 @@ async function dropCollection(mongoClient, collectionName) {
   const collection = mongoClient.db(DB).collection(collectionName)
 
   await collection.drop().catch((e) => {
-    console.log('error when dropping', e)
+    console.error('error when dropping', e)
     if (e.code !== 26) {
       throw e
     }
@@ -35,17 +35,17 @@ module.exports.seedDB = async (reset = true) => {
 
     if (reset) {
       await dropCollection(client, 'users')
-      console.log(`${DB} database reset!`)
+      console.info(`${DB} database reset!`)
     }
 
     await seedCollection(client, 'users', testUser1)
     await seedCollection(client, 'users', testUser2)
 
-    console.log(`${DB} database seeded!`)
+    console.info(`${DB} database seeded!`)
 
     client.close()
   } catch (err) {
-    console.log(err.stack)
+    console.error(err.stack)
     return err
   }
 }

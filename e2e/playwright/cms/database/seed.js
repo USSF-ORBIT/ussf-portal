@@ -39,7 +39,7 @@ export const createOrUpdateUsers = async ([...users]) => {
 
     await client.end()
   } catch (err) {
-    console.log(err.stack)
+    console.error(err.stack)
     return err
   }
 }
