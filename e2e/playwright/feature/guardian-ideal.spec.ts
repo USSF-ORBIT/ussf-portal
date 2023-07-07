@@ -29,7 +29,7 @@ test('can add/remove Guardian Ideal widget to My Space', async ({
   await expect(page.locator('text=WELCOME, FLOYD KING')).toBeVisible()
 
   // Remove Guardian Ideal
-  await page.locator('[aria-label="Widget Settings"]').last().click()
+  await page.locator('[aria-label="Guardian Ideal Widget Settings"]').click()
   await page.locator('text=Remove Guardian Ideal widget').click()
   await page.locator('[data-testid="modalFooter"] >> text=Delete').click()
 
@@ -44,4 +44,9 @@ test('can add/remove Guardian Ideal widget to My Space', async ({
   await expect(
     page.locator('text=Connect in a Collaborative Environment')
   ).toBeVisible()
+
+  // Cannot add Guardian Ideal twice
+  await page.locator('[aria-label="Add widget"]').click()
+  const button = page.locator('text=Add Guardian Ideal widget')
+  await expect(button).toBeDisabled()
 })
