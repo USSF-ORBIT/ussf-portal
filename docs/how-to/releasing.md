@@ -27,69 +27,23 @@ Both the portal client & CMS have been set up with the following tools & workflo
 - Ensure any changes, especially database migrations & any architectural or infrastructure changes, have been thoroughly tested on AWS dev.
 - It's also a great idea to test the application that wasn't updated against the one that was. For example, if a new change is merged & deployed on the CMS, also login to the portal client on AWS dev and verify that nothing broke (and vice versa).
 
-### Release on Github
 
-1. To determine the next version of the application, you can run `yarn release --dry-run` which will output the anticipated new version & changelog without actually making any changes:
+### Release with release-please
 
-```
-➜ yarn release --dry-run
-yarn run v1.22.18
-$ standard-version -t '' --dry-run
-✔ bumping version in package.json from 4.2.0 to 4.2.1
-✔ outputting changes to CHANGELOG.md
+We use the [release-please](https://github.com/googleapis/release-please) github action to automatically create and maintain a release PR. See the [github action documentation](https://github.com/google-github-actions/release-please-action) for details.
 
----
-### [4.2.1](https://github.com/USSF-ORBIT/ussf-portal-client/compare/4.2.0...4.2.1) (2022-06-21)
----
-
-✔ committing package.json and CHANGELOG.md
-✨  Done in 0.56s.
-```
-
-2. Based on that output, create a new branch for the release changes:
-
-```
-git checkout -b release-4.2.1
-```
-
-3. Run `yarn release` again on that branch to update the version & changelog:
-
-```
-➜ yarn release
-yarn run v1.22.18
-$ standard-version -t ''
-✔ bumping version in package.json from 4.2.0 to 4.2.1
-✔ outputting changes to CHANGELOG.md
-✔ committing package.json and CHANGELOG.md
-$ lint-staged
-[STARTED] Preparing lint-staged...
-[SUCCESS] Preparing lint-staged...
-[STARTED] Running tasks for staged files...
-[STARTED] package.json — 2 files
-[STARTED] *.{js,jsx,ts,tsx,json} — 1 file
-[STARTED] *.{css,scss} — 0 files
-[SKIPPED] *.{css,scss} — no files
-[STARTED] prettier --write
-[SUCCESS] prettier --write
-[STARTED] eslint
-[SUCCESS] eslint
-[SUCCESS] *.{js,jsx,ts,tsx,json} — 1 file
-[SUCCESS] package.json — 2 files
-[SUCCESS] Running tasks for staged files...
-[STARTED] Applying modifications from tasks...
-[SUCCESS] Applying modifications from tasks...
-[STARTED] Cleaning up temporary files...
-[SUCCESS] Cleaning up temporary files...
-
-✨  Done in 16.78s.
-```
-
-4. Push your new branch up and open a PR with the changelog in the description. Normally the only changed files should be `package.json` and `CHANGELOG.md`. Since there are no code changes, approval of this PR should just indicate sign off that we do, in fact, want to deploy the changeset to production.
+1. Find the PR that the `release-please` bot has opened. Example [Client PR](https://github.com/USSF-ORBIT/ussf-portal-client/pull/1039) and example [CMS PR](https://github.com/USSF-ORBIT/ussf-portal-cms/pull/344). This will show you what the proposed next version number and changelog changes, which will show what is included in the release.
+   - The PR `release-please` will create should look like this. The only changed files should be `package.json` and `CHANGELOG.md`. Since there are no code changes, approval of this PR should just indicate sign off that we do, in fact, want to deploy the changeset to production.
    ![release PR](./release-pr.png)
 
-5. Once the PR has been approved and merged, create a release on Github where the tag is the new version number, and the target is the newly merged release commit:
+2. Once the PR has been approved and merged, `release-please` will create a release on Github where the tag is the new version number, and the target is the newly merged release commit. Examples of what this looks like are below. If you don't want to wait for `release-please` to do this you can manually create the release, but it doesn't take long.
    ![new release](./new-release.png)
    ![releases](./releases.png)
+
+3. Trigger the build job to build the final docker image and push it to C1 artifactory. Use the tag that was created by `release-please`.
+   - Client [Docker Build Main Push C1 Artifactory](https://github.com/USSF-ORBIT/ussf-portal-client/actions/workflows/build-push-c1-art.yml)
+   - CMS [Docker Build Main Push C1 Artifactory](https://github.com/USSF-ORBIT/ussf-portal-cms/actions/workflows/build-push-c1-art.yml)
+   - This is a manual step because the `release-please` github action cannot trigger the job.
 
 ### Deploy to staging & production
 
@@ -97,25 +51,27 @@ Someone with access to our staging/production infrastructure will need to deploy
 
 > It's important to communicate any specific needs to the infra team when deploying, such as if new environment variables need to be added or configured.
 
-### Further automation
-
-Even though our deploy automation is limited by our infrastructure, the release workflow itself can likely be further automated. Ideas include:
-
-- A Github workflow that runs `yarn release` and opens the release PR in CI. This could be triggered by anyone on the project using a [`workflow_dispatch` event](https://docs.github.com/en/actions/managing-workflow-runs/manually-running-a-workflow).
-- A Github workflow that tags the new release when a `release-x.y.z` branch has been merged to `main`.
-
 ### Versioning
 
-We use the [standard-version](https://github.com/conventional-changelog/standard-version) tool to automatically generate a new version and changelog based on the standard commit messages on the `main` branch. It's a good idea to become familiar with the [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) standard, and how certain commit types will trigger a patch, minor, or major version. Each application has valid commit types listed in their `package.json` under the `standard-version` config. A major version update will only happen if a commit indicates a breaking change, ie if the commit message includes `!` after the commit type (example: `feat!: ...`). However, you can also explicitly specify a version as part of the release command:
+We use the [release-please](https://github.com/googleapis/release-please) github action to automatically generate a new version and changelog based on the standard commit messages on the `main` branch. It's a good idea to become familiar with the [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) standard, and how certain commit types will trigger a patch, minor, or major version. Each application has valid commit types listed in their `release-please` workflow in the file `.github/workflows/release-please.yml`. A major version update will only happen if a commit indicates a breaking change, ie if the commit message includes `!` after the commit type (example: `feat!: ...`). However, you can also explicitly specify a version using a special commit as [described here](https://github.com/googleapis/release-please#how-do-i-change-the-version-number):
+
+> When a commit to the main branch has Release-As: x.x.x (case insensitive) in the commit body, Release Please will open a new pull request for the specified version.
+
+Empty commit example:
+
+```sh
+git commit --allow-empty -m "chore: release 2.0.0" -m "Release-As: 2.0.0"
+```
 
 ```
-yarn release --release-as 5.0.0
-yarn release --release-as minor
+chore: release 2.0.0
+
+Release-As: 2.0.0
 ```
 
 Since we should strive for backwards compatibility between the application & CMS as much as possible, major versions are most useful to indicate updates where certain database or infrastructure changes are required that would mean rolling back to a previous version might be more difficult than usual.
 
-We can also make use of the `--prerelease` flag (and corresponding pre-release checkbox when creating a new release on Github) to indicate a release that includes changes that need to be tested on the production environment, before being made in a manner that will affect the end user experience. In this case, we follow the version format: `<new version>-beta.<build number>` where:
+We can also make use of the pre-release feature (and corresponding pre-release checkbox when creating a new release on Github) to indicate a release that includes changes that need to be tested on the production environment, before being made in a manner that will affect the end user experience. In this case, we follow the version format: `<new version>-beta.<build number>` where:
 
 - `new version` is what the version will be once the feature has been released for real
 - `beta` can be used to indicate the feature is being pre-released as beta - this could also be `alpha` if it's a very early test
