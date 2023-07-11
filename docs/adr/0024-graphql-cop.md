@@ -1,4 +1,4 @@
-# [Use GraphQL Cop ]
+# [Use GraphQL Cop in GitHub Actions to scan our GraphQL APIs]
 
 - Status: Accepted <!-- optional -->
 - Deciders: @gidjin @jcbcapps <!-- optional -->
