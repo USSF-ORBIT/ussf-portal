@@ -64,6 +64,7 @@ describe('Drag and drop user collections', () => {
     await loginPage.login(portalUser2.username, portalUser2.password)
     await expect(page.locator('text=WELCOME, RONNY')).toBeVisible()
 
+    // Add new collections
     await page.getByRole('button', { name: 'Add widget' }).click()
 
     await page
@@ -88,7 +89,7 @@ describe('Drag and drop user collections', () => {
     await page.keyboard.press('ArrowLeft')
     await page.keyboard.press(' ')
 
-    // First h3 should be the new collection
+    // First h3 should be Personnel & Administration
     await expect(page.locator('h3').first()).toHaveText(
       'Personnel & Administration'
     )
@@ -119,5 +120,46 @@ describe('Drag and drop user collections', () => {
     await expect(page.locator('h3').first()).toHaveText(
       'Personnel & Administration'
     )
+  })
+
+  test('can drag and drop a collection and immediately edit the title', async ({
+    page,
+    loginPage,
+  }) => {
+    // Login and check that user is in My Space
+    await loginPage.login(portalUser2.username, portalUser2.password)
+    await expect(page.locator('text=WELCOME, RONNY')).toBeVisible()
+
+    const collectionToDrag = page.getByRole('button', {
+      name: 'Career Collection Settings Drag Handle MyVector (opens in a new window) remove MyVector from collection Drag Handle SURF (opens in a new window) remove SURF from collection Drag Handle Orders (opens in a new window) remove Orders from collection Drag Handle EPRs/OPRs (opens in a new window) remove EPRs/OPRs from collection Drag Handle PRDA (opens in a new window) remove PRDA from collection Drag Handle MyPers (opens in a new window) remove MyPers from collection + Add link',
+    })
+
+    // Drag and drop collection
+    await collectionToDrag.focus()
+    await page.keyboard.press(' ')
+    await page.keyboard.press('ArrowLeft')
+    await page.keyboard.press('ArrowLeft')
+    await page.keyboard.press(' ')
+
+    // First h3 should be Career
+    await expect(page.locator('h3').first()).toHaveText('Career')
+
+    // Update the title
+    const settingsButton = page
+      .getByRole('button', {
+        name: 'Career Collection Settings Drag Handle MyVector (opens in a new window) remove MyVector from collection Drag Handle SURF (opens in a new window) remove SURF from collection Drag Handle Orders (opens in a new window) remove Orders from collection Drag Handle EPRs/OPRs (opens in a new window) remove EPRs/OPRs from collection Drag Handle PRDA (opens in a new window) remove PRDA from collection Drag Handle MyPers (opens in a new window) remove MyPers from collection + Add link',
+      })
+      .getByRole('button', { name: 'Collection Settings' })
+
+    await settingsButton.click()
+
+    await page
+      .getByRole('button', { name: 'Edit Career collection title' })
+      .click()
+    await page.getByTestId('textInput').fill('Career Update')
+    await page.getByRole('button', { name: 'Save name' }).click()
+
+    // Check that Career Update is still the first collection
+    await expect(page.locator('h3').first()).toHaveText('Career Update')
   })
 })
