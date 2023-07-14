@@ -154,7 +154,10 @@ describe('Drag and drop user collections', () => {
     await settingsButton.click()
 
     await page
-      .getByRole('button', { name: 'Edit Career collection title' })
+      .getByRole('button', {
+        name: 'Edit Career collection title',
+        exact: true,
+      })
       .click()
     await page.getByTestId('textInput').fill('Career Update')
     await page.getByRole('button', { name: 'Save name' }).click()
