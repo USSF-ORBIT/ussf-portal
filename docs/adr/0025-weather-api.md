@@ -22,8 +22,7 @@ We need to choose an API to power the new weather widget for My Space. While the
 
 ## Considered Options
 
-* [OpenWeatherMap](https://openweathermap.org/api
-)
+* [OpenWeatherMap](https://openweathermap.org/api)
 * [National Weather Service API](https://www.weather.gov/documentation/services-web-api)
 * [Microsoft Azure Maps](https://azure.microsoft.com/en-us/products/azure-maps/)
 
