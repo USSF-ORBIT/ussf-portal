@@ -48,3 +48,4 @@ When creating a new ADR, you can copy the [template](./adr/0000-template.md).
 22. [Integrating personnel data into the portal](./adr/0022-integrating-personnel-data-into-the-portal.md)
 23. [Use Github Actions Cache for Docker Builds in CI/CD](./adr/0023-github-actions-cache-for-docker-builds.md)
 24. [Use GraphQL Cop in GitHub Actions to scan our GraphQL APIs](./adr/0024-graphql-cop.md)
+25. [Use National Weather Service API for Weather Widget](./adr/0025-weather-api.md)
