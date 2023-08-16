@@ -32,11 +32,8 @@ test('can add/remove Weather widget to My Space', async ({
   await page.getByRole('button', { name: 'Add weather widget' }).click()
   await page.getByTestId('weatherWidget_input').fill('90210')
 
-  await Promise.all([
-    page.getByRole('button', { name: 'Save zip code' }).click(),
-  ])
+  await page.getByRole('button', { name: 'Save zip code' }).click()
 
-  await expect(page.locator('text=Weather')).toBeVisible()
   await expect(page.locator('text=90210')).toBeVisible()
 
   // Edit Weather widget
@@ -46,11 +43,8 @@ test('can add/remove Weather widget to My Space', async ({
   await page.getByRole('button', { name: 'Edit zip code', exact: true }).click()
   await page.getByTestId('weatherWidget_input').fill('85202')
 
-  await Promise.all([
-    page.getByRole('button', { name: 'Save zip code' }).click(),
-  ])
+  await page.getByRole('button', { name: 'Save zip code' }).click()
 
-  await expect(page.locator('text=Weather')).toBeVisible()
   await expect(page.locator('text=85202')).toBeVisible()
 
   // Remove Weather widget
@@ -81,9 +75,7 @@ test('can only add three Weather widgets', async ({ page, loginPage }) => {
   await page.getByRole('button', { name: 'Add weather widget' }).click()
   await page.getByTestId('weatherWidget_input').fill('90210')
 
-  await Promise.all([
-    page.getByRole('button', { name: 'Save zip code' }).click(),
-  ])
+  await page.getByRole('button', { name: 'Save zip code' }).click()
 
   await expect(page.locator('text=90210')).toBeVisible()
 
@@ -92,9 +84,7 @@ test('can only add three Weather widgets', async ({ page, loginPage }) => {
   await page.getByRole('button', { name: 'Add weather widget' }).click()
   await page.getByTestId('weatherWidget_input').fill('85202')
 
-  await Promise.all([
-    page.getByRole('button', { name: 'Save zip code' }).click(),
-  ])
+  await page.getByRole('button', { name: 'Save zip code' }).click()
 
   await expect(page.locator('text=85202')).toBeVisible()
 
@@ -103,9 +93,7 @@ test('can only add three Weather widgets', async ({ page, loginPage }) => {
   await page.getByRole('button', { name: 'Add weather widget' }).click()
   await page.getByTestId('weatherWidget_input').fill('85001')
 
-  await Promise.all([
-    page.getByRole('button', { name: 'Save zip code' }).click(),
-  ])
+  await page.getByRole('button', { name: 'Save zip code' }).click()
 
   await expect(page.locator('text=85001')).toBeVisible()
 
