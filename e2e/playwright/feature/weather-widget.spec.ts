@@ -33,6 +33,8 @@ test('can add/remove Weather widget to My Space', async ({
   await page.getByTestId('weatherWidget_input').fill('90210')
   await page.getByRole('button', { name: 'Save zip code' }).click()
 
+  // Wait for widget to load
+  await page.waitForSelector('text=Weather')
   await expect(page.locator('text=Weather')).toBeVisible()
   await expect(page.locator('text=90210')).toBeVisible()
 
@@ -44,6 +46,7 @@ test('can add/remove Weather widget to My Space', async ({
   await page.getByTestId('weatherWidget_input').fill('85202')
   await page.getByRole('button', { name: 'Save zip code' }).click()
 
+  await page.waitForSelector('text=Weather')
   await expect(page.locator('text=Weather')).toBeVisible()
   await expect(page.locator('text=85202')).toBeVisible()
 
@@ -74,6 +77,8 @@ test('can only add three Weather widgets', async ({ page, loginPage }) => {
   await page.getByTestId('weatherWidget_input').fill('90210')
   await page.getByRole('button', { name: 'Save zip code' }).click()
 
+  // Wait for widget to load
+  await page.waitForSelector('text=90210')
   await expect(page.locator('text=90210')).toBeVisible()
 
   // Add Weather widget
@@ -82,6 +87,8 @@ test('can only add three Weather widgets', async ({ page, loginPage }) => {
   await page.getByTestId('weatherWidget_input').fill('85202')
   await page.getByRole('button', { name: 'Save zip code' }).click()
 
+  // Wait for widget to load
+  await page.waitForSelector('text=85202')
   await expect(page.locator('text=85202')).toBeVisible()
 
   // Add Weather widget
@@ -90,6 +97,8 @@ test('can only add three Weather widgets', async ({ page, loginPage }) => {
   await page.getByTestId('weatherWidget_input').fill('85001')
   await page.getByRole('button', { name: 'Save zip code' }).click()
 
+  // Wait for widget to load
+  await page.waitForSelector('text=85001')
   await expect(page.locator('text=85001')).toBeVisible()
 
   // Check that Add Weather widget button is disabled
