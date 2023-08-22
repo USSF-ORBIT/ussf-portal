@@ -129,7 +129,10 @@ export class KeystoneArticlePage {
       }
       // Keystone labels the calendar buttons 1010th February for some reason
       // So using `nth=0` guarantees we find 4th February instead of 4th, 14th, and 24th.
-      const dateFormat = `d'${this.nthNumber(publishedDate.day)}' MMMM`
+      const dateFormat = `dd'${this.nthNumber(publishedDate.day)}' MMMM ('${
+        publishedDate.weekdayLong
+      }')`
+
       await this.page
         .locator(
           `button:has-text("${publishedDate.toFormat(dateFormat)}") >> nth=0`
