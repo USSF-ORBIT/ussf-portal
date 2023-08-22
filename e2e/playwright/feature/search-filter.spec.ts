@@ -71,7 +71,7 @@ describe('Filter search results', () => {
     await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
 
     await page.goto('http://localhost:3000/search')
-    await page.getByText('Application').click()
+    await page.getByTestId('fieldset').getByText('Application').click()
     await page.getByRole('button', { name: 'Filter' }).click()
     await expect(
       page.getByRole('link', { name: 'MyVector (opens in a new window)' })
