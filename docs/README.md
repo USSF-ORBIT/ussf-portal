@@ -5,6 +5,7 @@
 - [USSF Portal Client](https://github.com/USSF-ORBIT/ussf-portal-client)
 - [USSF Portal CMS](https://github.com/USSF-ORBIT/ussf-portal-cms)
 - [USSF Analytics](https://github.com/USSF-ORBIT/analytics)
+- [USSF Personnel API](https://github.com/USSF-ORBIT/ussf-personnel-api)
 
 ## How-tos
 
@@ -19,6 +20,7 @@
 - [How to Use mongoexport on C1](./how-to/use-mongoexport-on-c1.md)
 - [How to manually trigger a Happo comparison](./how-to/run-happo-comparison-manually.md)
 - [How to review a pull request](./how-to/review-pull-request.md)
+- [How to use dev AWS S3 locally](./how-to/use-s3-locally.md)
 
 ## Architectural Decision Records
 
