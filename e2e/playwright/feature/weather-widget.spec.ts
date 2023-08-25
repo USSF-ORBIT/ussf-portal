@@ -69,7 +69,7 @@ test('can add/remove Weather widget to My Space', async ({
   await expect(page.locator('text=Tempe, AZ')).toBeHidden()
 })
 
-test('can only add three Weather widgets', async ({ page, loginPage }) => {
+test('can only add five Weather widgets', async ({ page, loginPage }) => {
   test.slow()
 
   await loginPage.login(adminUser.username, adminUser.password)
@@ -102,6 +102,24 @@ test('can only add three Weather widgets', async ({ page, loginPage }) => {
   await page.getByRole('button', { name: 'Save zip code' }).click()
 
   await expect(page.locator('text=Guadalupe, AZ')).toBeVisible()
+
+  // Add Weather widget
+  await page.getByRole('button', { name: 'Add widget' }).click()
+  await page.getByRole('button', { name: 'Add weather widget' }).click()
+  await page.getByTestId('weatherWidget_input').fill('30310')
+
+  await page.getByRole('button', { name: 'Save zip code' }).click()
+
+  await expect(page.locator('text=Atlanta, GA')).toBeVisible()
+
+  // Add Weather widget
+  await page.getByRole('button', { name: 'Add widget' }).click()
+  await page.getByRole('button', { name: 'Add weather widget' }).click()
+  await page.getByTestId('weatherWidget_input').fill('60601')
+
+  await page.getByRole('button', { name: 'Save zip code' }).click()
+
+  await expect(page.locator('text=Chicago, IL')).toBeVisible()
 
   // Check that Add Weather widget button is disabled
   await page.getByRole('button', { name: 'Add widget' }).click()
