@@ -25,6 +25,8 @@ services:
       SESSION_DOMAIN: localhost
       KEYSTONE_URL: http://cms:3001
       LAUNCHDARKLY_SDK_CLIENT_SIDE_ID: localfile
+      # TODO add correct reference when personnel api is added to e2e tests
+      PERSONNEL_API_URL: '' 
     stdin_open: true
     depends_on:
       - mongo
