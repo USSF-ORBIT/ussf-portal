@@ -32,7 +32,6 @@ services:
       - redis
       - idp
       - cms
-      - personnel-api
 
   cms:
     container_name: keystone-cms
