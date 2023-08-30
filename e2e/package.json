@@ -39,7 +39,7 @@
     "lint-staged": "13.2.1",
     "luxon": "3.3.0",
     "mkdirp": "3.0.1",
-    "mongodb": "4.15.0",
+    "mongodb": "5.8.1",
     "pg": "8.10.0",
     "prettier": "2.8.7",
     "typescript": "5.1.3",
