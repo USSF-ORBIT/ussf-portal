@@ -80,8 +80,8 @@ services:
     container_name: personnel-api
     build:
       # Uncomment the below line to work with local check out
-      context: ../../ussf-personnel-api/
-      # context: https://github.com/USSF-ORBIT/ussf-personnel-api.git#main
+      # context: ../../ussf-personnel-api/
+      context: https://github.com/USSF-ORBIT/ussf-personnel-api.git#main
       dockerfile: Dockerfile
       target: builder
     restart: always
