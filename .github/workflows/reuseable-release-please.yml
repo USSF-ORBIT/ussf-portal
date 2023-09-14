@@ -1,0 +1,43 @@
+on:
+  # make the workflow reusable
+  workflow_call:
+    inputs:
+      package-name:
+        required: true
+        type: string
+      release-type:
+        required: true
+        type: string
+
+# permissions:
+#   contents: write
+#   pull-requests: write
+
+name: release-please
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: google-github-actions/release-please-action@51ee8ae2605bd5ce1cfdcc5938684908f1cd9f69 # v3
+        with:
+          release-type: ${{ inputs.release-type }}
+          package-name: ${{ inputs.package-name }}
+          release-labels: 'type: release'
+          include-v-in-tag: false
+          changelog-types: >
+            [
+              { "type": "build", "hidden": true },
+              { "type": "chore", "hidden": true },
+              { "type": "ci", "hidden": true },
+              { "type": "dev", "hidden": true },
+              { "type": "feat", "section": "Features" },
+              { "type": "fix", "section": "Bug Fixes" },
+              { "type": "perf", "section": "Performance Improvements" },
+              { "type": "refactor", "hidden": true },
+              { "type": "revert", "section": "Reverted Changes" },
+              { "type": "style", "hidden": true },
+              { "type": "test", "hidden": true },
+              { "type": "docs", "section": "Documentation" },
+              { "type": "security", "section": "Security Improvements" }
+            ]
