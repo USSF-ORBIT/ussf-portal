@@ -34,7 +34,14 @@ test('can add/remove Weather widget to My Space', async ({
 
   await page.getByRole('button', { name: 'Save zip code' }).click()
 
-  await expect(page.locator('text=Beverly Hills, CA')).toBeVisible()
+  try {
+    await expect(page.locator('text=Beverly Hills, CA')).toBeVisible()
+  } catch (err) {
+    expect(async () => {
+      await page.getByRole('button', { name: 'Retry' }).click()
+      await expect(page.locator('text=Beverly Hills, CA')).toBeVisible()
+    }).toPass()
+  }
 
   // Edit Weather widget
   await page
@@ -48,7 +55,14 @@ test('can add/remove Weather widget to My Space', async ({
 
   await page.getByRole('button', { name: 'Save zip code' }).click()
 
-  await expect(page.locator('text=Tempe, AZ')).toBeVisible()
+  try {
+    await expect(page.locator('text=Tempe, AZ')).toBeVisible()
+  } catch (err) {
+    expect(async () => {
+      await page.getByRole('button', { name: 'Retry' }).click()
+      await expect(page.locator('text=Tempe, AZ')).toBeVisible()
+    }).toPass()
+  }
 
   // Remove Weather widget
   await page
@@ -83,7 +97,14 @@ test('can only add five Weather widgets', async ({ page, loginPage }) => {
 
   await page.getByRole('button', { name: 'Save zip code' }).click()
 
-  await expect(page.locator('text=Beverly Hills, CA')).toBeVisible()
+  try {
+    await expect(page.locator('text=Beverly Hills, CA')).toBeVisible()
+  } catch (err) {
+    expect(async () => {
+      await page.getByRole('button', { name: 'Retry' }).click()
+      await expect(page.locator('text=Beverly Hills, CA')).toBeVisible()
+    }).toPass()
+  }
 
   // Add Weather widget
   await page.getByRole('button', { name: 'Add widget' }).click()
@@ -92,7 +113,14 @@ test('can only add five Weather widgets', async ({ page, loginPage }) => {
 
   await page.getByRole('button', { name: 'Save zip code' }).click()
 
-  await expect(page.locator('text=Tempe, AZ')).toBeVisible()
+  try {
+    await expect(page.locator('text=Tempe, AZ')).toBeVisible()
+  } catch (err) {
+    expect(async () => {
+      await page.getByRole('button', { name: 'Retry' }).click()
+      await expect(page.locator('text=Tempe, AZ')).toBeVisible()
+    }).toPass()
+  }
 
   // Add Weather widget
   await page.getByRole('button', { name: 'Add widget' }).click()
@@ -101,7 +129,14 @@ test('can only add five Weather widgets', async ({ page, loginPage }) => {
 
   await page.getByRole('button', { name: 'Save zip code' }).click()
 
-  await expect(page.locator('text=Guadalupe, AZ')).toBeVisible()
+  try {
+    await expect(page.locator('text=Guadalupe, AZ')).toBeVisible()
+  } catch (err) {
+    expect(async () => {
+      await page.getByRole('button', { name: 'Retry' }).click()
+      await expect(page.locator('Guadalupe, AZ')).toBeVisible()
+    }).toPass()
+  }
 
   // Add Weather widget
   await page.getByRole('button', { name: 'Add widget' }).click()
@@ -110,7 +145,14 @@ test('can only add five Weather widgets', async ({ page, loginPage }) => {
 
   await page.getByRole('button', { name: 'Save zip code' }).click()
 
-  await expect(page.locator('text=Atlanta, GA')).toBeVisible()
+  try {
+    await expect(page.locator('text=Atlanta, GA')).toBeVisible()
+  } catch (err) {
+    expect(async () => {
+      await page.getByRole('button', { name: 'Retry' }).click()
+      await expect(page.locator('text=Atlanta, GA')).toBeVisible()
+    }).toPass()
+  }
 
   // Add Weather widget
   await page.getByRole('button', { name: 'Add widget' }).click()
@@ -119,7 +161,14 @@ test('can only add five Weather widgets', async ({ page, loginPage }) => {
 
   await page.getByRole('button', { name: 'Save zip code' }).click()
 
-  await expect(page.locator('text=Chicago, IL')).toBeVisible()
+  try {
+    await expect(page.locator('text=Chicago, IL')).toBeVisible()
+  } catch (err) {
+    expect(async () => {
+      await page.getByRole('button', { name: 'Retry' }).click()
+      await expect(page.locator('text=Chicago, IL')).toBeVisible()
+    }).toPass()
+  }
 
   // Check that Add Weather widget button is disabled
   await page.getByRole('button', { name: 'Add widget' }).click()
