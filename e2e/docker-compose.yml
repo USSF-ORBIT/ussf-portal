@@ -25,7 +25,8 @@ services:
       SESSION_DOMAIN: localhost
       KEYSTONE_URL: http://cms:3001
       LAUNCHDARKLY_SDK_CLIENT_SIDE_ID: localfile
-      PERSONNEL_API_URL: http://personnel-api:4000 
+      PERSONNEL_API_URL: http://personnel-api:4000
+      WEATHER_API_URL: https://nws-ussf-e2e.wiremockapi.cloud/points/
     stdin_open: true
     depends_on:
       - mongo
