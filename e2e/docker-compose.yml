@@ -25,6 +25,7 @@ services:
       SESSION_DOMAIN: localhost
       KEYSTONE_URL: http://cms:3001
       LAUNCHDARKLY_SDK_CLIENT_SIDE_ID: localfile
+      PERSONNEL_API_URL: http://personnel-api:4000 
     stdin_open: true
     depends_on:
       - mongo
@@ -76,6 +77,18 @@ services:
       - '27017:27017'
 
   # Shared between CMS and Portal client
+  personnel-api:
+    container_name: personnel-api
+    build:
+      # Uncomment the below line to work with local check out
+      # context: ../ussf-personnel-api/
+      context: https://github.com/USSF-ORBIT/ussf-personnel-api.git#main
+      dockerfile: Dockerfile
+      target: builder
+    restart: always
+    ports:
+      - '4000:4000'
+
   redis:
     container_name: portal_redis
     image: redis:6.2

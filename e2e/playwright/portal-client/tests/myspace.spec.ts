@@ -134,7 +134,9 @@ describe('MySpace', () => {
     ).toBeVisible()
 
     // Delete custom link
-    await page.locator('[aria-label="edit Updated Custom Link bookmark"]').click()
+    await page
+      .locator('[aria-label="edit Updated Custom Link bookmark"]')
+      .click()
     await page.locator('text=Delete').click()
     await expect(
       page.locator('text=Updated Custom Link(opens in a new window)')
@@ -159,7 +161,9 @@ describe('MySpace', () => {
 
     // Change back so other tests don't depend on this update
     await page.locator('[aria-label="Collection Settings"]').first().click()
-    await page.locator('text=Edit Updated Collection Title collection title').click()
+    await page
+      .locator('text=Edit Updated Collection Title collection title')
+      .click()
     await page
       .locator('[placeholder="Name this collection"]')
       .fill('Example Collection')
@@ -200,13 +204,17 @@ describe('MySpace', () => {
 
     // Cancel
     await page.locator('[aria-label="Collection Settings"]').first().click()
-    await page.locator('button:has-text("Delete Example Collection collection")').click()
+    await page
+      .locator('button:has-text("Delete Example Collection collection")')
+      .click()
     await page.locator('[data-testid="modalFooter"] >> text=Cancel').click()
     await expect(page.locator('text=Example Collection')).toBeVisible()
 
     // Delete
     await page.locator('[aria-label="Collection Settings"]').first().click()
-    await page.locator('button:has-text("Delete Example Collection collection")').click()
+    await page
+      .locator('button:has-text("Delete Example Collection collection")')
+      .click()
     await page.locator('[data-testid="modalFooter"] >> text=Delete').click()
     await expect(page.locator('text=Example Collection')).toBeHidden()
   })
