@@ -226,7 +226,7 @@ jobs:
             df
             docker image ls
             docker builder du
-            docker system prune --all --force
+            docker image prune --force
 
       - name: get disk usage
         run: |
@@ -243,7 +243,11 @@ jobs:
             df
             docker image ls
             docker builder du
-
+            docker builder prune --force
+            df
+            docker image ls
+            docker builder du
+            
       - name: Install dependencies
         run: yarn install --frozen-lockfile
         working-directory: ./e2e-tests/e2e
