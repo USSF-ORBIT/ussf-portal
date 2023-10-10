@@ -222,7 +222,10 @@ jobs:
           key: ${{ runner.os }}-docker-keystone-cms-${{ needs.get-build-cache.outputs.keystone-cms-docker-tag }}
 
       - name: get disk usage
-        run: df
+        run: |
+            df
+            docker image ls
+            docker builder du
 
       - name: Docker compose
         run: docker compose up -d
@@ -232,6 +235,7 @@ jobs:
         run: |
             df
             docker image ls
+            docker builder du
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
