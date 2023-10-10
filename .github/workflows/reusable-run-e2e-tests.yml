@@ -229,7 +229,9 @@ jobs:
         working-directory: ./e2e-tests/e2e
 
       - name: get disk usage
-        run: df
+        run: |
+          df
+          docker image ls
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
