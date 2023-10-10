@@ -225,7 +225,7 @@ jobs:
         run: |
             df
             docker system df
-            docker system prune --force
+            docker image prune --all --force
 
       - name: get disk usage
         run: |
@@ -241,7 +241,7 @@ jobs:
         run: |
             df
             docker system df
-            docker builder prune --force
+            docker builder prune --all --force
             docker system df
 
 
