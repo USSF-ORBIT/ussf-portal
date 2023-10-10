@@ -230,8 +230,8 @@ jobs:
 
       - name: get disk usage
         run: |
-          df
-          docker image ls
+            df
+            docker image ls
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
