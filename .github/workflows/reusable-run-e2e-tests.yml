@@ -117,21 +117,21 @@ jobs:
       - name: get disk usage
         run: df
 
-      - name: Free Disk Space (Ubuntu)
-        uses: jlumbroso/free-disk-space@f68fdb76e2ea636224182cfb7377ff9a1708f9b8
-        with:
-          # this might remove tools that are actually needed,
-          # if set to "true" but frees about 6 GB
-          tool-cache: false
+      # - name: Free Disk Space (Ubuntu)
+      #   uses: jlumbroso/free-disk-space@f68fdb76e2ea636224182cfb7377ff9a1708f9b8
+      #   with:
+      #     # this might remove tools that are actually needed,
+      #     # if set to "true" but frees about 6 GB
+      #     tool-cache: false
           
-          # all of these default to true, but feel free to set to
-          # "false" if necessary for your workflow
-          android: true
-          dotnet: true
-          haskell: true
-          large-packages: true
-          docker-images: true
-          swap-storage: true
+      #     # all of these default to true, but feel free to set to
+      #     # "false" if necessary for your workflow
+      #     android: true
+      #     dotnet: true
+      #     haskell: true
+      #     large-packages: true
+      #     docker-images: true
+      #     swap-storage: true
 
       - name: get disk usage
         run: df
@@ -220,6 +220,13 @@ jobs:
         with:
           path: /tmp/keystone-cms
           key: ${{ runner.os }}-docker-keystone-cms-${{ needs.get-build-cache.outputs.keystone-cms-docker-tag }}
+
+      - name: get disk usage
+        run: |
+            df
+            docker image ls
+            docker builder du
+            docker system prune --all --force
 
       - name: get disk usage
         run: |
