@@ -224,17 +224,14 @@ jobs:
       - name: get disk usage
         run: |
             df
-            docker image ls
-            docker builder du
-            docker buildx du
-            docker builder prune --force
-            docker buildx prune --force
+            docker system df
+            docker system prune --force
 
       - name: get disk usage
         run: |
             df
-            docker image ls
-            docker builder du
+            docker system df
+
 
       - name: Docker compose
         run: docker compose up -d
@@ -243,12 +240,10 @@ jobs:
       - name: get disk usage
         run: |
             df
-            docker image ls
-            docker builder du
+            docker system df
             docker builder prune --force
-            df
-            docker image ls
-            docker builder du
+            docker system df
+
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
