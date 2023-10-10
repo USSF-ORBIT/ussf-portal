@@ -118,7 +118,7 @@ jobs:
         run: df
 
       - name: Free Disk Space (Ubuntu)
-        uses: jlumbroso/free-disk-space@main
+        uses: jlumbroso/free-disk-space@f68fdb76e2ea636224182cfb7377ff9a1708f9b8
         with:
           # this might remove tools that are actually needed,
           # if set to "true" but frees about 6 GB
