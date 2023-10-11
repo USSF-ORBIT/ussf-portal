@@ -62,10 +62,11 @@ test('announcement published with future date cannot be seen', async ({
     publishedDate: futureDate,
   })
 
-  // Check that the announcement has the proper date
+  // Check that the button has the correct date
   await expect(
-    page.locator(`text=${futureDate.toFormat('MM/dd/yyyy')}`)
+    page.locator(`button:has-text("${futureDate.toFormat('MM/dd/yyyy')}")`)
   ).toBeVisible()
+
   await expect(page.locator(`input[placeholder="00:00"]`)).toHaveValue(
     futureDate.toFormat('HH:mm')
   )

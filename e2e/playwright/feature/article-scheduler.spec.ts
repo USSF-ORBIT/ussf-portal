@@ -68,7 +68,7 @@ test('orbit blog article published with future date cannot be seen', async ({
 
   // check that the article has the date
   await expect(
-    page.locator(`text=${futureDate.toFormat('MM/dd/yyyy')}`)
+    page.locator(`button:has-text("${futureDate.toFormat('MM/dd/yyyy')}")`)
   ).toBeVisible()
   await expect(page.locator(`input[placeholder="00:00"]`)).toHaveValue(
     futureDate.toFormat('HH:mm')
@@ -137,7 +137,7 @@ test('internal news article published with future date cannot be seen', async ({
 
   // check that the article has the date
   await expect(
-    page.locator(`text=${futureDate.toFormat('MM/dd/yyyy')}`)
+    page.locator(`button:has-text("${futureDate.toFormat('MM/dd/yyyy')}")`)
   ).toBeVisible()
   await expect(page.locator(`input[placeholder="00:00"]`)).toHaveValue(
     futureDate.toFormat('HH:mm')
