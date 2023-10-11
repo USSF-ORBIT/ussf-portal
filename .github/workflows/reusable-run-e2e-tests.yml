@@ -185,7 +185,10 @@ jobs:
           key: ${{ runner.os }}-docker-keystone-cms-${{ needs.get-build-cache.outputs.keystone-cms-docker-tag }}
 
       - name: Docker compose
-        run: docker compose up -d
+        run: |
+            docker image prune --all --force
+            docker compose up -d
+            docker builder prune --all --force
         working-directory: ./e2e-tests/e2e
 
       - name: Install dependencies
