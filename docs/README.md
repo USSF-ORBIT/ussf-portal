@@ -51,6 +51,8 @@ When creating a new ADR, you can copy the [template](./adr/0000-template.md).
 23. [Use Github Actions Cache for Docker Builds in CI/CD](./adr/0023-github-actions-cache-for-docker-builds.md)
 24. [Use GraphQL Cop in GitHub Actions to scan our GraphQL APIs](./adr/0024-graphql-cop.md)
 25. [Use National Weather Service API for Weather Widget](./adr/0025-weather-api.md)
+26. [Use WireMock to mock third party APIs for E2E tests](./adr/0026-use-wiremock-to-mock-third-party-apis-for-e2e-tests.md)
+27. [Enable Playwright E2E retries](./adr/0027-enable-playwright-e2e-retries.md)
 
 ## Troubleshooting
 
