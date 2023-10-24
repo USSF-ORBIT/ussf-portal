@@ -7,6 +7,10 @@
 - [USSF Analytics](https://github.com/USSF-ORBIT/analytics)
 - [USSF Personnel API](https://github.com/USSF-ORBIT/ussf-personnel-api)
 
+## Development setup
+
+- [Development documentation](./development.md)
+
 ## How-tos
 
 - [How to Update Github Actions](./how-to/updating-github-actions.md)
@@ -21,6 +25,7 @@
 - [How to manually trigger a Happo comparison](./how-to/run-happo-comparison-manually.md)
 - [How to review a pull request](./how-to/review-pull-request.md)
 - [How to use dev AWS S3 locally](./how-to/use-s3-locally.md)
+- [How to delete DocumentDB Snapshots](./how-to/how-to-del-docdb-snapshots.md)
 
 ## Architectural Decision Records
 
