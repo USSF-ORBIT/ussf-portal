@@ -103,17 +103,18 @@ jobs:
           path: /tmp/keystone-cms
           key: ${{ runner.os }}-docker-keystone-cms-${{ steps.keystone_manifest.outputs.keystone_cms_docker_tag }}
 
-      - name: Download personnel-api image manifest
-        uses: dawidd6/action-download-artifact@246dbf436b23d7c49e21a7ab8204ca9ecd1fe615 # v2
-        with:
-          github_token: ${{secrets.ACTION_DOWNLOAD_ARTIFACT_GITHUB_TOKEN}}
-          workflow: build-docker-cache-artifacts.yml
-          workflow_conclusion: success
-          branch: main
-          name: personnel-api-index
-          path: /tmp/portal-manifest
-          repo: USSF-ORBIT/ussf-personnel-api
-          if_no_artifact_found: warn
+      # TODO: renable once personnel api builds its cache
+      # - name: Download personnel-api image manifest
+      #   uses: dawidd6/action-download-artifact@246dbf436b23d7c49e21a7ab8204ca9ecd1fe615 # v2
+      #   with:
+      #     github_token: ${{secrets.ACTION_DOWNLOAD_ARTIFACT_GITHUB_TOKEN}}
+      #     workflow: build-docker-cache-artifacts.yml
+      #     workflow_conclusion: success
+      #     branch: main
+      #     name: personnel-api-index
+      #     path: /tmp/portal-manifest
+      #     repo: USSF-ORBIT/ussf-personnel-api
+      #     if_no_artifact_found: warn
 
       - name: Get docker image digest from personnel-api manifest
         id: personnel_manifest
