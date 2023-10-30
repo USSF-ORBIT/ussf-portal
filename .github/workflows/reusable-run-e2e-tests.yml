@@ -116,7 +116,7 @@ jobs:
           if_no_artifact_found: warn
 
       - name: Get docker image digest from personnel-api manifest
-        id: portal_manifest
+        id: personnel_manifest
         run: |
           digest=$(cat /tmp/portal-manifest/index.json | jq -r '.manifests[0].digest')
           echo "personnel_api_docker_tag=${digest##sha256:}" >> $GITHUB_OUTPUT
@@ -126,7 +126,7 @@ jobs:
         id: restore-client-cache
         with:
           path: /tmp/personnel-api
-          key: ${{ runner.os }}-docker-personnel-api-${{ steps.portal_manifest.outputs.personnel_api_docker_tag }}
+          key: ${{ runner.os }}-docker-personnel-api-${{ steps.personnel_manifest.outputs.personnel_api_docker_tag }}
           lookup-only: true
 
       - name: If personnel-api build cache not found locally, download personnel-api build cache
@@ -147,11 +147,11 @@ jobs:
         if: steps.restore-client-cache.outputs.cache-hit != 'true'
         with:
           path: /tmp/personnel-api
-          key: ${{ runner.os }}-docker-personnel-api-${{ steps.portal_manifest.outputs.personnel_api_docker_tag }}
+          key: ${{ runner.os }}-docker-personnel-api-${{ steps.personnel_manifest.outputs.personnel_api_docker_tag }}
     outputs:
       keystone-cms-docker-tag: ${{ steps.keystone_manifest.outputs.keystone_cms_docker_tag }}
       portal-client-docker-tag: ${{ steps.portal_manifest.outputs.portal_client_docker_tag }}
-      personnel-api-docker-tag: ${{ steps.portal_manifest.outputs.personnel_api_docker_tag }}
+      personnel-api-docker-tag: ${{ steps.personnel_manifest.outputs.personnel_api_docker_tag }}
 
   # run e2e tests on each browser, using build artifacts from the build job
   run-e2e-tests:
