@@ -3,12 +3,14 @@ name: Run E2E tests when changed
 on:
   # configure on push events
   push:
-    branches: [main]
+    branches: [ main ]
   # configure on pull request events
   pull_request:
-    branches: [main]
+    branches: [ main ]
   # configure on merge group checks
   merge_group:
+  workflow_dispatch:
+
 
 jobs:
   check-e2e-tests:
