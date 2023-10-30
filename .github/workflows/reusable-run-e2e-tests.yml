@@ -123,7 +123,7 @@ jobs:
 
       - name: Lookup if personnel-api image build cache is available
         uses: actions/cache/restore@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3
-        id: restore-client-cache
+        id: restore-personnel-cache
         with:
           path: /tmp/personnel-api
           key: ${{ runner.os }}-docker-personnel-api-${{ steps.personnel_manifest.outputs.personnel_api_docker_tag }}
@@ -131,7 +131,7 @@ jobs:
 
       - name: If personnel-api build cache not found locally, download personnel-api build cache
         uses: dawidd6/action-download-artifact@246dbf436b23d7c49e21a7ab8204ca9ecd1fe615 # v2
-        if: steps.restore-client-cache.outputs.cache-hit != 'true'
+        if: steps.restore-personnel-cache.outputs.cache-hit != 'true'
         with:
           github_token: ${{secrets.ACTION_DOWNLOAD_ARTIFACT_GITHUB_TOKEN}}
           workflow: build-docker-cache-artifacts.yml
@@ -144,7 +144,7 @@ jobs:
 
       - name: If personnel-api build cache not found locally, save it to this repo's GHA cache
         uses: actions/cache/save@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3
-        if: steps.restore-client-cache.outputs.cache-hit != 'true'
+        if: steps.restore-personnel-cache.outputs.cache-hit != 'true'
         with:
           path: /tmp/personnel-api
           key: ${{ runner.os }}-docker-personnel-api-${{ steps.personnel_manifest.outputs.personnel_api_docker_tag }}
@@ -245,11 +245,18 @@ jobs:
           path: /tmp/keystone-cms
           key: ${{ runner.os }}-docker-keystone-cms-${{ needs.get-build-cache.outputs.keystone-cms-docker-tag }}
 
+      - name: Restore personnel-api Docker build cache
+        uses: actions/cache/restore@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3
+        id: restore-personnel-cache
+        with:
+          path: /tmp/personnel-api
+          key: ${{ runner.os }}-docker-personnel-api-${{ needs.get-build-cache.outputs.personnel_api_docker_tag }}
+
       - name: Docker compose
         run: |
-            docker image prune --all --force
-            docker compose up -d
-            docker builder prune --all --force
+          docker image prune --all --force
+          docker compose up -d
+          docker builder prune --all --force
         working-directory: ./e2e-tests/e2e
 
       - name: Install dependencies
