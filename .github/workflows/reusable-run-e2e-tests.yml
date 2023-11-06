@@ -9,7 +9,7 @@ permissions:
 jobs:
   # builds docker images once and saves them as artifacts for parallel e2e job to use
   get-build-cache:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Download portal-client image manifest
         uses: dawidd6/action-download-artifact@246dbf436b23d7c49e21a7ab8204ca9ecd1fe615 # v2
@@ -158,7 +158,7 @@ jobs:
     strategy:
       matrix:
         browser: [ "chromium", "chrome", "msedge" ]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     needs: get-build-cache
     steps:
       - name: Clone E2E tests repo # defaults to checking out the reference or SHA for the event that triggered this workflow. Otherwise, uses the default branch.
