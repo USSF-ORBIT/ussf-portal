@@ -1,0 +1,43 @@
+name: Docker Build Cache Save Artifact
+
+on:
+  workflow_dispatch:
+
+
+jobs:
+  build-and-cache:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone portal client # checkout main
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3
+        with:
+          repository: USSF-ORBIT/ussf-portal-client
+          ref: main
+          path: ./ussf-portal-client
+          fetch-depth: 0 # fetch all branch information, needed to checkout the branch if present later
+
+      - name: Docker setup buildx
+        uses: docker/setup-buildx-action@885d1462b80bc1c1c7f0b00334ad271f09369c55 # v2
+        id: buildx
+        with:
+          install: true
+
+      - name: Build portal-client to e2e stage
+        uses: docker/build-push-action@0a97817b6ade9f46837855d676c4cca3a2471fc9 # v4
+        with:
+          context: ./ussf-portal-client
+          tags: portal-client:e2e
+          cache-to: type=local,mode=max,dest=/tmp/portal-client,tag=e2e
+          target: e2e
+          
+      - name: Get docker image digest from manifest
+        id: manifest
+        run: |
+          digest=$(cat /tmp/portal-client/index.json | jq -r '.manifests[0].digest')
+          echo "docker_tag=${digest##sha256:}" >> $GITHUB_OUTPUT
+
+      - name: Save docker cache to GHA cache using image digest as key
+        uses: actions/cache/save@704facf57e6136b1bc63b828d79edcd491f0ee84 # v3
+        with:
+          path: /tmp/portal-client
+          key: ${{ runner.os }}-docker-portal-client-${{ steps.manifest.outputs.docker_tag }}
