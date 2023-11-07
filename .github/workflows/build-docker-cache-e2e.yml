@@ -1,0 +1,11 @@
+name: Portal Client and Keystone CMS Docker Build and Save Cache
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-cache-portal-client:
+      uses: USSF-ORBIT/ussf-portal/.github/workflows/reusable-docker-cache-portal-client.yml@docker-ci/minhlai/re-usable-docker-cache-workflows
+
+  build-and-cache-keystone-cms:
+      uses: USSF-ORBIT/ussf-portal/.github/workflows/reusable-docker-cache-keystone-cms.yml@docker-ci/minhlai/re-usable-docker-cache-workflows
