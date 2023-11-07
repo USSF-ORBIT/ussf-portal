@@ -26,7 +26,9 @@ services:
       KEYSTONE_URL: http://cms:3001
       LAUNCHDARKLY_SDK_CLIENT_SIDE_ID: localfile
       PERSONNEL_API_URL: http://personnel-api:4000
-      WEATHER_API_URL: https://nws-ussf-e2e.wiremockapi.cloud/points/
+      # uncomment following line to use wire mock, commenting out to use real api
+      # until paid wire mock account ready
+      # WEATHER_API_URL: https://nws-ussf-e2e.wiremockapi.cloud/points/
     stdin_open: true
     depends_on:
       - mongo
@@ -81,9 +83,7 @@ services:
   personnel-api:
     container_name: personnel-api
     build:
-      # Uncomment the below line to work with local check out
-      # context: ../ussf-personnel-api/
-      context: https://github.com/USSF-ORBIT/ussf-personnel-api.git#main
+      context: ../../ussf-personnel-api/
       dockerfile: Dockerfile
       target: builder
     restart: always
