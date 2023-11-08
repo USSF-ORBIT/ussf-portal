@@ -2,6 +2,7 @@ name: Portal Client and Keystone CMS Docker Build and Save Cache
 
 on:
   workflow_dispatch:
+  push:
 
 jobs:
   build-and-cache-portal-client:
