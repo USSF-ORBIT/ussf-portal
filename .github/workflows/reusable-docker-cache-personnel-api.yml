@@ -3,7 +3,6 @@ name: Personnel API Docker Build Cache Save Artifact
 on:
   workflow_dispatch:
   workflow_call:
-  push:
 
 jobs:
   build-and-cache:
@@ -28,17 +27,17 @@ jobs:
         with:
           context: ./ussf-personnel-api 
           tags: personnel-api:builder
-          cache-to: type=local,mode=max,dest=/tmp/ussf-personnel-api,tag=builder
+          cache-to: type=local,mode=max,dest=/tmp/personnel-api,tag=builder
           target: builder
 
       - name: Get docker image digest from manifest
         id: manifest
         run: |
-          digest=$(cat /tmp/ussf-personnel-api/index.json | jq -r '.manifests[0].digest')
+          digest=$(cat /tmp/personnel-api/index.json | jq -r '.manifests[0].digest')
           echo "docker_tag=${digest##sha256:}" >> $GITHUB_OUTPUT
 
       - name: Save docker cache to GHA cache using image digest as key
         uses: actions/cache/save@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3
         with:
-          path: /tmp/ussf-personnel-api 
-          key: ${{ runner.os }}-docker-ussf-personnel-api-${{ steps.manifest.outputs.docker_tag }}
+          path: /tmp/personnel-api 
+          key: ${{ runner.os }}-docker-personnel-api-${{ steps.manifest.outputs.docker_tag }}
