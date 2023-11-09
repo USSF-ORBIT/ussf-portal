@@ -32,12 +32,28 @@ describe('Authentication', () => {
   }) => {
     await context.clearCookies()
 
-    await page.goto('/')
+    await page.goto('http://localhost:3000')
 
-    expect(page.url()).toBe(
-      'http://localhost:3000/login?redirectTo=http%3A%2F%2Flocalhost%3A3001%2F'
-    )
     await expect(page.locator('h1')).toHaveText('Space Force Portal Login')
+    expect(page.url()).toBe('http://localhost:3000/login')
+  })
+
+  test('redirects a user to the cms if they go there first before login', async ({ page, loginPage }) => {
+    await page.goto('http://localhost:3001')
+
+    await loginPage.performLogin(defaultUser.username, defaultUser.password)
+
+    await expect(
+      page.locator(
+        'text=Signed in as JOHN.HENKE.562270783@testusers.cce.af.mil'
+      )
+    ).toBeVisible()
+
+    await expect(page.locator('main div:has(h3:has-text("Users"))')).toHaveText(
+      'Users 1 item'
+    )
+
+    await loginPage.logout()
   })
 
   test('can log in as a CMS user', async ({ page, loginPage }) => {
