@@ -14,7 +14,7 @@ export class LoginPage {
     this.page = page
     this.context = context
     this.loginUrl = 'http://localhost:3000/login'
-    this.loginButton = page.locator('text=Log In')
+    this.loginButton = page.getByRole('button', { name: 'Log In' })
     this.submitLogin = page.locator('text=Login')
 
     this.logoutMenuBtn = page.locator('[aria-label="Links and signout"]')
