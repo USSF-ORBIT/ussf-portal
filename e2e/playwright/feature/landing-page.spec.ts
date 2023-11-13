@@ -34,7 +34,7 @@ const documentTitle = faker.lorem.words()
 
 const testfile = path.resolve(__dirname, 'test-file.pdf')
 
-test.only('can create a landing page in the CMS and view it in the portal', async ({
+test('can create a landing page in the CMS and view it in the portal', async ({
   page,
   loginPage,
 }) => {
