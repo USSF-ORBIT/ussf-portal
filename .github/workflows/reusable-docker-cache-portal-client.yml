@@ -1,8 +1,8 @@
-name: Docker Build Cache Save Artifact
+name: Portal Client Docker Build Cache Save Artifact
 
 on:
   workflow_dispatch:
-
+  workflow_call:
 
 jobs:
   build-and-cache:
@@ -27,7 +27,7 @@ jobs:
         with:
           context: ./ussf-portal-client
           tags: portal-client:e2e
-          cache-to: type=local,mode=max,dest=/tmp/portal-client,tag=e2e
+          cache-to: type=local,mode=max,dest=/tmp/portal-client
           target: e2e
           
       - name: Get docker image digest from manifest

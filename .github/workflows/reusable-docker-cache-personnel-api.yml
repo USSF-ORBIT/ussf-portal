@@ -1,0 +1,43 @@
+name: Personnel API Docker Build Cache Save Artifact
+
+on:
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  build-and-cache:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone Personnel API # checkout main
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3
+        with:
+          repository: USSF-ORBIT/ussf-personnel-api 
+          ref: main
+          path: ./ussf-personnel-api 
+          fetch-depth: 0 # fetch all branch information, needed to checkout the branch if present later
+
+      - name: Docker setup buildx
+        uses: docker/setup-buildx-action@885d1462b80bc1c1c7f0b00334ad271f09369c55 # v2
+        id: buildx
+        with:
+          install: true
+
+      - name: Build Personnel API to builder Stage
+        uses: docker/build-push-action@2eb1c1961a95fc15694676618e422e8ba1d63825 # v4
+        with:
+          context: ./ussf-personnel-api 
+          tags: personnel-api:builder
+          cache-to: type=local,mode=max,dest=/tmp/personnel-api
+          target: builder
+
+      - name: Get docker image digest from manifest
+        id: manifest
+        run: |
+          digest=$(cat /tmp/personnel-api/index.json | jq -r '.manifests[0].digest')
+          echo "docker_tag=${digest##sha256:}" >> $GITHUB_OUTPUT
+
+      - name: Save docker cache to GHA cache using image digest as key
+        uses: actions/cache/save@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3
+        with:
+          path: /tmp/personnel-api 
+          key: ${{ runner.os }}-docker-personnel-api-${{ steps.manifest.outputs.docker_tag }}
