@@ -27,7 +27,7 @@ jobs:
         with:
           context: ./ussf-portal-cms
           tags: keystone-cms:e2e
-          cache-to: type=local,mode=max,dest=/tmp/keystone-cms
+          cache-to: type=local,mode=max,dest=/tmp/keystone-cms,tag=e2e
           target: e2e
 
       - name: Get docker image digest from manifest

@@ -8,7 +8,7 @@ services:
       dockerfile: Dockerfile
       target: e2e
       cache_from:
-        - 'type=local,src=/tmp/portal-client'
+        - 'type=local,src=/tmp/portal-client,tag=e2e'
     restart: always
     ports:
       - '3000:3000'
@@ -43,7 +43,7 @@ services:
       dockerfile: Dockerfile
       target: 'e2e${LOCAL_BUILD}'
       cache_from:
-        - 'type=local,src=/tmp/keystone-cms'
+        - 'type=local,src=/tmp/keystone-cms,tag=e2e'
     ports:
       - '3001:3001'
     environment:
@@ -87,7 +87,7 @@ services:
       dockerfile: Dockerfile
       target: builder
       cache_from:
-        - 'type=local,src=/tmp/personnel-api'
+        - 'type=local,src=/tmp/personnel-api,tag=builder'
     restart: always
     ports:
       - '4000:4000'

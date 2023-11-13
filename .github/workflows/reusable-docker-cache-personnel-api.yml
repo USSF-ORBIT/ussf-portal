@@ -27,7 +27,7 @@ jobs:
         with:
           context: ./ussf-personnel-api 
           tags: personnel-api:builder
-          cache-to: type=local,mode=max,dest=/tmp/personnel-api
+          cache-to: type=local,mode=max,dest=/tmp/personnel-api,tag=builder
           target: builder
 
       - name: Get docker image digest from manifest
