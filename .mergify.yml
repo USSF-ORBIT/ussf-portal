@@ -7,10 +7,10 @@ pull_request_rules:
       - or:
         - and:
           - "#approved-reviews-by>=2"
-          - label="needs:\ 2 appeng approvals"
+          - "label=needs: 2 appeng approvals"
         - and:
           - "#approved-reviews-by>=1"
-          - label!="needs:\ 2 appeng approvals"
+          - "label!=needs: 2 appeng approvals"
       - schedule=Mon-Fri 09:00-19:00[America/Los_Angeles] # schedule the PRs to be queued during PST work hours
     actions:
       queue:
