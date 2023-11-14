@@ -86,6 +86,8 @@ services:
       context: ../../ussf-personnel-api/
       dockerfile: Dockerfile
       target: builder
+      cache_from:
+        - 'type=local,src=/tmp/personnel-api,tag=builder'
     restart: always
     ports:
       - '4000:4000'

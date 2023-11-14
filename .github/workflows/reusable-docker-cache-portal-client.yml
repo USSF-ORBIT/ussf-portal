@@ -1,8 +1,8 @@
-name: Docker Build Cache Save Artifact
+name: Portal Client Docker Build Cache Save Artifact
 
 on:
   workflow_dispatch:
-
+  workflow_call:
 
 jobs:
   build-and-cache:
