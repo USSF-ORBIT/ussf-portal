@@ -70,6 +70,7 @@ test('can create a landing page in the CMS and view it in the portal', async ({
 
   // Create Landing Page
   await page.getByRole('link', { name: 'Landing Page' }).click()
+  await page.waitForSelector('text=Create Landing Page')
   await page.getByRole('link', { name: 'Create Landing Page' }).click()
   await page.getByLabel('Page Title').click()
   await page.getByLabel('Page Title').fill(landingPageTitle)
@@ -136,7 +137,9 @@ test('can create a landing page in the CMS and view it in the portal', async ({
 
   // These headings are only visible when there is content in the section, so
   // if they are visible, we know the content is there
-  await expect(page.getByRole('heading', { name: 'Documents' })).toBeVisible()
+  await expect(
+    page.getByRole('heading', { name: 'Documentation' })
+  ).toBeVisible()
   await expect(page.getByRole('heading', { name: 'Collections' })).toBeVisible()
   await expect(page.getByRole('heading', { name: 'Articles' })).toBeVisible()
 
