@@ -24,6 +24,7 @@ services:
       SESSION_SECRET: thisvaluecanbeanythingitisonlyforlocaldevelopment
       SESSION_DOMAIN: localhost
       KEYSTONE_URL: http://cms:3001
+      KEYSTONE_PUBLIC_URL: http://localhost:3001
       LAUNCHDARKLY_SDK_CLIENT_SIDE_ID: localfile
       PERSONNEL_API_URL: http://personnel-api:4000
       # uncomment following line to use wire mock, commenting out to use real api
@@ -68,7 +69,6 @@ services:
       - cms_images:/app/public/images
       - cms_files:/app/public/files
 
-
   # Required by Portal client
   mongo:
     container_name: mongo
@@ -86,6 +86,8 @@ services:
       context: ../../ussf-personnel-api/
       dockerfile: Dockerfile
       target: builder
+      cache_from:
+        - 'type=local,src=/tmp/personnel-api,tag=builder'
     restart: always
     ports:
       - '4000:4000'
@@ -122,11 +124,16 @@ services:
       - POSTGRES_USER=keystone
       - POSTGRES_DB=test
     healthcheck:
-      test: ['CMD-SHELL', 'pg_isready --username=keystone --dbname=test']
+      test:
+        [
+          'CMD-SHELL',
+          'pg_isready --username=keystone --dbname=test'
+        ]
       interval: 10s
       timeout: 5s
       retries: 5
 volumes:
   cms_images:
   cms_files:
+
 

@@ -50,9 +50,13 @@ describe('Portal authentication', () => {
 
       // Check that each route redirects to /login
       for (const url of routes) {
+        let expectedUrl = 'http://localhost:3000/login'
+        if (url !== '/') {
+          expectedUrl = `http://localhost:3000/login?redirectTo=${url}`
+        }
         await page.goto(url)
         await page.waitForLoadState('domcontentloaded')
-        await expect(page).toHaveURL('http://localhost:3000/login')
+        await expect(page).toHaveURL(expectedUrl)
       }
     })
   })

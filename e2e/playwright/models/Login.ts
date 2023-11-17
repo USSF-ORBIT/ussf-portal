@@ -14,7 +14,7 @@ export class LoginPage {
     this.page = page
     this.context = context
     this.loginUrl = 'http://localhost:3000/login'
-    this.loginButton = page.locator('text=Log In')
+    this.loginButton = page.getByRole('button', { name: 'Log In' })
     this.submitLogin = page.locator('text=Login')
 
     this.logoutMenuBtn = page.locator('[aria-label="Links and signout"]')
@@ -24,13 +24,18 @@ export class LoginPage {
   async login(username: string, password: string) {
     await this.context.clearCookies()
     await this.page.goto(this.loginUrl)
+
+    await this.performLogin(username, password)
+  }
+
+  async performLogin(username: string, password: string) {
     await this.loginButton.click()
 
     // SAML
-    await expect(this.page.url()).toContain('http://localhost:8080/simplesaml/')
     await expect(
       this.page.locator('h2:has-text("Enter your username and password")')
     ).toBeVisible()
+    expect(this.page.url()).toContain('http://localhost:8080/simplesaml/')
 
     await this.page.fill('#username', username)
     await this.page.fill('#password', password)

@@ -21,6 +21,7 @@ jobs:
           package-name: ${{ inputs.package-name }}
           release-labels: 'type: release'
           include-v-in-tag: false
+          token: ${{ secrets.RELEASE_PLEASE_TOKEN}}
           changelog-types: >
             [
               { "type": "build", "hidden": true },
