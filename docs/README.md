@@ -63,4 +63,4 @@ When creating a new ADR, you can copy the [template](./adr/0000-template.md).
 
 ## Troubleshooting
 
-[Some troubleshooting steps can be found here.](TROUBLESHOOTING.md)
+[Some troubleshooting steps can be found here.](../TROUBLESHOOTING.md)
