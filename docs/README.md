@@ -26,6 +26,7 @@
 - [How to review a pull request](./how-to/review-pull-request.md)
 - [How to use dev AWS S3 locally](./how-to/use-s3-locally.md)
 - [How to delete DocumentDB Snapshots](./how-to/how-to-del-docdb-snapshots.md)
+- [How to grant CMS access](./how-to/Grant-CMS-acess.md)
 
 ## Architectural Decision Records
 
