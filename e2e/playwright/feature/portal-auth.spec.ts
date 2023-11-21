@@ -22,7 +22,6 @@ const test = base.extend<TestingLibraryFixtures & CustomFixtures>({
 const { describe, expect } = test
 
 const routes = [
-  '/',
   '/sites-and-applications',
   '/about-us',
   '/about-us/orbit-blog',
@@ -39,6 +38,22 @@ test.beforeAll(async () => {
 
 describe('Portal authentication', () => {
   describe('access without being logged in', () => {
+    test('requires a user to be logged in to view the portal root', async ({
+      page,
+      loginPage,
+    }) => {
+      test.slow()
+      // Navigate to portal login page
+      await page.goto(loginPage.loginUrl)
+      await expect(loginPage.loginButton).toBeVisible()
+
+      // Check that each route redirects to /login
+      const expectedUrl = 'http://localhost:3000/login'
+      await page.goto('/')
+      await page.waitForLoadState('domcontentloaded')
+      await expect(page).toHaveURL(expectedUrl)
+    })
+
     test('requires a user to be logged in to view the portal routes', async ({
       page,
       loginPage,
@@ -50,10 +65,7 @@ describe('Portal authentication', () => {
 
       // Check that each route redirects to /login
       for (const url of routes) {
-        let expectedUrl = 'http://localhost:3000/login'
-        if (url !== '/') {
-          expectedUrl = `http://localhost:3000/login?redirectTo=${url}`
-        }
+        const expectedUrl = `http://localhost:3000/login?redirectTo=${url}`
         await page.goto(url)
         await page.waitForLoadState('domcontentloaded')
         await expect(page).toHaveURL(expectedUrl)
