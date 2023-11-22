@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Clone E2E tests repo # defaults to checking out the reference or SHA for the event that triggered this workflow. Otherwise, uses the default branch.
-        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
         with:
           repository: USSF-ORBIT/ussf-portal
           path: ./e2e-tests
@@ -30,7 +30,7 @@ jobs:
           /usr/bin/git checkout --progress --force -B ${{github.head_ref}} origin/${{github.head_ref}} || echo "staying on main"
 
       - name: Clone portal client # defaults to checking out the reference or SHA for the event that triggered this workflow. Otherwise, uses the default branch.
-        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
         with:
           repository: USSF-ORBIT/ussf-portal-client
           path: ./ussf-portal-client
@@ -44,7 +44,7 @@ jobs:
           /usr/bin/git checkout --progress --force -B ${{github.head_ref}} origin/${{github.head_ref}} || echo "staying on main"
 
       - name: Clone cms # defaults to checking out the reference or SHA for the event that triggered this workflow. Otherwise, uses the default branch.
-        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
         with:
           repository: USSF-ORBIT/ussf-portal-cms
           path: ./ussf-portal-cms
@@ -58,7 +58,7 @@ jobs:
           /usr/bin/git checkout --progress --force -B ${{github.head_ref}} origin/${{github.head_ref}} || echo "staying on main"
 
       - name: Clone personnel api # defaults to checking out the reference or SHA for the event that triggered this workflow. Otherwise, uses the default branch.
-        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
         with:
           repository: USSF-ORBIT/ussf-personnel-api
           path: ./ussf-personnel-api
@@ -76,17 +76,17 @@ jobs:
         id: engines
 
       - name: Set up node
-        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3
+        uses: actions/setup-node@1a4442cacd436585916779262731d5b162bc6ec7 # v3
         with:
           node-version: ${{ steps.engines.outputs.nodeVersion }}
 
-      - uses: docker/setup-buildx-action@ecf95283f03858871ff00b787d79c419715afc34 # v2
+      - uses: docker/setup-buildx-action@885d1462b80bc1c1c7f0b00334ad271f09369c55 # v2
         id: buildx
         with:
           install: true
 
       - name: Restore portal-client Docker build cache
-        uses: actions/cache/restore@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3
+        uses: actions/cache/restore@704facf57e6136b1bc63b828d79edcd491f0ee84 # v3
         id: restore-client-cache
         with:
           path: /tmp/portal-client
@@ -94,7 +94,7 @@ jobs:
           restore-keys: ${{ runner.os }}-docker-portal-client-
 
       - name: Restore keystone-cms Docker build cache
-        uses: actions/cache/restore@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3
+        uses: actions/cache/restore@704facf57e6136b1bc63b828d79edcd491f0ee84 # v3
         id: restore-keystone-cache
         with:
           path: /tmp/keystone-cms
@@ -102,7 +102,7 @@ jobs:
           restore-keys: ${{ runner.os }}-docker-keystone-cms-
 
       - name: Restore personnel-api Docker build cache
-        uses: actions/cache/restore@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3
+        uses: actions/cache/restore@704facf57e6136b1bc63b828d79edcd491f0ee84 # v3
         id: restore-personnel-cache
         with:
           path: /tmp/personnel-api
@@ -134,7 +134,7 @@ jobs:
 
       - name: Upload Playwright test results
         if: always()
-        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3
+        uses: actions/upload-artifact@a8a3f3ad30e3422c9c7b888a15615d19a852ae32 # v3
         with:
           name: playwright-results
           path: ./e2e-tests/e2e/test-results
@@ -146,7 +146,7 @@ jobs:
           dest: "./docker-logs"
 
       - name: Upload logs
-        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3
+        uses: actions/upload-artifact@a8a3f3ad30e3422c9c7b888a15615d19a852ae32 # v3
         if: always()
         with:
           name: container-logs
