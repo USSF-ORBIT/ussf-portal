@@ -124,16 +124,26 @@ services:
       - POSTGRES_USER=keystone
       - POSTGRES_DB=test
     healthcheck:
-      test:
-        [
-          'CMD-SHELL',
-          'pg_isready --username=keystone --dbname=test'
-        ]
+      test: ['CMD-SHELL', 'pg_isready --username=keystone --dbname=test']
       interval: 10s
       timeout: 5s
       retries: 5
+
+  wiremock:
+    image: 'wiremock/wiremock:latest'
+    container_name: wiremock
+    ports:
+      - '8181:8080'
+    entrypoint:
+      [
+        '/docker-entrypoint.sh',
+        '--global-response-templating',
+        '--disable-gzip',
+        '--verbose',
+      ]
+    volumes:
+      - './mappings:/home/wiremock/mappings'
+
 volumes:
   cms_images:
   cms_files:
-
-
