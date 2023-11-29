@@ -27,15 +27,14 @@ services:
       KEYSTONE_PUBLIC_URL: http://localhost:3001
       LAUNCHDARKLY_SDK_CLIENT_SIDE_ID: localfile
       PERSONNEL_API_URL: http://personnel-api:4000
-      # uncomment following line to use wire mock, commenting out to use real api
-      # until paid wire mock account ready
-      # WEATHER_API_URL: https://nws-ussf-e2e.wiremockapi.cloud/points/
+      WEATHER_API_URL: http://localhost:8181/points/
     stdin_open: true
     depends_on:
       - mongo
       - redis
       - idp
       - cms
+      - wiremock
 
   cms:
     container_name: keystone-cms
