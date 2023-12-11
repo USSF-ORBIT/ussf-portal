@@ -27,6 +27,7 @@ services:
       KEYSTONE_PUBLIC_URL: http://localhost:3001
       LAUNCHDARKLY_SDK_CLIENT_SIDE_ID: localfile
       PERSONNEL_API_URL: http://personnel-api:4000
+      NEXT_PUBLIC_PORTAL_URL: http://localhost:3000
       # uncomment following line to use wire mock, commenting out to use real api
       # until paid wire mock account ready
       # WEATHER_API_URL: https://nws-ussf-e2e.wiremockapi.cloud/points/
