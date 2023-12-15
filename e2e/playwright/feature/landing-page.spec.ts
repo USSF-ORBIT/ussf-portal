@@ -5,7 +5,7 @@ import {
   fixtures,
   TestingLibraryFixtures,
 } from '@playwright-testing-library/test/fixture'
-import { adminUser } from '../cms/database/users'
+import { adminUser, portalUser1 } from '../cms/database/users'
 import { LoginPage } from '../models/Login'
 
 type CustomFixtures = {
@@ -125,6 +125,10 @@ test('can create a landing page in the CMS and view it in the portal', async ({
   // Save Landing Page
   await page.getByRole('button', { name: 'Create Landing Page' }).click()
 
+  // Publish Landing Page
+  await page.getByText('Published', { exact: true }).click()
+  await page.getByRole('button', { name: 'Save changes' }).click()
+
   // Navigate to the portal
   await page.goto('http://localhost:3000/')
   await page.getByRole('link', { name: 'Landing Pages' }).click()
@@ -152,5 +156,34 @@ test('can create a landing page in the CMS and view it in the portal', async ({
 
   expect(page1.url()).toBe(
     `http://localhost:3000/landing/${landingPageSlug}/${articleSlug}`
+  )
+})
+
+test('portal user can see published landing page', async ({
+  page,
+  loginPage,
+}) => {
+  // try to go to the landing page as default user
+  await loginPage.login(portalUser1.username, portalUser1.password)
+  await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+
+  await page.getByRole('link', { name: 'Landing Pages' }).click()
+  await expect(
+    page.getByRole('heading', { name: 'Landing Pages' })
+  ).toBeVisible()
+
+  // Navigate to the landing page
+  await page.getByRole('link', { name: landingPageTitle }).click()
+
+  // These headings are only visible when there is content in the section, so
+  // if they are visible, we know the content is there
+  await expect(
+    page.getByRole('heading', { name: 'Documentation' })
+  ).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Collections' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Articles' })).toBeVisible()
+
+  expect(page.url()).toBe(
+    `http://localhost:3000/landing/${landingPageSlug}`
   )
 })

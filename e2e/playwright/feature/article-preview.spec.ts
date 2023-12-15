@@ -86,7 +86,7 @@ describe('orbit blog', () => {
 
     // Ensure preview banner is present
     await expect(
-      article.locator('article >> h2:has-text("Unpublished Article Preview")')
+      article.locator('article >> h2:has-text("Draft Article Preview")')
     ).toBeVisible()
 
     // Ensure article title is present
@@ -152,7 +152,7 @@ describe('orbit blog', () => {
 
     // Ensure preview banner is present
     await expect(
-      article.locator('article >> h2:has-text("Unpublished Article Preview")')
+      article.locator('article >> h2:has-text("Draft Article Preview")')
     ).toBeHidden()
 
     // Ensure article title is present
@@ -225,7 +225,7 @@ describe('internal news', () => {
 
     // Ensure preview banner is present
     await expect(
-      article.locator('article >> h2:has-text("Unpublished Article Preview")')
+      article.locator('article >> h2:has-text("Draft Article Preview")')
     ).toBeVisible()
 
     // Ensure article title is present
@@ -290,7 +290,7 @@ describe('internal news', () => {
 
     // Ensure preview banner is present
     await expect(
-      article.locator('article >> h2:has-text("Unpublished Article Preview")')
+      article.locator('article >> h2:has-text("Draft Article Preview")')
     ).toBeHidden()
 
     // Ensure article title is present
