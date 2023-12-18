@@ -28,15 +28,14 @@ services:
       LAUNCHDARKLY_SDK_CLIENT_SIDE_ID: localfile
       PERSONNEL_API_URL: http://personnel-api:4000
       NEXT_PUBLIC_PORTAL_URL: http://localhost:3000
-      # uncomment following line to use wire mock, commenting out to use real api
-      # until paid wire mock account ready
-      # WEATHER_API_URL: https://nws-ussf-e2e.wiremockapi.cloud/points/
+      WEATHER_API_URL: http://wiremock:8181/points/
     stdin_open: true
     depends_on:
       - mongo
       - redis
       - idp
       - cms
+      - wiremock
 
   cms:
     container_name: keystone-cms
@@ -133,8 +132,24 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  wiremock:
+    image: 'wiremock/wiremock:latest'
+    container_name: wiremock
+    ports:
+      - '8181:8181'
+    entrypoint:
+      [
+        '/docker-entrypoint.sh',
+        '--global-response-templating',
+        '--disable-gzip',
+        '--verbose',
+        '--port=8181',
+        '--enable-stub-cors'
+      ]
+    volumes:
+      - './mappings:/home/wiremock/mappings'
+
 volumes:
   cms_images:
   cms_files:
-
-
