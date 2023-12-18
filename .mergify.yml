@@ -1,6 +1,7 @@
 pull_request_rules:
   - name: Automatic queue on >=1 or >=2 approvals   # rule for Auto-Queueing PRs to Default Merge Queue
     conditions:
+      - "label!=no-merge"
       - and:
         - author!=dependabot[bot] # if author is not dependabot
         - author!=renovate[bot] # if author is not renovatebot
@@ -18,6 +19,7 @@ pull_request_rules:
 
   - name: automatic merge from dependabot # rule for Auto-Queueing PRs to Dependabot Merge Queue
     conditions:
+      - "label!=no-merge"
       - "#approved-reviews-by >= 1"
       - or:
         - author=dependabot[bot]
