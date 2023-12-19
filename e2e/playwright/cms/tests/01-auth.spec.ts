@@ -41,7 +41,7 @@ describe('Authentication', () => {
   test('redirects a user to the page they tried going to in the portal on login', async ({
     page,
     context,
-    loginPage
+    loginPage,
   }) => {
     await context.clearCookies()
 
@@ -49,13 +49,18 @@ describe('Authentication', () => {
 
     await loginPage.performLogin(defaultUser.username, defaultUser.password)
 
-    await expect(page.getByRole('heading', { name: 'News & Announcements' })).toBeVisible()
+    await expect(
+      page.getByRole('heading', { name: 'News & Announcements' })
+    ).toBeVisible()
     await expect(page.getByTestId('search-input')).toBeVisible()
 
     expect(page.url()).toBe('http://localhost:3000/news-announcements')
   })
 
-  test('redirects a user to the cms if they go there first before login', async ({ page, loginPage }) => {
+  test('redirects a user to the cms if they go there first before login', async ({
+    page,
+    loginPage,
+  }) => {
     await page.goto('http://localhost:3001')
 
     await loginPage.performLogin(defaultUser.username, defaultUser.password)
@@ -73,7 +78,10 @@ describe('Authentication', () => {
     await loginPage.logout()
   })
 
-  test('redirects a user to the page in the cms if they go there first before login', async ({ page, loginPage }) => {
+  test('redirects a user to the page in the cms if they go there first before login', async ({
+    page,
+    loginPage,
+  }) => {
     await page.goto('http://localhost:3001/users')
 
     await loginPage.performLogin(defaultUser.username, defaultUser.password)
@@ -85,7 +93,11 @@ describe('Authentication', () => {
     ).toBeVisible()
 
     expect(page.url()).toBe('http://localhost:3001/users')
-    await expect(page.getByRole('link', { name: 'JOHN.HENKE.562270783@testusers.cce.af.mil' })).toBeVisible()
+    await expect(
+      page.getByRole('link', {
+        name: 'JOHN.HENKE.562270783@testusers.cce.af.mil',
+      })
+    ).toBeVisible()
 
     await loginPage.logout()
   })
@@ -154,9 +166,6 @@ describe('Authentication', () => {
     await loginPage.login(adminUser.username, adminUser.password)
     await expect(page.locator('text=WELCOME, FLOYD KING')).toBeVisible()
     await page.goto('http://localhost:3001')
-    await expect(page.locator('main div:has(h3:has-text("Users"))')).toHaveText(
-      'Users 5 items'
-    )
     await page.locator('a:has-text("Users 5 items")').click()
 
     // RONALD BOYD is enabled but should not be
@@ -183,9 +192,6 @@ describe('Authentication', () => {
     await loginPage.login(adminUser.username, adminUser.password)
     await expect(page.locator('text=WELCOME, FLOYD KING')).toBeVisible()
     await page.goto('http://localhost:3001')
-    await expect(page.locator('main div:has(h3:has-text("Users"))')).toHaveText(
-      'Users 5 items'
-    )
     await page.locator('a:has-text("Users 5 items")').click()
 
     // RONALD BOYD is now disabled
@@ -214,9 +220,6 @@ describe('Authentication', () => {
     await loginPage.login(adminUser.username, adminUser.password)
     await expect(page.locator('text=WELCOME, FLOYD KING')).toBeVisible()
     await page.goto('http://localhost:3001')
-    await expect(page.locator('main div:has(h3:has-text("Users"))')).toHaveText(
-      'Users 5 items'
-    )
     await page.locator('a:has-text("Users 5 items")').click()
 
     // JOHN HENKE is admin but should not be
@@ -247,9 +250,6 @@ describe('Authentication', () => {
     await loginPage.login(`${adminUser.username}`, `${adminUser.password}`)
     await expect(page.locator('text=WELCOME, FLOYD KING')).toBeVisible()
     await page.goto('http://localhost:3001')
-    await expect(page.locator('main div:has(h3:has-text("Users"))')).toHaveText(
-      'Users 5 items'
-    )
     await page.locator('a:has-text("Users 5 items")').click()
 
     // JOHN HENKE is no longer an admin
@@ -275,9 +275,6 @@ describe('Authentication', () => {
     await loginPage.login(adminUser.username, adminUser.password)
     await expect(page.locator('text=WELCOME, FLOYD KING')).toBeVisible()
     await page.goto('http://localhost:3001')
-    await expect(page.locator('main div:has(h3:has-text("Users"))')).toHaveText(
-      'Users 5 items'
-    )
     await page.locator('a:has-text("Users 5 items")').click()
   })
 
