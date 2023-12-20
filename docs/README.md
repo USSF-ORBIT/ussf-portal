@@ -27,6 +27,7 @@
 - [How to use dev AWS S3 locally](./how-to/use-s3-locally.md)
 - [How to delete DocumentDB Snapshots](./how-to/how-to-del-docdb-snapshots.md)
 - [How to grant CMS access](./how-to/Grant-CMS-acess.md)
+- [How to use the SAML groups](./how-to/use-saml-groups.md)
 
 ## Architectural Decision Records
 
