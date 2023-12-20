@@ -31,6 +31,12 @@ This group is how we manage access to adjust the SAML groups. Users in this grou
 
 A user does not need to be in both the `PORTAL_CMS_Users` and `PORTAL_CMS_Admins`, only one is enough. Adding a user to `PORTAL_SUPERADMINS` only gives a user access to modify the groups NOT CMS access. Typically admins end up in both admin groups.
 
-#### SLAM
+### Defenitions
 
-We use SLAM (Super Lightweight Authorization Management) to control who is in which group. For [Production we use this instance](https://slam.cce.af.mil/slam-ui/groups) for [Staging and Development this server](https://slam.test.cce.af.mil/slam-ui/groups).
+#### SAML - Security Assertion Markup Language
+
+SAML (Security Assertion Markup Language) is a an XML standard that allows secure web domains to exchange user authentication and authorization data. See [detailed documentation](https://support.google.com/a/answer/6262987?hl=en). Part of what the identity server provides are a way to manage user groups so that different authorization can be done based on the groups.
+
+#### SLAM - Super Lightweight Authorization Management
+
+We use SLAM (Super Lightweight Authorization Management) to control who is in which group. This is a tool made available by our identity provider to allow us to self manage the SAML groups created for our application. For [Production we use this instance](https://slam.cce.af.mil/slam-ui/groups) for [Staging and Development this server](https://slam.test.cce.af.mil/slam-ui/groups).
