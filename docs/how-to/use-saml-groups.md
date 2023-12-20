@@ -31,7 +31,7 @@ This group is how we manage access to adjust the SAML groups. Users in this grou
 
 A user does not need to be in both the `PORTAL_CMS_Users` and `PORTAL_CMS_Admins`, only one is enough. Adding a user to `PORTAL_SUPERADMINS` only gives a user access to modify the groups NOT CMS access. Typically admins end up in both admin groups.
 
-### Defenitions
+### Definitions
 
 #### SAML - Security Assertion Markup Language
 
