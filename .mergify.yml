@@ -2,15 +2,17 @@ pull_request_rules:
   - name: Automatic queue on >=1 or >=2 approvals   # rule for Auto-Queueing PRs to Default Merge Queue
     conditions:
       - and:
-        - author!=dependabot[bot] # if author is not dependabot
-        - author!=renovate[bot] # if author is not renovatebot
-      - or:
+        - "label!=no-merge"
         - and:
-          - "#approved-reviews-by>=2"
-          - "label=needs: 2 appeng approvals"
-        - and:
-          - "#approved-reviews-by>=1"
-          - "label!=needs: 2 appeng approvals"
+          - author!=dependabot[bot] # if author is not dependabot
+          - author!=renovate[bot] # if author is not renovatebot
+        - or:
+          - and:
+            - "#approved-reviews-by>=2"
+            - "label=needs: 2 appeng approvals"
+          - and:
+            - "#approved-reviews-by>=1"
+            - "label!=needs: 2 appeng approvals"
       - schedule=Mon-Fri 09:00-19:00[America/Los_Angeles] # schedule the PRs to be queued during PST work hours
     actions:
       queue:
@@ -18,10 +20,12 @@ pull_request_rules:
 
   - name: automatic merge from dependabot # rule for Auto-Queueing PRs to Dependabot Merge Queue
     conditions:
-      - "#approved-reviews-by >= 1"
-      - or:
-        - author=dependabot[bot]
-        - author=renovate[bot]
+      - and:
+        - "label!=no-merge"
+        - "#approved-reviews-by >= 1"
+        - or:
+          - author=dependabot[bot]
+          - author=renovate[bot]
     actions:
       queue:
         name: dependabot-merge-queue
