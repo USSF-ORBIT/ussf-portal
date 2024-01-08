@@ -189,6 +189,7 @@ test('portal user can see published landing page', async ({
   await expect(
     page.locator('img[alt="landing page hero graphic"]')
   ).toBeVisible()
+  await expect(page.locator('img[alt="landing page badge"]')).toBeVisible()
   await expect(page.getByRole('heading', { name: 'Collections' })).toBeVisible()
   await expect(page.getByRole('heading', { name: 'Articles' })).toBeVisible()
 
