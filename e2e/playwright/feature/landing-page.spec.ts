@@ -91,7 +91,7 @@ test('can create a landing page in the CMS and view it in the portal', async ({
 
   const [fileChooser] = await Promise.all([
     page.waitForEvent('filechooser'),
-    page.locator('text=Upload').click(),
+    page.locator('text=Upload file').click(),
   ])
   await fileChooser.setFiles(testfile)
 
@@ -183,7 +183,5 @@ test('portal user can see published landing page', async ({
   await expect(page.getByRole('heading', { name: 'Collections' })).toBeVisible()
   await expect(page.getByRole('heading', { name: 'Articles' })).toBeVisible()
 
-  expect(page.url()).toBe(
-    `http://localhost:3000/landing/${landingPageSlug}`
-  )
+  expect(page.url()).toBe(`http://localhost:3000/landing/${landingPageSlug}`)
 })
