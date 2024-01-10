@@ -195,3 +195,24 @@ test('portal user can see published landing page', async ({
 
   expect(page.url()).toBe(`http://localhost:3000/landing/${landingPageSlug}`)
 })
+
+test('landing page shows up in search', async ({
+  page,
+  loginPage,
+}) => {
+  // try to go to the landing page as default user
+  await loginPage.login(portalUser1.username, portalUser1.password)
+  await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+
+  await page.goto('http://localhost:3000/search')
+  await page.getByTestId('search-input').fill(landingPageTitle)
+  await expect(page.getByTestId('search-input')).toHaveValue(
+    landingPageTitle
+  )
+  await page.getByRole('button', { name: 'Search' }).click()
+  const linkToLandingPage = page.getByRole('link', { name: `${landingPageTitle} (opens in a new window)` }) 
+  await expect(linkToLandingPage).toBeVisible()
+  const href = await linkToLandingPage.getAttribute('href')
+  expect(href).toEqual(`http://localhost:3000/landing/${landingPageSlug}`)
+  await expect(page.getByTestId('result-preview').getByText(landingPageDescription)).toBeVisible()
+})
