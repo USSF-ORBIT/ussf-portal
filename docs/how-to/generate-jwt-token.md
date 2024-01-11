@@ -47,15 +47,12 @@ NOW YOU’RE READY TO GENERATE A TOKEN!!!!
 
 ## Step 3: Generate a token
 
-1. Download the Postman collection USSF Third Party API from Abigail. It contains three folders:
+1. Download the Postman collection USSF Third Party API from the Space Force Portal 1P vault. Once imported to Postman, the collection contains three folders:
 
-* Public
-    * Contains requests that require no authorization 
-* Auth
-    * Contains requests that require Authorization header. Token is set automatically by a utility request.
-* Utility
-    * Contains requests that mimic functionality from the Guardian One app / third party.
-    * Generate Token requires a code from Mobile Connect login, and then will return and automatically set the Bearer Token to be used in auth requests.
+    * **Public**: Contains requests that require no authorization 
+    * **Auth**: Contains requests that require Authorization header. Token is set automatically by a utility request.
+    * **Utility**: Contains requests that mimic functionality from the Guardian One app / third party.
+        * `Generate Token` requires a code from Mobile Connect login, and then will return and automatically set the Bearer Token to be used in auth requests.
         
 
 2. Get a code to use in the Generate Token request.
@@ -72,7 +69,7 @@ NOW YOU’RE READY TO GENERATE A TOKEN!!!!
 
     * Import the collection downloaded earlier to Postman.
     * Click on the collection title USSF Third-Party API in the left nav bar.
-    * In the main panel, click `Variables` > Paste your code in the value field for `code`. Click `Save`` in the upper right-hand corner, or press `cmd + S`. **You must save this variable in order for Postman to use it in the next step.**
+    * In the main panel, click `Variables` > Paste your code in the value field for `code`. Click `Save` in the upper right-hand corner, or press `cmd + S`. **You must save this variable in order for Postman to use it in the next step.**
     * Click on the request `Utility` > `POST Generate Token` in the left nav bar.
     * Click send. You should receive a 200 response similar to:
 
