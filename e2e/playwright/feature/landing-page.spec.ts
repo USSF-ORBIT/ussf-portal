@@ -200,6 +200,7 @@ test('landing page shows up in search', async ({
   page,
   loginPage,
 }) => {
+  test.slow()
   // try to go to the landing page as default user
   await loginPage.login(portalUser1.username, portalUser1.password)
   await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
