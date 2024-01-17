@@ -20,6 +20,7 @@ If you're testing against `localhost`, you need to create a user in the local db
 1. In your `.envrc.local` file, add the following variables:
 
 ```
+export NODE_TLS_REJECT_UNAUTHORIZED=0
 export COMMON_NAME=<nameID value goes here>
 export EDIPI=<edipi goes here>
 export GIVENNAME=<your first name>
@@ -63,6 +64,8 @@ NOW YOU’RE READY TO GENERATE A TOKEN!!!!
     * Open the MobileConnect TEST app on your phone, scan the QR code and enter your PIN.
     * Once you’ve successfully authenticated, you’ll be redirected. If it gets stuck on the redirect screen, click the link to redirect. If you see a screen that says there was an API error, that’s ok.
     * In the Network tab, you should see a canceled request in red that begins with `callback?code=`. Click this request, and click Payload. Copy the value after code.
+    * NOTE: If you are already authenticaed with C1, the url may not load at all. If this happens, open your dev tools and check for the `callback?code=` -- it may already be there.
+
 
 3. Generate token in Postman
 
