@@ -1,0 +1,9 @@
+version: '3'
+services:
+  test-jwt-issuer:
+    build: .
+    ports:
+      - "5001:5001"
+    volumes:
+      - .:/jwt-app
+      - /jwt-app/node_modules

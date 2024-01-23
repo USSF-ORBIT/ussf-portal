@@ -1,0 +1,6 @@
+{
+  "issuer": "http://localhost:5001/.well-known/openid-configuration",
+  "jwks_uri": "http://localhost:5001/.well-known/jwks.json",
+  "authorization_endpoint": "http://localhost:5001/authorize",
+  "token_endpoint": "http://localhost:5001/token"
+}

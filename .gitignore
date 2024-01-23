@@ -36,3 +36,6 @@ tsconfig.tsbuildinfo
 
 #vscode
 .vscode
+
+# test jwt service certs
+test-jwt-service/certs/*.pem
