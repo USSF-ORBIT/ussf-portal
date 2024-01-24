@@ -180,7 +180,7 @@ test('can search the guardian directory', async ({ page, loginPage }) => {
   await expect(page.getByTestId('7_FirstName')).toBeVisible()
 })
 
-test.only('shows no results if none are found', async ({ page, loginPage }) => {
+test('shows no results if none are found', async ({ page, loginPage }) => {
   // Log in as CMS admin
   await loginPage.login(portalUser1.username, portalUser1.password)
 
