@@ -175,6 +175,50 @@ test('can search the guardian directory', async ({ page, loginPage }) => {
   await page.getByRole('button', { name: 'Reset search' }).click()
   // Inexplicably, counting the rows does not work here,
   // so let's check the first and last rows render
+  // This might be due to a bug see https://app.shortcut.com/orbit-truss/story/3126/guardian-directory-search-with-empty-string-returns-incomplete-list
+  await expect(page.getByTestId('0_FirstName')).toBeVisible()
+  await expect(page.getByTestId('7_FirstName')).toBeVisible()
+})
+
+test.only('shows no results if none are found', async ({ page, loginPage }) => {
+  // Log in as CMS admin
+  await loginPage.login(portalUser1.username, portalUser1.password)
+
+  await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+  await page.locator('text=Guardian Directory').click()
+  await expect(
+    page.getByRole('heading', { name: 'Guardian Directory' })
+  ).toBeVisible()
+
+  // Wait for data to show
+  await page
+    .locator('[data-testid="guardian-directory-table"] tbody tr')
+    .first()
+    .waitFor()
+
+  // Check we have the full expected directory
+  expect(
+    await page
+      .locator('[data-testid="guardian-directory-table"] tbody tr')
+      .count()
+  ).toBe(9)
+
+  // Successfully search for a Guardian
+  await page.getByTestId('textInput').click()
+  await page.getByTestId('textInput').fill('noresults')
+  await page.getByTestId('form').getByTestId('button').click()
+
+  // We should NOT have any results
+  await expect(page.getByRole('heading', { name: 'There are no results that match that query.' })).toBeVisible()
+
+  // Reset search results returns full directory
+  await page.getByRole('button', { name: 'Reset search' }).click()
+
+  await expect(page.getByRole('heading', { name: 'There are no results that match that query.' })).toBeHidden()
+
+  // Inexplicably, counting the rows does not work here,
+  // so let's check the first and last rows render
+  // This might be due to a bug see https://app.shortcut.com/orbit-truss/story/3126/guardian-directory-search-with-empty-string-returns-incomplete-list
   await expect(page.getByTestId('0_FirstName')).toBeVisible()
   await expect(page.getByTestId('7_FirstName')).toBeVisible()
 })
