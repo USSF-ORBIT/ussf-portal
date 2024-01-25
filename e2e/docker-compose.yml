@@ -6,7 +6,7 @@ services:
     build:
       context: ../../ussf-portal-client/
       dockerfile: Dockerfile
-      target: e2e
+      target: runner
       cache_from:
         - 'type=local,src=/tmp/portal-client,tag=e2e'
     restart: always
@@ -29,6 +29,8 @@ services:
       PERSONNEL_API_URL: http://personnel-api:4000
       NEXT_PUBLIC_PORTAL_URL: http://localhost:3000
       WEATHER_API_URL: http://wiremock:8181/points/
+      JWKS_URI: http://test-jwt-issuer:5001/.well-known/jwks.json
+      ISSUER: http://test-jwt-issuer:5001/.well-known/issuer.json
     stdin_open: true
     depends_on:
       - mongo
@@ -91,7 +93,16 @@ services:
     restart: always
     ports:
       - '4000:4000'
-
+  test-jwt-issuer:
+    container_name: test-jwt-issuer
+    build:
+      context: ../test-jwt-service/
+      dockerfile: Dockerfile
+    environment:
+      ISSUER: http://test-jwt-issuer:5001/.well-known/issuer.json
+    restart: always
+    ports:
+      - '5001:5001'
   redis:
     container_name: portal_redis
     image: redis:6.2
