@@ -34,7 +34,6 @@ app.get("/login", async (req, res, next) => {
 });
 
 
-
 app.get("/.well-known/openid-configuration", (req, res) => {
   const metadata = {
     issuer: issuer,
@@ -46,27 +45,9 @@ app.get("/.well-known/openid-configuration", (req, res) => {
   res.status(200).json(metadata);
 });
 
-app.post("/api/token", validateJWT, (req, res, next) => {
-  res.status(200).json({ valid: true });
-});
 
 // Start the server
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 
-function validateJWT(req, res, next) {
-  console.log(req.headers.authorization);
-  const token = req.headers.authorization?.split(" ")[1]; // Assuming token is sent as a Bearer token
-  if (!token) {
-    return res.status(401).send("Access Denied: No Token Provided!");
-  }
-
-  try {
-    const verified = jwt.verify(token, JWT_SECRET_KEY);
-    req.user = verified;
-    next(); // Proceed to the next middleware/function
-  } catch (error) {
-    return res.status(400).send({ valid: false });
-  }
-}
