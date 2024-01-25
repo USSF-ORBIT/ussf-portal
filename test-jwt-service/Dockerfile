@@ -11,7 +11,7 @@ ENV NODE_ENV=development
 COPY package.json yarn.lock /usr/src/app/
 COPY server.js /usr/src/app/
 COPY public /usr/src/app/public
-COPY certs /usr/src/app/certs
+# COPY certs /usr/src/app/certs
 
 # Set the working directory in the container
 WORKDIR /usr/src/app
