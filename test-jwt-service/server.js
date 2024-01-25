@@ -5,15 +5,11 @@ const port = process.env.PORT || 5001;
 const JWT = require("jsonwebtoken");
 const fs = require("fs");
 
-const secret = fs.readFileSync("./certs/dev-private.pem");
-
+const cert = process.env.JWT_DEV_CERT || "./certs/dev-private.pem";
+const secret = fs.readFileSync(cert);
+const issuer = process.env.ISSUER || "http://localhost:5001/.well-known/issuer.json";
 app.use(express.json());
 app.use(express.static("public"));
-
-// Basic route for testing
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
 
 app.get("/login", async (req, res, next) => {
   // Assuming user is permitted to login / get a token
@@ -21,8 +17,8 @@ app.get("/login", async (req, res, next) => {
 
   const token = JWT.sign(
     {
-      CN: req.body.userId,
-      iss: "http://localhost:5001/.well-known/openid-configuration",
+      CN: req.query.userId,
+      iss: issuer,
       aud: "guardian-one",
     },
     secret,
@@ -37,13 +33,11 @@ app.get("/login", async (req, res, next) => {
   res.send({ token });
 });
 
-// app.get("/.well-known/jwks.json", (req, res) => {
-//   res.status(200);
-// });
+
 
 app.get("/.well-known/openid-configuration", (req, res) => {
   const metadata = {
-    issuer: "http://localhost:5001/.well-known/openid-configuration",
+    issuer: issuer,
     jwks_uri: "http://localhost:5001/.well-known/jwks.json",
     authorization_endpoint: "http://localhost:5001/login",
     token_endpoint: "http://localhost:5001/token",
