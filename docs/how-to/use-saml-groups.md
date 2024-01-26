@@ -21,7 +21,7 @@ This group contains all users who have CMS admin access. Adding users to this gr
 
 ### PORTAL_CMS_Users		
 
-This group contains all users of the CMS who are not admins. This includes `CMS users`, `CMS Authors`, and `CMS Managers`. If you need to add someone who has one of these roles add them to this group. You can assign the role to them before they sign in if you grab their `UPN` after adding them to the `PORTAL_CMS_Users` group and create an account using that as their `userId`
+This group contains all users of the CMS who are not admins. This includes `CMS users`, `CMS Authors`, and `CMS Managers`. If you need to add someone who has one of these roles add them to this group. You can assign the role to them before they sign in if you grab their `Display Name` (NOT the ~~`UPN`~~, which is similar) after adding them to the `PORTAL_CMS_Users` group in SLAM and create an account using that as their `userId`
 
 ### PORTAL_SUPERADMINS
 

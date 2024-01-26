@@ -64,7 +64,9 @@ test('can create a draft landing page in the CMS and view it in the portal', asy
   await page.getByRole('button', { name: 'Create Landing Page' }).click()
 
   await expect(page.getByRole('radio', { name: 'Draft' })).toBeChecked()
-  await expect(page.getByRole('button', { name: 'Preview Landing Page' })).toBeVisible()
+  await expect(
+    page.getByRole('button', { name: 'Preview Landing Page' })
+  ).toBeVisible()
 
   // Start waiting for new page before clicking
   // and Click preview button
@@ -89,7 +91,9 @@ test('can create a draft landing page in the CMS and view it in the portal', asy
   // ensure the landing page is on the index page and has it's tag
   await page.goto('http://localhost:3000')
   await page.getByRole('link', { name: 'Landing Pages' }).click()
-  await expect(page.getByRole('cell', { name: `${landingPageTitle} Draft`, exact: true })).toBeVisible()
+  await expect(
+    page.getByRole('link', { name: `${landingPageTitle}`, exact: true })
+  ).toBeVisible()
 
   // return to the CMS and log out
   await page.goto('http://localhost:3001')
@@ -109,7 +113,9 @@ test('draft landing page cannot be seen by portal user', async ({
     page.getByRole('heading', { name: 'Landing Pages' })
   ).toBeVisible()
 
-  await expect(page.getByRole('cell', { name: `${landingPageTitle} Draft`, exact: true })).toBeHidden()
+  await expect(
+    page.getByRole('cell', { name: `${landingPageTitle} Draft`, exact: true })
+  ).toBeHidden()
   // Try to Navigate to the landing page
   await expect(page.getByRole('link', { name: landingPageTitle })).toBeHidden()
   const defaultResponse = await page.request.get(

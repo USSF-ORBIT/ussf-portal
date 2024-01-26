@@ -74,6 +74,13 @@ test('can create a landing page in the CMS and view it in the portal', async ({
   await page.getByRole('link', { name: 'Create Landing Page' }).click()
   await page.getByLabel('Page Title').click()
   await page.getByLabel('Page Title').fill(landingPageTitle)
+
+  /* Use fileChooser to upload a hero image */
+  const fileChooserPromise = page.waitForEvent('filechooser')
+  await page.locator('text=Upload image').nth(1).click()
+  const fileChooser = await fileChooserPromise
+  await fileChooser.setFiles(path.resolve(__dirname, 'placeholder.png'))
+
   await page.getByLabel('Slug').click()
   await page.getByLabel('Slug').fill(landingPageSlug)
   await page.getByLabel('Page Description').click()
@@ -87,13 +94,12 @@ test('can create a landing page in the CMS and view it in the portal', async ({
   await page
     .getByRole('button', { name: 'Create related Document', exact: true })
     .click()
-  await page.getByRole('button', { name: 'Upload File' }).click()
 
-  const [fileChooser] = await Promise.all([
-    page.waitForEvent('filechooser'),
-    page.locator('text=Upload').click(),
-  ])
-  await fileChooser.setFiles(testfile)
+  // Need to create a new fileChooser for each file upload
+  const newFileChooserPromise = page.waitForEvent('filechooser')
+  await page.locator('text=Upload File').click()
+  const newFileChooser = await newFileChooserPromise
+  await newFileChooser.setFiles(testfile)
 
   await page
     .getByRole('dialog', { name: 'Create Document', exact: true })
@@ -180,10 +186,33 @@ test('portal user can see published landing page', async ({
   await expect(
     page.getByRole('heading', { name: 'Documentation' })
   ).toBeVisible()
+  await expect(
+    page.locator('img[alt="landing page hero graphic"]')
+  ).toBeVisible()
+  await expect(page.locator('img[alt="landing page badge"]')).toBeVisible()
   await expect(page.getByRole('heading', { name: 'Collections' })).toBeVisible()
   await expect(page.getByRole('heading', { name: 'Articles' })).toBeVisible()
 
-  expect(page.url()).toBe(
-    `http://localhost:3000/landing/${landingPageSlug}`
+  expect(page.url()).toBe(`http://localhost:3000/landing/${landingPageSlug}`)
+})
+
+test('landing page shows up in search', async ({
+  page,
+  loginPage,
+}) => {
+  // try to go to the landing page as default user
+  await loginPage.login(portalUser1.username, portalUser1.password)
+  await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+
+  await page.goto('http://localhost:3000/search')
+  await page.getByTestId('search-input').fill(landingPageTitle)
+  await expect(page.getByTestId('search-input')).toHaveValue(
+    landingPageTitle
   )
+  await page.getByRole('button', { name: 'Search' }).click()
+  const linkToLandingPage = page.getByRole('link', { name: `${landingPageTitle} (opens in a new window)` }) 
+  await expect(linkToLandingPage).toBeVisible()
+  const href = await linkToLandingPage.getAttribute('href')
+  expect(href).toEqual(`http://localhost:3000/landing/${landingPageSlug}`)
+  await expect(page.getByTestId('result-preview').getByText(landingPageDescription)).toBeVisible()
 })

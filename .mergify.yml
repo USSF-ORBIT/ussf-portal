@@ -3,6 +3,7 @@ pull_request_rules:
     conditions:
       - and:
         - "label!=no-merge"
+        - "label=okay-to-merge"
         - and:
           - author!=dependabot[bot] # if author is not dependabot
           - author!=renovate[bot] # if author is not renovatebot

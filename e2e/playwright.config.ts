@@ -27,6 +27,7 @@ const config: PlaywrightTestConfig = {
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
     trace: 'retain-on-failure',
+    permissions: ["clipboard-read", "clipboard-write"],
   },
   workers: 1,
   retries: 3,
