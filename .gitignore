@@ -31,11 +31,9 @@ e2e/test-results
 # dotenv environment variables file
 .env
 .envrc.*
+e2e/.envrc
 
 tsconfig.tsbuildinfo
 
 #vscode
 .vscode
-
-# test jwt service certs
-test-jwt-service/certs/*.pem

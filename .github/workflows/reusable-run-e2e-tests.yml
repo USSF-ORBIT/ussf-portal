@@ -109,7 +109,15 @@ jobs:
           key: ${{ runner.os }}-docker-personnel-api-
           restore-keys: ${{ runner.os }}-docker-personnel-api-
 
+      - name: Add DoD Certificate Bundle
+        env:
+          CERT_BUNDLE_SHA256: ${{ secrets.DOD_CA_CERT_BUNDLE_SHA256 }}
+        run: |
+          echo "$CERT_BUNDLE_SHA256" > scripts/dod_ca_cert_bundle.sha256
+            
       - name: Docker compose
+        env:
+          JWT_DEV_CERT: ${{ secrets.JWT_DEV_CERT }}
         run: |
           docker image prune --all --force
           docker compose up -d
