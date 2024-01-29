@@ -3,10 +3,9 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 5001;
 const JWT = require("jsonwebtoken");
-const fs = require("fs");
 
-const cert = process.env.JWT_DEV_CERT || "./certs/dev-private.pem";
-const secret = fs.readFileSync(cert);
+const secret = process.env.JWT_DEV_CERT
+console.debug('🚨secret length', secret.length)
 const issuer = process.env.ISSUER || "http://localhost:5001/.well-known/issuer.json";
 app.use(express.json());
 app.use(express.static("public"));
