@@ -5,7 +5,7 @@ services:
     container_name: client
     build:
       context: ../../ussf-portal-client/
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-gh
       target: e2e
       cache_from:
         - 'type=local,src=/tmp/portal-client,tag=e2e'
