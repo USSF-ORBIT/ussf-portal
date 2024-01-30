@@ -15,15 +15,7 @@ jobs:
           ref: main
           path: ./ussf-portal-client
           fetch-depth: 0 # fetch all branch information, needed to checkout the branch if present later
-          
-          
-      - name: Add DoD Certificate Bundle
-        env:
-          CERT_BUNDLE_SHA256: ${{ secrets.DOD_CA_CERT_BUNDLE_SHA256 }}
-        # not sure if this will work..
-        working-directory: ./ussf-portal-client
-        run: |
-          echo "$CERT_BUNDLE_SHA256" > scripts/dod_ca_cert_bundle.sha256
+
             
       
       - name: Docker setup buildx
