@@ -39,9 +39,7 @@ describe('Event logging', () => {
 
     await Promise.all([
       page.waitForNavigation(),
-      page
-        .locator('a:has-text("JOHN.HENKE.562270783@testusers.cce.af.mil")')
-        .click(),
+      page.locator(`a:has-text("${defaultUser.userId}")`).click(),
     ])
 
     await page.fill('#name', 'Johnathan Henke')
@@ -49,7 +47,7 @@ describe('Event logging', () => {
 
     await expect(
       page.locator(
-        'legend:has-text("Updated By") + div:has-text("JOHN.HENKE.562270783@testusers.cce.af.mil")'
+        `legend:has-text("Updated By") + div:has-text("${defaultUser.userId}")`
       )
     ).toBeVisible()
 
@@ -79,7 +77,7 @@ describe('Event logging', () => {
 
     await expect(
       page.locator(
-        'legend:has-text("Actor") + div:has-text("JOHN.HENKE.562270783@testusers.cce.af.mil")'
+        `legend:has-text("Actor") + div:has-text("${defaultUser.userId}")`
       )
     ).toBeVisible()
   })
