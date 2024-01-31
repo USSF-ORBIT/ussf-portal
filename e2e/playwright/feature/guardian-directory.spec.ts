@@ -152,14 +152,17 @@ test('can search the guardian directory', async ({ page, loginPage }) => {
   await page.getByTestId('form').getByTestId('button').click()
   // Inexplicably, counting the rows does not work here,
   // so let's check the first and last rows render
+  // This might be due to a bug see https://app.shortcut.com/orbit-truss/story/3126/guardian-directory-search-with-empty-string-returns-incomplete-list
   await expect(page.getByTestId('0_FirstName')).toBeVisible()
   await expect(page.getByTestId('7_FirstName')).toBeVisible()
 
   // Searching for a non-matching input returns no results
   await page.getByTestId('textInput').click()
-  await page.getByTestId('textInput').fill('asdf')
+  await page.getByTestId('textInput').fill('noresults')
   await page.getByTestId('form').getByTestId('button').click()
-  await page.waitForSelector('[data-testid="guardian-directory-table"]')
+ 
+  // We should NOT have any results
+  await expect(page.getByRole('heading', { name: 'There are no results that match that query.' })).toBeVisible()
   // Same as above, counting the rows does not work here, so checking
   // that all rows are hidden manually
   await expect(page.getByTestId('0_FirstName')).toBeHidden()
@@ -173,8 +176,12 @@ test('can search the guardian directory', async ({ page, loginPage }) => {
 
   // Reset search results returns full directory
   await page.getByRole('button', { name: 'Reset search' }).click()
+
+  await page.waitForSelector('[data-testid="guardian-directory-table"]')
+
   // Inexplicably, counting the rows does not work here,
   // so let's check the first and last rows render
+  // This might be due to a bug see https://app.shortcut.com/orbit-truss/story/3126/guardian-directory-search-with-empty-string-returns-incomplete-list
   await expect(page.getByTestId('0_FirstName')).toBeVisible()
   await expect(page.getByTestId('7_FirstName')).toBeVisible()
 })
