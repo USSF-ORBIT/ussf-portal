@@ -197,7 +197,6 @@ test('portal user can see published landing page', async ({
 })
 
 test('landing page shows up in search', async ({ page, loginPage }) => {
-  // try to go to the landing page as default user
   await loginPage.login(portalUser1.username, portalUser1.password)
   await expect(
     page.locator(`text=WELCOME, ${portalUser1.displayName}`)
@@ -215,5 +214,29 @@ test('landing page shows up in search', async ({ page, loginPage }) => {
   expect(href).toEqual(`http://localhost:3000/landing/${landingPageSlug}`)
   await expect(
     page.getByTestId('result-preview').getByText(landingPageDescription)
+  ).toBeVisible()
+})
+
+test('article linked to a landing page shows up in search', async ({
+  page,
+  loginPage,
+}) => {
+  await loginPage.login(portalUser1.username, portalUser1.password)
+  await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+
+  await page.goto('http://localhost:3000/search')
+  await page.getByTestId('search-input').fill(articleTitle)
+  await expect(page.getByTestId('search-input')).toHaveValue(articleTitle)
+  await page.getByRole('button', { name: 'Search' }).click()
+  const linkToArticle = page.getByRole('link', {
+    name: `${articleTitle} (opens in a new window)`,
+  })
+  await expect(linkToArticle).toBeVisible()
+  const href = await linkToArticle.getAttribute('href')
+  expect(href).toEqual(
+    `http://localhost:3000/landing/${landingPageSlug}/${articleSlug}`
+  )
+  await expect(
+    page.getByTestId('result-preview').getByText(articlePreview)
   ).toBeVisible()
 })
