@@ -66,9 +66,7 @@ describe('Authentication', () => {
     await loginPage.performLogin(defaultUser.username, defaultUser.password)
 
     await expect(
-      page.locator(
-        'text=Signed in as JOHN.HENKE.562270783@testusers.cce.af.mil'
-      )
+      page.locator(`text=Signed in as ${defaultUser.userId}`)
     ).toBeVisible()
 
     await expect(page.locator('main div:has(h3:has-text("Users"))')).toHaveText(
@@ -87,15 +85,13 @@ describe('Authentication', () => {
     await loginPage.performLogin(defaultUser.username, defaultUser.password)
 
     await expect(
-      page.locator(
-        'text=Signed in as JOHN.HENKE.562270783@testusers.cce.af.mil'
-      )
+      page.locator(`text=Signed in as ${defaultUser.userId}`)
     ).toBeVisible()
 
     expect(page.url()).toBe('http://localhost:3001/users')
     await expect(
       page.getByRole('link', {
-        name: 'JOHN.HENKE.562270783@testusers.cce.af.mil',
+        name: `${defaultUser.userId}`,
       })
     ).toBeVisible()
 
@@ -105,13 +101,13 @@ describe('Authentication', () => {
   test('can log in as a CMS user', async ({ page, loginPage }) => {
     await loginPage.login(defaultUser.username, defaultUser.password)
 
-    await expect(page.locator('text=WELCOME, JOHN HENKE')).toBeVisible()
+    await expect(
+      page.locator(`text=WELCOME, ${defaultUser.name}`)
+    ).toBeVisible()
 
     await page.goto('http://localhost:3001')
     await expect(
-      page.locator(
-        'text=Signed in as JOHN.HENKE.562270783@testusers.cce.af.mil'
-      )
+      page.locator(`text=Signed in as ${defaultUser.userId}`)
     ).toBeVisible()
 
     await expect(page.locator('main div:has(h3:has-text("Users"))')).toHaveText(
@@ -124,13 +120,11 @@ describe('Authentication', () => {
   test('can log in as a CMS admin', async ({ page, loginPage }) => {
     await loginPage.login(adminUser.username, adminUser.password)
 
-    await expect(page.locator('text=WELCOME, FLOYD KING')).toBeVisible()
+    await expect(page.locator(`text=WELCOME, ${adminUser.name}`)).toBeVisible()
 
     await page.goto('http://localhost:3001')
     await expect(
-      page.locator(
-        'text=Signed in as FLOYD.KING.376144527@testusers.cce.af.mil'
-      )
+      page.locator(`text=Signed in as ${adminUser.userId}`)
     ).toBeVisible()
 
     await loginPage.logout()
@@ -142,7 +136,9 @@ describe('Authentication', () => {
   }) => {
     await loginPage.login(portalUser1.username, portalUser1.password)
 
-    await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+    await expect(
+      page.locator(`text=WELCOME, ${portalUser1.name}`)
+    ).toBeVisible()
 
     await page.goto('http://localhost:3001')
     await expect(
@@ -164,24 +160,26 @@ describe('Authentication', () => {
 
     // Verify isEnabled state as admin user
     await loginPage.login(adminUser.username, adminUser.password)
-    await expect(page.locator('text=WELCOME, FLOYD KING')).toBeVisible()
+    await expect(page.locator(`text=WELCOME, ${adminUser.name}`)).toBeVisible()
     await page.goto('http://localhost:3001')
     await page.locator('a:has-text("Users 5 items")').click()
-
+    page.pause()
     // RONALD BOYD is enabled but should not be
     await expect(
-      page.locator('tr:has-text("RONALD BOYD") td:nth-child(5)')
+      page.locator(`tr:has-text("${portalUser2.name}") td:nth-child(5)`)
     ).toHaveText('False')
     await expect(
-      page.locator('tr:has-text("RONALD BOYD") td:nth-child(6)')
+      page.locator(`tr:has-text("${portalUser2.name}") td:nth-child(6)`)
     ).toHaveText('True')
-
+    page.pause()
     await loginPage.logout()
 
     // Login as RONALD BOYD
     // Expected: No Access
     await loginPage.login(portalUser2.username, portalUser2.password)
-    await expect(page.locator('text=WELCOME, RONNY')).toBeVisible()
+    await expect(
+      page.locator(`text=WELCOME, ${portalUser2.name}`)
+    ).toBeVisible()
     await page.goto('http://localhost:3001')
     expect(page.url()).toContain('/no-access')
     await expect(
@@ -190,16 +188,16 @@ describe('Authentication', () => {
 
     // Verify updated state as admin user
     await loginPage.login(adminUser.username, adminUser.password)
-    await expect(page.locator('text=WELCOME, FLOYD KING')).toBeVisible()
+    await expect(page.locator(`text=WELCOME, ${adminUser.name}`)).toBeVisible()
     await page.goto('http://localhost:3001')
     await page.locator('a:has-text("Users 5 items")').click()
 
     // RONALD BOYD is now disabled
     await expect(
-      page.locator('tr:has-text("RONALD BOYD") td:nth-child(5)')
+      page.locator(`tr:has-text("${portalUser2.name}") td:nth-child(5)`)
     ).toHaveText('False')
     await expect(
-      page.locator('tr:has-text("RONALD BOYD") td:nth-child(6)')
+      page.locator(`tr:has-text("${portalUser2.name}") td:nth-child(6)`)
     ).toHaveText('False')
   })
 
@@ -218,28 +216,28 @@ describe('Authentication', () => {
 
     // Verify previous state as admin user
     await loginPage.login(adminUser.username, adminUser.password)
-    await expect(page.locator('text=WELCOME, FLOYD KING')).toBeVisible()
+    await expect(page.locator(`text=WELCOME, ${adminUser.name}`)).toBeVisible()
     await page.goto('http://localhost:3001')
     await page.locator('a:has-text("Users 5 items")').click()
 
     // JOHN HENKE is admin but should not be
     await expect(
-      page.locator('tr:has-text("JOHN HENKE") > td:nth-child(5)')
+      page.locator(`tr:has-text("${defaultUser.name}") > td:nth-child(5)`)
     ).toHaveText('True')
     await expect(
-      page.locator('tr:has-text("JOHN HENKE") td:nth-child(6)')
+      page.locator(`tr:has-text("${defaultUser.name}") td:nth-child(6)`)
     ).toHaveText('True')
 
     await loginPage.logout()
 
     // Login as JOHN HENKE
     await loginPage.login(defaultUser.username, defaultUser.password)
-    await expect(page.locator('text=WELCOME, JOHN HENKE')).toBeVisible()
+    await expect(
+      page.locator(`text=WELCOME, ${defaultUser.name}`)
+    ).toBeVisible()
     await page.goto('http://localhost:3001')
     await expect(
-      page.locator(
-        'text=Signed in as JOHN.HENKE.562270783@testusers.cce.af.mil'
-      )
+      page.locator(`text=Signed in as ${defaultUser.userId}`)
     ).toBeVisible()
     await expect(page.locator('main div:has(h3:has-text("Users"))')).toHaveText(
       'Users 1 item'
@@ -248,16 +246,16 @@ describe('Authentication', () => {
 
     // Verify new state as admin user
     await loginPage.login(`${adminUser.username}`, `${adminUser.password}`)
-    await expect(page.locator('text=WELCOME, FLOYD KING')).toBeVisible()
+    await expect(page.locator(`text=WELCOME, ${adminUser.name}`)).toBeVisible()
     await page.goto('http://localhost:3001')
     await page.locator('a:has-text("Users 5 items")').click()
-
+    page.pause()
     // JOHN HENKE is no longer an admin
     await expect(
-      page.locator('tr:has-text("JOHN HENKE") > td:nth-child(5)')
+      page.locator(`tr:has-text("${defaultUser.name}") > td:nth-child(5)`)
     ).toHaveText('False')
     await expect(
-      page.locator('tr:has-text("JOHN HENKE") td:nth-child(6)')
+      page.locator(`tr:has-text("${defaultUser.name}") td:nth-child(6)`)
     ).toHaveText('True')
   })
 
@@ -273,7 +271,7 @@ describe('Authentication', () => {
     await createOrUpdateUsers([{ ...adminUser, isAdmin: false }])
 
     await loginPage.login(adminUser.username, adminUser.password)
-    await expect(page.locator('text=WELCOME, FLOYD KING')).toBeVisible()
+    await expect(page.locator(`text=WELCOME, ${adminUser.name}`)).toBeVisible()
     await page.goto('http://localhost:3001')
     await page.locator('a:has-text("Users 5 items")').click()
   })
@@ -290,7 +288,9 @@ describe('Authentication', () => {
     await createOrUpdateUsers([{ ...defaultUser, isEnabled: false }])
 
     await loginPage.login(defaultUser.username, defaultUser.password)
-    await expect(page.locator('text=WELCOME, JOHN HENKE')).toBeVisible()
+    await expect(
+      page.locator(`text=WELCOME, ${defaultUser.name}`)
+    ).toBeVisible()
     await page.goto('http://localhost:3001')
     await expect(page.locator('main div:has(h3:has-text("Users"))')).toHaveText(
       'Users 1 item'
