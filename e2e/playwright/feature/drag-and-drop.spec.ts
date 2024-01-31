@@ -31,7 +31,9 @@ describe('Drag and drop feature', () => {
   }) => {
     // Login and check that user is in My Space
     await loginPage.login(portalUser1.username, portalUser1.password)
-    await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+    await expect(
+      page.locator(`text=WELCOME, ${portalUser1.displayName}`)
+    ).toBeVisible()
     await expect(page.locator('text=Example Collection')).toBeVisible()
 
     const dragHandle = page

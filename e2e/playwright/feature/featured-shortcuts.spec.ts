@@ -26,10 +26,13 @@ test('can add/remove Featured Shortcuts widget to My Space', async ({
   // Log in as CMS admin
   await loginPage.login(adminUser.username, adminUser.password)
 
-  await expect(page.locator('text=WELCOME, FLOYD KING')).toBeVisible()
+  await expect(page.locator(`text=WELCOME, ${adminUser.name}`)).toBeVisible()
 
   // Remove Default Featured Shortcuts
-  await page.locator('[aria-label="Featured Shortcuts Widget Settings"]').first().click()
+  await page
+    .locator('[aria-label="Featured Shortcuts Widget Settings"]')
+    .first()
+    .click()
   await page.locator('text=Remove Featured Shortcuts widget').click()
   await page.locator('[data-testid="modalFooter"] >> text=Delete').click()
 

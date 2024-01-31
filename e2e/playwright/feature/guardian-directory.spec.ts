@@ -23,7 +23,9 @@ test('can view the guardian directory', async ({ page, loginPage }) => {
   // Log in as CMS admin
   await loginPage.login(portalUser1.username, portalUser1.password)
 
-  await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+  await expect(
+    page.locator(`text=WELCOME, ${portalUser1.displayName}`)
+  ).toBeVisible()
   await page.locator('text=Guardian Directory').click()
   await expect(
     page.getByRole('heading', { name: 'Guardian Directory' })
@@ -56,7 +58,7 @@ test('can view the guardian directory', async ({ page, loginPage }) => {
   await expect(page.getByTestId('0_Rank')).toBeVisible()
   await expect(page.getByTestId('0_Rank')).toHaveText('Spc2/E-2')
   await expect(page.getByTestId('0_DutyTitle')).toBeVisible()
-  await expect(page.getByTestId('0_DutyTitle')).toHaveText('ENGINEER')
+  await expect(page.getByTestId('0_DutyTitle')).toHaveText('Engineer')
   await expect(page.getByTestId('0_BaseLoc')).toBeVisible()
   await expect(page.getByTestId('0_BaseLoc')).toHaveText('Vandenberg')
   await expect(page.getByTestId('0_MajCom')).toBeVisible()
@@ -76,7 +78,7 @@ test('can view the guardian directory', async ({ page, loginPage }) => {
   await expect(page.getByTestId('8_Rank')).toBeVisible()
   await expect(page.getByTestId('8_Rank')).toHaveText('Spc3/E-3')
   await expect(page.getByTestId('8_DutyTitle')).toBeVisible()
-  await expect(page.getByTestId('8_DutyTitle')).toHaveText('DESIGNER')
+  await expect(page.getByTestId('8_DutyTitle')).toHaveText('Designer')
   await expect(page.getByTestId('8_BaseLoc')).toBeVisible()
   await expect(page.getByTestId('8_BaseLoc')).toHaveText('Buckley')
   await expect(page.getByTestId('8_MajCom')).toBeVisible()
@@ -96,7 +98,7 @@ test('can view the guardian directory', async ({ page, loginPage }) => {
   await expect(page.getByTestId('5_Rank')).toBeVisible()
   await expect(page.getByTestId('5_Rank')).toHaveText('1st Lt/O-2')
   await expect(page.getByTestId('5_DutyTitle')).toBeVisible()
-  await expect(page.getByTestId('5_DutyTitle')).toHaveText('SPACE COMBAT')
+  await expect(page.getByTestId('5_DutyTitle')).toHaveText('Space Combat')
   await expect(page.getByTestId('5_BaseLoc')).toBeVisible()
   await expect(page.getByTestId('5_BaseLoc')).toHaveText('Schriever')
   await expect(page.getByTestId('5_MajCom')).toBeVisible()
@@ -113,7 +115,9 @@ test('can search the guardian directory', async ({ page, loginPage }) => {
   // Log in as CMS admin
   await loginPage.login(portalUser1.username, portalUser1.password)
 
-  await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+  await expect(
+    page.locator(`text=WELCOME, ${portalUser1.displayName}`)
+  ).toBeVisible()
   await page.locator('text=Guardian Directory').click()
   await expect(
     page.getByRole('heading', { name: 'Guardian Directory' })

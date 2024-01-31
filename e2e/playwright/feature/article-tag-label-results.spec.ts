@@ -38,11 +38,11 @@ test('can view filtered article results with a specific tag or label', async ({
   const label = faker.lorem.words()
 
   await loginPage.login(adminUser.username, adminUser.password)
-  await expect(page.locator('text=WELCOME, FLOYD KING')).toBeVisible()
+  await expect(page.locator(`text=WELCOME, ${adminUser.name}`)).toBeVisible()
 
   await page.goto('http://localhost:3001')
   await expect(
-    page.locator('text=Signed in as FLOYD.KING.376144527@testusers.cce.af.mil')
+    page.locator(`text=Signed in as ${adminUser.userId}`)
   ).toBeVisible()
 
   /* Create a label from the Labels page */

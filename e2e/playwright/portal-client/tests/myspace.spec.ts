@@ -35,7 +35,9 @@ describe('MySpace', () => {
   }) => {
     // Login
     await loginPage.login(portalUser1.username, portalUser1.password)
-    await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+    await expect(
+      page.locator(`text=WELCOME, ${portalUser1.displayName}`)
+    ).toBeVisible()
 
     // Create a custom collection
     await page.locator('text=Add widget').click()
@@ -53,7 +55,9 @@ describe('MySpace', () => {
   }) => {
     // Login and check that user is in My Space
     await loginPage.login(portalUser1.username, portalUser1.password)
-    await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+    await expect(
+      page.locator(`text=WELCOME, ${portalUser1.displayName}`)
+    ).toBeVisible()
     await expect(page.locator('text=Example Collection')).toBeVisible()
 
     // Remove Webmail and undo
@@ -76,7 +80,9 @@ describe('MySpace', () => {
   }) => {
     // Login and check that user is in My Space
     await loginPage.login(portalUser1.username, portalUser1.password)
-    await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+    await expect(
+      page.locator(`text=WELCOME, ${portalUser1.displayName}`)
+    ).toBeVisible()
     await expect(page.locator('text=Example Collection')).toBeVisible()
 
     // Open dropdown and select an existing bookmark and click it
@@ -98,7 +104,9 @@ describe('MySpace', () => {
   }) => {
     // Login and check that user is in My Space
     await loginPage.login(portalUser1.username, portalUser1.password)
-    await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+    await expect(
+      page.locator(`text=WELCOME, ${portalUser1.displayName}`)
+    ).toBeVisible()
     await expect(page.locator('text=Example Collection')).toBeVisible()
 
     // Open dropdown and select the 'Add custom link' option and click it
@@ -146,7 +154,9 @@ describe('MySpace', () => {
   test('can edit an existing collection title', async ({ page, loginPage }) => {
     // Login and check that user is in My Space
     await loginPage.login(portalUser1.username, portalUser1.password)
-    await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+    await expect(
+      page.locator(`text=WELCOME, ${portalUser1.displayName}`)
+    ).toBeVisible()
     await expect(page.locator('text=Example Collection')).toBeVisible()
 
     // Update Example Collection title
@@ -178,7 +188,9 @@ describe('MySpace', () => {
   }) => {
     // Login and check that user is in My Space
     await loginPage.login(portalUser1.username, portalUser1.password)
-    await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+    await expect(
+      page.locator(`text=WELCOME, ${portalUser1.displayName}`)
+    ).toBeVisible()
     await expect(page.locator('text=Example Collection')).toBeVisible()
 
     await page.locator('[aria-label="remove Webmail from collection"]').click()
@@ -199,7 +211,9 @@ describe('MySpace', () => {
   test('can delete an existing collection', async ({ page, loginPage }) => {
     // Login and check that user is in My Space
     await loginPage.login(portalUser1.username, portalUser1.password)
-    await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+    await expect(
+      page.locator(`text=WELCOME, ${portalUser1.displayName}`)
+    ).toBeVisible()
     await expect(page.locator('text=Example Collection')).toBeVisible()
 
     // Cancel
@@ -224,7 +238,9 @@ describe('MySpace', () => {
     loginPage,
   }) => {
     await loginPage.login(portalUser1.username, portalUser1.password)
-    await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+    await expect(
+      page.locator(`text=WELCOME, ${portalUser1.displayName}`)
+    ).toBeVisible()
 
     // Add News Widget
     await page.locator('text=Add widget').click()

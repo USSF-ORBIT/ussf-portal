@@ -82,7 +82,9 @@ describe('Portal authentication', () => {
       await expect(loginPage.loginButton).toBeVisible()
 
       await loginPage.login(portalUser1.username, portalUser1.password)
-      await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+      await expect(
+        page.locator(`text=WELCOME, ${portalUser1.displayName}`)
+      ).toBeVisible()
 
       await Promise.all([
         page.waitForResponse('/api/auth/logout'),
@@ -105,7 +107,9 @@ describe('Portal authentication', () => {
   describe('access while logged in', () => {
     test('loads the user on each route', async ({ page, loginPage }) => {
       await loginPage.login(portalUser1.username, portalUser1.password)
-      await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+      await expect(
+        page.locator(`text=WELCOME, ${portalUser1.displayName}`)
+      ).toBeVisible()
 
       // Check that logged in user can visit each url
       for (const url of routes) {

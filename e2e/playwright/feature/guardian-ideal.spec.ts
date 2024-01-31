@@ -26,7 +26,7 @@ test('can add/remove Guardian Ideal widget to My Space', async ({
   // Log in as CMS admin
   await loginPage.login(adminUser.username, adminUser.password)
 
-  await expect(page.locator('text=WELCOME, FLOYD KING')).toBeVisible()
+  await expect(page.locator(`text=WELCOME, ${adminUser.name}`)).toBeVisible()
 
   // Remove Guardian Ideal
   await page.locator('[aria-label="Guardian Ideal Widget Settings"]').click()

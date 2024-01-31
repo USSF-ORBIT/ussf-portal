@@ -38,13 +38,11 @@ test('orbit blog article published with future date cannot be seen', async ({
   keystoneArticlePage,
 }) => {
   await loginPage.login(managerUser.username, managerUser.password)
-  await expect(page.locator('text=WELCOME, CHRISTINA HAVEN')).toBeVisible()
+  await expect(page.locator(`text=WELCOME, ${managerUser.name}`)).toBeVisible()
 
   await page.goto('http://localhost:3001')
   await expect(
-    page.locator(
-      'text=Signed in as CHRISTINA.HAVEN.561698119@testusers.cce.af.mil'
-    )
+    page.locator(`text=Signed in as ${managerUser.userId}`)
   ).toBeVisible()
 
   /* Navigate to the Articles page */
@@ -93,7 +91,9 @@ test('orbit blog article published with future date cannot be seen', async ({
 
   // try to go to the article as default user
   await loginPage.login(portalUser1.username, portalUser1.password)
-  await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+  await expect(
+    page.locator(`text=WELCOME, ${portalUser1.displayName}`)
+  ).toBeVisible()
 
   const defaultResponse = await page.request.get(
     `http://localhost:3000/articles/${slug}`
@@ -108,13 +108,11 @@ test('internal news article published with future date cannot be seen', async ({
   keystoneArticlePage,
 }) => {
   await loginPage.login(managerUser.username, managerUser.password)
-  await expect(page.locator('text=WELCOME, CHRISTINA HAVEN')).toBeVisible()
+  await expect(page.locator(`text=WELCOME, ${managerUser.name}`)).toBeVisible()
 
   await page.goto('http://localhost:3001')
   await expect(
-    page.locator(
-      'text=Signed in as CHRISTINA.HAVEN.561698119@testusers.cce.af.mil'
-    )
+    page.locator(`text=Signed in as ${managerUser.userId}`)
   ).toBeVisible()
 
   /* Navigate to the Articles page */
@@ -170,7 +168,9 @@ test('internal news article published with future date cannot be seen', async ({
 
   // try to go to the article a portal user
   await loginPage.login(portalUser1.username, portalUser1.password)
-  await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+  await expect(
+    page.locator(`text=WELCOME, ${portalUser1.displayName}`)
+  ).toBeVisible()
 
   const response = await page.request.get(
     `http://localhost:3000/articles/${slug}`

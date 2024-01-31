@@ -79,14 +79,14 @@ const exampleCollection3 = {
 // These users need to exist in the test IDP users.php file
 // because Cypress tests authenticate using the test IDP
 module.exports.testUser1 = {
-  userId: 'BERNADETTE.CAMPBELL.5244446289@testusers.cce.af.mil',
+  userId: 'CAMPBELL.BERNADETTE.5244446289',
   mySpace: [exampleCollection1, exampleCollection2],
   displayName: 'Bernie',
   theme: 'light',
 }
 
 module.exports.testUser2 = {
-  userId: 'RONALD.BOYD.312969168@testusers.cce.af.mil',
+  userId: 'BOYD.RONALD.312969168',
   mySpace: [exampleCollection3],
   displayName: 'Ronny',
   theme: 'light',

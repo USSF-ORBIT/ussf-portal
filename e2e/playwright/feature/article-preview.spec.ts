@@ -40,13 +40,13 @@ describe('orbit blog', () => {
     keystoneArticlePage,
   }) => {
     await loginPage.login(managerUser.username, managerUser.password)
-    await expect(page.locator('text=WELCOME, CHRISTINA HAVEN')).toBeVisible()
+    await expect(
+      page.locator(`text=WELCOME, ${managerUser.name}`)
+    ).toBeVisible()
 
     await page.goto('http://localhost:3001')
     await expect(
-      page.locator(
-        'text=Signed in as CHRISTINA.HAVEN.561698119@testusers.cce.af.mil'
-      )
+      page.locator(`text=Signed in as ${managerUser.userId}`)
     ).toBeVisible()
 
     /* Navigate to the Articles page */
@@ -102,7 +102,9 @@ describe('orbit blog', () => {
   test('cannot be seen by portal user', async ({ page, loginPage }) => {
     // try to go to the article as default user
     await loginPage.login(portalUser1.username, portalUser1.password)
-    await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+    await expect(
+      page.locator(`text=WELCOME, ${portalUser1.displayName}`)
+    ).toBeVisible()
 
     const defaultResponse = await page.request.get(
       `http://localhost:3000/articles/${slug}`
@@ -120,13 +122,13 @@ describe('orbit blog', () => {
     keystoneArticlePage,
   }) => {
     await loginPage.login(managerUser.username, managerUser.password)
-    await expect(page.locator('text=WELCOME, CHRISTINA HAVEN')).toBeVisible()
+    await expect(
+      page.locator(`text=WELCOME, ${managerUser.name}`)
+    ).toBeVisible()
 
     await page.goto('http://localhost:3001')
     await expect(
-      page.locator(
-        'text=Signed in as CHRISTINA.HAVEN.561698119@testusers.cce.af.mil'
-      )
+      page.locator(`text=Signed in as ${managerUser.userId}`)
     ).toBeVisible()
 
     /* Navigate to the Articles page */
@@ -135,9 +137,7 @@ describe('orbit blog', () => {
     await keystoneArticlePage.publishArticle()
 
     // Check for preview button
-    await expect(
-      page.locator('button:has-text("View Article")')
-    ).toBeVisible()
+    await expect(page.locator('button:has-text("View Article")')).toBeVisible()
 
     // Start waiting for new page before clicking
     // and Click preview button
@@ -172,13 +172,13 @@ describe('internal news', () => {
     keystoneArticlePage,
   }) => {
     await loginPage.login(managerUser.username, managerUser.password)
-    await expect(page.locator('text=WELCOME, CHRISTINA HAVEN')).toBeVisible()
+    await expect(
+      page.locator(`text=WELCOME, ${managerUser.name}`)
+    ).toBeVisible()
 
     await page.goto('http://localhost:3001')
     await expect(
-      page.locator(
-        'text=Signed in as CHRISTINA.HAVEN.561698119@testusers.cce.af.mil'
-      )
+      page.locator(`text=Signed in as ${managerUser.userId}`)
     ).toBeVisible()
 
     /* Navigate to the Articles page */
@@ -241,7 +241,9 @@ describe('internal news', () => {
   test('cannot be seen by portal user', async ({ page, loginPage }) => {
     // try to go to the article as default user
     await loginPage.login(portalUser1.username, portalUser1.password)
-    await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+    await expect(
+      page.locator(`text=WELCOME, ${portalUser1.displayName}`)
+    ).toBeVisible()
 
     const defaultResponse = await page.request.get(
       `http://localhost:3000/articles/${slug}`
@@ -259,13 +261,13 @@ describe('internal news', () => {
     keystoneArticlePage,
   }) => {
     await loginPage.login(managerUser.username, managerUser.password)
-    await expect(page.locator('text=WELCOME, CHRISTINA HAVEN')).toBeVisible()
+    await expect(
+      page.locator(`text=WELCOME, ${managerUser.name}`)
+    ).toBeVisible()
 
     await page.goto('http://localhost:3001')
     await expect(
-      page.locator(
-        'text=Signed in as CHRISTINA.HAVEN.561698119@testusers.cce.af.mil'
-      )
+      page.locator(`text=Signed in as ${managerUser.userId}`)
     ).toBeVisible()
 
     /* Navigate to the Articles page */
@@ -274,9 +276,7 @@ describe('internal news', () => {
     await keystoneArticlePage.publishArticle()
 
     // Check for preview button
-    await expect(
-      page.locator('button:has-text("View Article")')
-    ).toBeVisible()
+    await expect(page.locator('button:has-text("View Article")')).toBeVisible()
 
     // Start waiting for new page before clicking
     // and Click preview button

@@ -25,7 +25,9 @@ describe('Event logging', () => {
   }) => {
     await loginPage.login(defaultUser.username, defaultUser.password)
 
-    await expect(page.locator('text=WELCOME, JOHN HENKE')).toBeVisible()
+    await expect(
+      page.locator(`text=WELCOME, ${defaultUser.name}`)
+    ).toBeVisible()
     await page.goto('/')
 
     await Promise.all([
@@ -54,7 +56,7 @@ describe('Event logging', () => {
     await loginPage.logout()
 
     await loginPage.login(adminUser.username, adminUser.password)
-    await expect(page.locator('text=WELCOME, FLOYD KING')).toBeVisible()
+    await expect(page.locator(`text=WELCOME, ${adminUser.name}`)).toBeVisible()
     await page.goto('http://localhost:3001')
     await Promise.all([
       page.waitForNavigation(),

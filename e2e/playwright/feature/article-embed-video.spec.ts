@@ -31,11 +31,11 @@ test('can create an article with an embedded video', async ({
   keystoneArticlePage,
 }) => {
   await loginPage.login(adminUser.username, adminUser.password)
-  await expect(page.locator('text=WELCOME, FLOYD KING')).toBeVisible()
+  await expect(page.locator(`text=WELCOME, ${adminUser.name}`)).toBeVisible()
 
   await page.goto('http://localhost:3001')
   await expect(
-    page.locator('text=Signed in as FLOYD.KING.376144527@testusers.cce.af.mil')
+    page.locator(`text=Signed in as ${adminUser.userId}`)
   ).toBeVisible()
 
   /* Navigate to the Articles page */

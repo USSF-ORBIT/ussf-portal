@@ -21,7 +21,9 @@ describe('Navigation', () => {
     loginPage,
   }) => {
     await loginPage.login(defaultUser.username, defaultUser.password)
-    await expect(page.locator('text=WELCOME, JOHN HENKE')).toBeVisible()
+    await expect(
+      page.locator(`text=WELCOME, ${defaultUser.name}`)
+    ).toBeVisible()
     await page.goto('/')
 
     await Promise.all([
@@ -55,7 +57,7 @@ describe('Navigation', () => {
     ])
 
     await expect(
-      page.locator('h2:has-text("WELCOME, JOHN HENKE")')
+      page.locator(`h2:has-text("WELCOME, ${defaultUser.name}")`)
     ).toBeVisible()
   })
 })

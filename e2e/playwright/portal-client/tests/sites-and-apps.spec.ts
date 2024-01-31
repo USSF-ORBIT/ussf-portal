@@ -32,7 +32,9 @@ describe('Sites & Applications', () => {
   }) => {
     // Login and check that user is in My Space
     await loginPage.login(portalUser1.username, portalUser1.password)
-    await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+    await expect(
+      page.locator(`text=WELCOME, ${portalUser1.displayName}`)
+    ).toBeVisible()
 
     // Navigate to /sites-and-applications using the side nav
     await page.locator('text=All sites & applications').click()
@@ -78,7 +80,9 @@ describe('Sites & Applications', () => {
   }) => {
     // Login and check that user is in My Space
     await loginPage.login(portalUser1.username, portalUser1.password)
-    await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+    await expect(
+      page.locator(`text=WELCOME, ${portalUser1.displayName}`)
+    ).toBeVisible()
     await expect(page.locator('text=Example Collection')).toBeVisible()
 
     // Click 'Add Widget' and navigate to /sites-and-applications
@@ -115,7 +119,9 @@ describe('Sites & Applications', () => {
   }) => {
     // Login and check that user is in My Space
     await loginPage.login(portalUser1.username, portalUser1.password)
-    await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+    await expect(
+      page.locator(`text=WELCOME, ${portalUser1.displayName}`)
+    ).toBeVisible()
     await expect(page.locator('text=Example Collection')).toBeVisible()
 
     // Navigate to /sites-and-applications
@@ -149,7 +155,9 @@ describe('Sites & Applications', () => {
   }) => {
     // Login and check that user is in My Space
     await loginPage.login(portalUser1.username, portalUser1.password)
-    await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+    await expect(
+      page.locator(`text=WELCOME, ${portalUser1.displayName}`)
+    ).toBeVisible()
     await expect(page.locator('text=Example Collection')).toBeVisible()
 
     // Navigate to /sites-and-applications

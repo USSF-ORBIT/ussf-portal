@@ -30,9 +30,7 @@ describe('Filter search results', () => {
 
     await page.goto('http://localhost:3001')
     await expect(
-      page.locator(
-        'text=Signed in as FLOYD.KING.376144527@testusers.cce.af.mil'
-      )
+      page.locator(`text=Signed in as ${adminUser.userId}`)
     ).toBeVisible()
 
     /* Create a label from the Labels page */
@@ -68,7 +66,9 @@ describe('Filter search results', () => {
 
   test('can filter search results', async ({ page, loginPage }) => {
     await loginPage.login(portalUser1.username, portalUser1.password)
-    await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+    await expect(
+      page.locator(`text=WELCOME, ${portalUser1.displayName}`)
+    ).toBeVisible()
 
     await page.goto('http://localhost:3000/search')
     await page.getByTestId('fieldset').getByText('Application').click()

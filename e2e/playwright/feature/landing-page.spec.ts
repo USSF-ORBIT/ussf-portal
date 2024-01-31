@@ -40,13 +40,11 @@ test('can create a landing page in the CMS and view it in the portal', async ({
 }) => {
   await loginPage.login(adminUser.username, adminUser.password)
 
-  await expect(page.locator('text=WELCOME, FLOYD KING')).toBeVisible()
+  await expect(page.locator(`text=WELCOME, ${adminUser.name}`)).toBeVisible()
 
   await page.goto('http://localhost:3001/')
 
-  await expect(
-    page.locator('text=FLOYD.KING.376144527@testusers.cce.af.mil')
-  ).toBeVisible()
+  await expect(page.locator(`text=${adminUser.userId}`)).toBeVisible()
 
   // Create Article
   await page.getByRole('link', { name: 'Create Article' }).click()
@@ -171,7 +169,9 @@ test('portal user can see published landing page', async ({
 }) => {
   // try to go to the landing page as default user
   await loginPage.login(portalUser1.username, portalUser1.password)
-  await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+  await expect(
+    page.locator(`text=WELCOME, ${portalUser1.displayName}`)
+  ).toBeVisible()
 
   await page.getByRole('link', { name: 'Landing Pages' }).click()
   await expect(
@@ -196,23 +196,24 @@ test('portal user can see published landing page', async ({
   expect(page.url()).toBe(`http://localhost:3000/landing/${landingPageSlug}`)
 })
 
-test('landing page shows up in search', async ({
-  page,
-  loginPage,
-}) => {
+test('landing page shows up in search', async ({ page, loginPage }) => {
   // try to go to the landing page as default user
   await loginPage.login(portalUser1.username, portalUser1.password)
-  await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+  await expect(
+    page.locator(`text=WELCOME, ${portalUser1.displayName}`)
+  ).toBeVisible()
 
   await page.goto('http://localhost:3000/search')
   await page.getByTestId('search-input').fill(landingPageTitle)
-  await expect(page.getByTestId('search-input')).toHaveValue(
-    landingPageTitle
-  )
+  await expect(page.getByTestId('search-input')).toHaveValue(landingPageTitle)
   await page.getByRole('button', { name: 'Search' }).click()
-  const linkToLandingPage = page.getByRole('link', { name: `${landingPageTitle} (opens in a new window)` }) 
+  const linkToLandingPage = page.getByRole('link', {
+    name: `${landingPageTitle} (opens in a new window)`,
+  })
   await expect(linkToLandingPage).toBeVisible()
   const href = await linkToLandingPage.getAttribute('href')
   expect(href).toEqual(`http://localhost:3000/landing/${landingPageSlug}`)
-  await expect(page.getByTestId('result-preview').getByText(landingPageDescription)).toBeVisible()
+  await expect(
+    page.getByTestId('result-preview').getByText(landingPageDescription)
+  ).toBeVisible()
 })

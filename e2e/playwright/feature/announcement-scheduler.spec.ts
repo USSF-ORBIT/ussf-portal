@@ -32,13 +32,11 @@ test('announcement published with future date cannot be seen', async ({
   keystoneAnnouncementPage,
 }) => {
   await loginPage.login(managerUser.username, managerUser.password)
-  await expect(page.locator('text=WELCOME, CHRISTINA HAVEN')).toBeVisible()
+  await expect(page.locator(`text=WELCOME, ${managerUser.name}`)).toBeVisible()
 
   await page.goto('http://localhost:3001')
   await expect(
-    page.locator(
-      'text=Signed in as CHRISTINA.HAVEN.561698119@testusers.cce.af.mil'
-    )
+    page.locator(`text=Signed in as ${managerUser.userId}`)
   ).toBeVisible()
 
   // Navigate to Announcements page
@@ -73,6 +71,6 @@ test('announcement published with future date cannot be seen', async ({
 
   // Navigate to portal and verify that the announcement is not visible
   await page.goto('http://localhost:3000/')
-  await expect(page.locator('text=WELCOME, CHRISTINA HAVEN')).toBeVisible()
+  await expect(page.locator(`text=WELCOME, ${managerUser.name}`)).toBeVisible()
   await expect(page.locator(title)).toBeHidden()
 })

@@ -45,17 +45,23 @@ describe('article was deleted', () => {
   // 2. the article pull down itself is sometimes not present when this test is run because the whole page is still loading. It's unclear why the page is loading still or what to wait for since waiting for the create button to load fully doesn't resolve things.
   //
   // Maybe once we have more custom ui with consistent ids we can update this test to work consistently. I'm leaving it here so that it will have a head start.
-  test.skip('404 link in Call-To-Action when article deleted', async ({page, loginPage, keystoneAnnouncementPage, keystoneListPage, keystoneArticlePage }) => {
+  test.skip('404 link in Call-To-Action when article deleted', async ({
+    page,
+    loginPage,
+    keystoneAnnouncementPage,
+    keystoneListPage,
+    keystoneArticlePage,
+  }) => {
     // login as manager
     await loginPage.login(managerUser.username, managerUser.password)
-    await expect(page.locator('text=WELCOME, CHRISTINA HAVEN')).toBeVisible()
+    await expect(
+      page.locator(`text=WELCOME, ${managerUser.name}`)
+    ).toBeVisible()
 
     // login as manager to the CMS
     await page.goto('http://localhost:3001')
     await expect(
-      page.locator(
-        'text=Signed in as CHRISTINA.HAVEN.561698119@testusers.cce.af.mil'
-      )
+      page.locator(`text=Signed in as ${managerUser.userId}`)
     ).toBeVisible()
 
     /* Navigate to the Articles page */
@@ -95,7 +101,9 @@ describe('article was deleted', () => {
     // 1. it worked when stepping
     // 2. it failed when run without a pause
     // await page.getByText(title, { exact: true }).click()
-    const createAnnoucnementButton = page.locator('button:has-text("Create Announcement")')
+    const createAnnoucnementButton = page.locator(
+      'button:has-text("Create Announcement")'
+    )
     await expect(createAnnoucnementButton).toBeVisible()
     // NOTE: This selector isn't consistent, so we cannot rely on it
     await page.locator('#react-select-15-input').fill(title)
@@ -117,20 +125,27 @@ describe('article was deleted', () => {
     await keystoneListPage.gotoAndSortBy('articles')
     await page.locator(`a:has-text("${title}")`).click()
     await page.getByRole('button', { name: 'Delete' }).click()
-    await page.getByRole('dialog', { name: 'Delete Confirmation' }).getByRole('button', { name: 'Delete' }).click()
-    await expect(page.locator('text=Deleted Article item successfully')).toBeVisible()
+    await page
+      .getByRole('dialog', { name: 'Delete Confirmation' })
+      .getByRole('button', { name: 'Delete' })
+      .click()
+    await expect(
+      page.locator('text=Deleted Article item successfully')
+    ).toBeVisible()
 
     //   Verify the article 404's now
     const articlePageResponse = await page.request.get(
       `http://localhost:3000/articles/${slug}`
     )
     expect(articlePageResponse.status()).toBe(404)
-    
+
     // navigate to home page to see the annoucnement
     await page.goto('http://localhost:3000')
 
     // Check for the CTA
-    await expect(page.getByRole('heading', { name: announcementTitle })).toBeVisible()
+    await expect(
+      page.getByRole('heading', { name: announcementTitle })
+    ).toBeVisible()
     const viewMore = page.getByRole('link', { name: 'View more' })
     await expect(viewMore).toBeVisible()
     const href = await viewMore.getAttribute('href')
@@ -152,7 +167,9 @@ describe('article does not exsist', () => {
   test('404 shown to portal user', async ({ page, loginPage }) => {
     // try to go to the article as default user
     await loginPage.login(portalUser1.username, portalUser1.password)
-    await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+    await expect(
+      page.locator(`text=WELCOME, ${portalUser1.displayName}`)
+    ).toBeVisible()
 
     const defaultResponse = await page.request.get(
       `http://localhost:3000/articles/${slug}`
@@ -167,7 +184,9 @@ describe('article does not exsist', () => {
   test('404 shown to cms user', async ({ page, loginPage }) => {
     // try to go to the article as default user
     await loginPage.login(managerUser.username, managerUser.password)
-    await expect(page.locator('text=WELCOME, CHRISTINA HAVEN')).toBeVisible()
+    await expect(
+      page.locator(`text=WELCOME, ${managerUser.name}`)
+    ).toBeVisible()
 
     const defaultResponse = await page.request.get(
       `http://localhost:3000/articles/${slug}`

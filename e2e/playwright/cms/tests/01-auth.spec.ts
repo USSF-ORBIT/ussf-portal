@@ -137,6 +137,7 @@ describe('Authentication', () => {
     await loginPage.login(portalUser1.username, portalUser1.password)
 
     await expect(
+      //todo why is this NOT displayName bernie
       page.locator(`text=WELCOME, ${portalUser1.name}`)
     ).toBeVisible()
 
@@ -166,10 +167,10 @@ describe('Authentication', () => {
     page.pause()
     // RONALD BOYD is enabled but should not be
     await expect(
-      page.locator(`tr:has-text("${portalUser2.name}") td:nth-child(5)`)
+      page.locator(`tr:has-text("${portalUser2.displayName}") td:nth-child(5)`)
     ).toHaveText('False')
     await expect(
-      page.locator(`tr:has-text("${portalUser2.name}") td:nth-child(6)`)
+      page.locator(`tr:has-text("${portalUser2.displayName}") td:nth-child(6)`)
     ).toHaveText('True')
     page.pause()
     await loginPage.logout()
@@ -178,7 +179,7 @@ describe('Authentication', () => {
     // Expected: No Access
     await loginPage.login(portalUser2.username, portalUser2.password)
     await expect(
-      page.locator(`text=WELCOME, ${portalUser2.name}`)
+      page.locator(`text=WELCOME, ${portalUser2.displayName}`)
     ).toBeVisible()
     await page.goto('http://localhost:3001')
     expect(page.url()).toContain('/no-access')
@@ -194,10 +195,10 @@ describe('Authentication', () => {
 
     // RONALD BOYD is now disabled
     await expect(
-      page.locator(`tr:has-text("${portalUser2.name}") td:nth-child(5)`)
+      page.locator(`tr:has-text("${portalUser2.displayName}") td:nth-child(5)`)
     ).toHaveText('False')
     await expect(
-      page.locator(`tr:has-text("${portalUser2.name}") td:nth-child(6)`)
+      page.locator(`tr:has-text("${portalUser2.displayName}") td:nth-child(6)`)
     ).toHaveText('False')
   })
 

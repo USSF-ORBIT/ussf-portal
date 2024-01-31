@@ -31,13 +31,11 @@ test('can create a draft landing page in the CMS and view it in the portal', asy
 }) => {
   await loginPage.login(adminUser.username, adminUser.password)
 
-  await expect(page.locator('text=WELCOME, FLOYD KING')).toBeVisible()
+  await expect(page.locator(`text=WELCOME, ${adminUser.name}`)).toBeVisible()
 
   await page.goto('http://localhost:3001/')
 
-  await expect(
-    page.locator('text=FLOYD.KING.376144527@testusers.cce.af.mil')
-  ).toBeVisible()
+  await expect(page.locator(`text=${adminUser.userId}`)).toBeVisible()
 
   // Create Landing Page
   await page.getByRole('link', { name: 'Landing Page', exact: true }).click()
@@ -106,7 +104,9 @@ test('draft landing page cannot be seen by portal user', async ({
 }) => {
   // try to go to the landing page as default user
   await loginPage.login(portalUser1.username, portalUser1.password)
-  await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+  await expect(
+    page.locator(`text=WELCOME, ${portalUser1.displayName}`)
+  ).toBeVisible()
 
   await page.getByRole('link', { name: 'Landing Pages' }).click()
   await expect(

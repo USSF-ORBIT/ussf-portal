@@ -42,13 +42,11 @@ test('announcements can be seen in carousel and accessible page', async ({
   keystoneAnnouncementPage,
 }) => {
   await loginPage.login(managerUser.username, managerUser.password)
-  await expect(page.locator('text=WELCOME, CHRISTINA HAVEN')).toBeVisible()
-
+  await expect(page.locator(`text=WELCOME, ${managerUser.name}`)).toBeVisible()
+  page.pause()
   await page.goto('http://localhost:3001')
   await expect(
-    page.locator(
-      'text=Signed in as CHRISTINA.HAVEN.561698119@testusers.cce.af.mil'
-    )
+    page.locator(`text=Signed in as ${managerUser.userId}`)
   ).toBeVisible()
 
   // Navigate to Announcements page
@@ -70,7 +68,7 @@ test('announcements can be seen in carousel and accessible page', async ({
 
   // Navigate to portal and verify that the announcement is visible
   await page.goto('http://localhost:3000/')
-  await expect(page.locator('text=WELCOME, CHRISTINA HAVEN')).toBeVisible()
+  await expect(page.locator(`text=WELCOME, ${managerUser.name}`)).toBeVisible()
 
   await expect(
     page.getByRole('heading', { level: 4, name: title })
@@ -104,17 +102,23 @@ describe.skip('announcment with call to action', () => {
   const announcementTitle = faker.lorem.words()
   const slug = faker.helpers.slugify(title)
 
-  test('using article', async ({page, loginPage, keystoneAnnouncementPage, keystoneListPage, keystoneArticlePage }) => {
+  test('using article', async ({
+    page,
+    loginPage,
+    keystoneAnnouncementPage,
+    keystoneListPage,
+    keystoneArticlePage,
+  }) => {
     // login as manager
     await loginPage.login(managerUser.username, managerUser.password)
-    await expect(page.locator('text=WELCOME, CHRISTINA HAVEN')).toBeVisible()
+    await expect(
+      page.locator(`text=WELCOME, ${managerUser.name}`)
+    ).toBeVisible()
 
     // login as manager to the CMS
     await page.goto('http://localhost:3001')
     await expect(
-      page.locator(
-        'text=Signed in as CHRISTINA.HAVEN.561698119@testusers.cce.af.mil'
-      )
+      page.locator(`text=Signed in as ${managerUser.userId}`)
     ).toBeVisible()
 
     /* Navigate to the Articles page */
@@ -153,7 +157,9 @@ describe.skip('announcment with call to action', () => {
     // 1. it worked when stepping
     // 2. it failed when run without a pause
     // await page.getByText(title, { exact: true }).click()
-    const createAnnoucnementButton = page.locator('button:has-text("Create Announcement")')
+    const createAnnoucnementButton = page.locator(
+      'button:has-text("Create Announcement")'
+    )
     await expect(createAnnoucnementButton).toBeVisible()
     await page.locator('#react-select-15-input').fill(title)
     await page.locator('#react-select-15-input').press('Enter')
@@ -167,7 +173,9 @@ describe.skip('announcment with call to action', () => {
     await page.goto('http://localhost:3000')
 
     // Check for the CTA
-    await expect(page.getByRole('heading', { name: announcementTitle })).toBeVisible()
+    await expect(
+      page.getByRole('heading', { name: announcementTitle })
+    ).toBeVisible()
     const viewMore = page.getByRole('link', { name: 'View more' })
     await expect(viewMore).toBeVisible()
     const href = await viewMore.getAttribute('href')

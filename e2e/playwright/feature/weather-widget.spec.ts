@@ -25,7 +25,7 @@ test('can add/remove Weather widget to My Space', async ({
 }) => {
   await loginPage.login(adminUser.username, adminUser.password)
 
-  await expect(page.locator('text=WELCOME, FLOYD KING')).toBeVisible()
+  await expect(page.locator(`text=WELCOME, ${adminUser.name}`)).toBeVisible()
 
   // Add Weather widget
   await page.getByRole('button', { name: 'Add widget' }).click()
@@ -74,7 +74,7 @@ test('can only add five Weather widgets', async ({ page, loginPage }) => {
 
   await loginPage.login(adminUser.username, adminUser.password)
 
-  await expect(page.locator('text=WELCOME, FLOYD KING')).toBeVisible()
+  await expect(page.locator(`text=WELCOME, ${adminUser.name}`)).toBeVisible()
 
   // Add Weather widget
   await page.getByRole('button', { name: 'Add widget' }).click()

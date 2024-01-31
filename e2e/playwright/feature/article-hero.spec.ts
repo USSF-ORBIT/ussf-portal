@@ -46,13 +46,11 @@ describe('Article Hero Image', () => {
     /* Log in as a CMS author */
     await loginPage.login(authorUser.username, authorUser.password)
 
-    await expect(page.locator('text=WELCOME, ETHEL NEAL')).toBeVisible()
+    await expect(page.locator(`text=WELCOME, ${authorUser.name}`)).toBeVisible()
 
     await page.goto('http://localhost:3001')
     await expect(
-      page.locator(
-        'text=Signed in as ETHEL.NEAL.643097412@testusers.cce.af.mil'
-      )
+      page.locator(`text=Signed in as ${authorUser.userId}`)
     ).toBeVisible()
 
     /* Navigate to the Articles page */
@@ -69,7 +67,7 @@ describe('Article Hero Image', () => {
       ****************************/
 
     await page.locator('text=Create Article').click()
-    await keystoneArticlePage.fillOrbitBlogArticleFields({title})
+    await keystoneArticlePage.fillOrbitBlogArticleFields({ title })
 
     /* Use fileChooser to upload a hero image */
     const [fileChooser] = await Promise.all([
@@ -106,13 +104,13 @@ describe('Article Hero Image', () => {
   }) => {
     /* Log in as a CMS manager */
     await loginPage.login(managerUser.username, managerUser.password)
-    await expect(page.locator('text=WELCOME, CHRISTINA HAVEN')).toBeVisible()
+    await expect(
+      page.locator(`text=WELCOME, ${managerUser.name}`)
+    ).toBeVisible()
 
     await page.goto('http://localhost:3001')
     await expect(
-      page.locator(
-        'text=Signed in as CHRISTINA.HAVEN.561698119@testusers.cce.af.mil'
-      )
+      page.locator(`text=Signed in as ${managerUser.userId}`)
     ).toBeVisible()
 
     /* Navigate to the Articles page */

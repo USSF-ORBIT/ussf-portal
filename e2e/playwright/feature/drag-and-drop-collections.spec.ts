@@ -32,7 +32,9 @@ describe('Drag and drop user collections', () => {
   }) => {
     // Login and check that user is in My Space
     await loginPage.login(portalUser1.username, portalUser1.password)
-    await expect(page.locator('text=WELCOME, BERNIE')).toBeVisible()
+    await expect(
+      page.locator(`text=WELCOME, ${portalUser1.displayName}`)
+    ).toBeVisible()
     await expect(page.locator('text=Example Collection')).toBeVisible()
 
     // Add a new collection
@@ -62,7 +64,9 @@ describe('Drag and drop user collections', () => {
   }) => {
     // Login and check that user is in My Space
     await loginPage.login(portalUser2.username, portalUser2.password)
-    await expect(page.locator('text=WELCOME, RONNY')).toBeVisible()
+    await expect(
+      page.locator(`text=WELCOME, ${portalUser2.displayName}`)
+    ).toBeVisible()
 
     // Add new collections
     await page.getByRole('button', { name: 'Add widget' }).click()
@@ -128,7 +132,9 @@ describe('Drag and drop user collections', () => {
   }) => {
     // Login and check that user is in My Space
     await loginPage.login(portalUser2.username, portalUser2.password)
-    await expect(page.locator('text=WELCOME, RONNY')).toBeVisible()
+    await expect(
+      page.locator(`text=WELCOME, ${portalUser2.displayName}`)
+    ).toBeVisible()
 
     const collectionToDrag = page.getByRole('button', {
       name: 'Career Collection Settings Drag Handle MyVector (opens in a new window) remove MyVector from collection Drag Handle SURF (opens in a new window) remove SURF from collection Drag Handle Orders (opens in a new window) remove Orders from collection Drag Handle EPRs/OPRs (opens in a new window) remove EPRs/OPRs from collection Drag Handle PRDA (opens in a new window) remove PRDA from collection Drag Handle MyPers (opens in a new window) remove MyPers from collection + Add link',
