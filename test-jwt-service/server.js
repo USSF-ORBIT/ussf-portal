@@ -5,15 +5,14 @@ const port = process.env.PORT || 5001;
 const JWT = require("jsonwebtoken");
 
 const secret = process.env.JWT_DEV_CERT
-console.debug('🚨secret length', secret.length)
 const issuer = process.env.ISSUER || "http://localhost:5001/.well-known/issuer.json";
+
 app.use(express.json());
 app.use(express.static("public"));
 
-app.get("/login", async (req, res, next) => {
+app.get("/login", async (req, res) => {
   // Assuming user is permitted to login / get a token
   // This is for TEST SERVICE ONLY
-
   const token = JWT.sign(
     {
       CN: req.query.userId,
