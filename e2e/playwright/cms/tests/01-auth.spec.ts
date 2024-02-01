@@ -163,7 +163,7 @@ describe('Authentication', () => {
     await expect(page.locator(`text=WELCOME, ${adminUser.name}`)).toBeVisible()
     await page.goto('http://localhost:3001')
     await page.locator('a:has-text("Users 5 items")').click()
-    page.pause()
+
     // RONALD BOYD is enabled but should not be
     await expect(
       page.locator(`tr:has-text("${portalUser2.name}") td:nth-child(5)`)
@@ -171,7 +171,7 @@ describe('Authentication', () => {
     await expect(
       page.locator(`tr:has-text("${portalUser2.name}") td:nth-child(6)`)
     ).toHaveText('True')
-    page.pause()
+
     await loginPage.logout()
 
     // Login as RONALD BOYD
@@ -249,7 +249,7 @@ describe('Authentication', () => {
     await expect(page.locator(`text=WELCOME, ${adminUser.name}`)).toBeVisible()
     await page.goto('http://localhost:3001')
     await page.locator('a:has-text("Users 5 items")').click()
-    page.pause()
+
     // JOHN HENKE is no longer an admin
     await expect(
       page.locator(`tr:has-text("${defaultUser.name}") > td:nth-child(5)`)

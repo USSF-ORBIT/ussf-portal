@@ -43,7 +43,7 @@ test('announcements can be seen in carousel and accessible page', async ({
 }) => {
   await loginPage.login(managerUser.username, managerUser.password)
   await expect(page.locator(`text=WELCOME, ${managerUser.name}`)).toBeVisible()
-  page.pause()
+
   await page.goto('http://localhost:3001')
   await expect(
     page.locator(`text=Signed in as ${managerUser.userId}`)
