@@ -43,6 +43,14 @@ jobs:
           # checkout the branch that started this pull request or stay on main if no such branch
           /usr/bin/git checkout --progress --force -B ${{github.head_ref}} origin/${{github.head_ref}} || echo "staying on main"
 
+      - name: Add DoD Certificate Bundle
+        env:
+          CERT_BUNDLE_SHA256: ${{ secrets.DOD_CA_CERT_BUNDLE_SHA256 }}
+        working-directory: ./ussf-portal-client
+        run: |
+          echo "$CERT_BUNDLE_SHA256" > scripts/dod_ca_cert_bundle.sha256
+          sudo bash scripts/add-dod-cas.sh
+          
       - name: Clone cms # defaults to checking out the reference or SHA for the event that triggered this workflow. Otherwise, uses the default branch.
         uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
         with:
