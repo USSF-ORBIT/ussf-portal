@@ -1,7 +1,7 @@
 # Use custom JWT service for testing third-party API
 
 * Status: accepted
-* Deciders: Abigail, Jacob, Tall John
+* Deciders: @abbyoung, @jcbcapps, @gidjin
 * Date: 02-02-2024
 
 ## Context and Problem Statement
