@@ -42,6 +42,9 @@ Set these variables for Happo in a `.envrc.local` file (only needed for local de
 - `HAPPO_API_KEY` - specific happo account API key, stored in 1Password valut
 - `HAPPO_API_SECRET` - specific happo account API secret, stored in 1Password valut
 
+Set this variable when testing the third-party api to avoid local cert issues:
+- `NODE_TLS_REJECT_UNAUTHORIZED=0`
+
 These env variables are already set in `.envrc` and only need to be added to your local file if you want to override the defaults:
 
 - `SESSION_SECRET` - must be a string at least 32 chars, must be the same value set in the CMS application
@@ -191,12 +194,25 @@ Services include:
 - Persists volume `matomo_data`
 - Access at `http://localhost:8081`
 - Do not use `https` locally as the Matomo image is not setup for that locally
-- Credentials are in the 1Password Vault
+- Credentials are in the 1Password Vault 
 
 
 7. MariaDB
 - Stores Matomo Data
 - Persists volume `mariadb_data`
+
+8. Test JWT Issuer
+- Creates a valid JSON Web Token to use for auth-protected queries and mutations for the Third-Party API
+  - This API exposes Keystone and Portal data to other USSF apps such as Guardian One
+- Code for this service lives in the `ussf-portal` repo in the `test-jwt-service` directory.
+- Uses Dockerfile located in `ussf-portal/test-jwt-service/Dockerfile`
+- Requires environment variable named `JWT_DEV_CERT` located in `ussf-portal/e2e/.envrc.local` (You will need to create this file initially.) 
+  - The value for this variable can be found in the 1Password Vault under 'Test JWT Server Certs for Dev'
+- Requires DoD certs to run e2e tests locally
+  - In `ussf-portal-client`, create the file `scripts/dod_ca_cert_bundle.sha256`
+  - In 1Password vault, locate `DoD PKI CA Cert Bundle SHA256 Checksums` and copy the data for the latest version
+  - Paste the checksums in the `dod_ca_cert_bundle.sha256` file and save.
+
 
 To run the app in detached development mode (with hot reloading):
 
