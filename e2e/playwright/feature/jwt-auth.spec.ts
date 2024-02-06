@@ -22,7 +22,7 @@ test.beforeAll(async () => {
 })
 
 describe('JWT Authentication', () => {
-  test.skip('user can get valid token', async () => {
+  test('user can get valid token', async () => {
     // Make an API request
     const response = await axios.get(
       'http://localhost:5001/login?userId=KING.FLOYD.376144527'
