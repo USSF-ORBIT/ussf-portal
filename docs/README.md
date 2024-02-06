@@ -62,7 +62,7 @@ When creating a new ADR, you can copy the [template](./adr/0000-template.md).
 26. [Use WireMock to mock third party APIs for E2E tests](./adr/0026-use-wiremock-to-mock-third-party-apis-for-e2e-tests.md)
 27. [Enable Playwright E2E retries](./adr/0027-enable-playwright-e2e-retries.md)
 28. [Use LaunchDarkly Feature Flags](./adr/0028-use-LaunchDarkly-for-feature-flags.md)
-
+29. [Use custom JWT service for testing third-party API](./adr/0029-test-jwt-service.md)
 ## Troubleshooting
 
 [Some troubleshooting steps can be found here.](../TROUBLESHOOTING.md)
