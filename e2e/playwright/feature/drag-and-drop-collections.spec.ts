@@ -44,7 +44,9 @@ describe('Drag and drop user collections', () => {
     await page.getByRole('button', { name: 'Save name' }).click()
 
     // Drag and drop the new collection
-    const collectionToDrag = page.getByRole('button', { name: '+ Add link' }).nth(2)
+    const collectionToDrag = page
+      .getByRole('button', { name: '+ Add link' })
+      .nth(2)
 
     await collectionToDrag.focus()
     await page.keyboard.press(' ')
@@ -80,7 +82,9 @@ describe('Drag and drop user collections', () => {
       .click()
     await page.getByRole('button', { name: 'Add selected' }).click()
 
-    const collectionToDrag = page.getByRole('button', { name: '+ Add link' }).nth(2)
+    const collectionToDrag = page
+      .getByRole('button', { name: '+ Add link' })
+      .nth(2)
 
     // Drag and drop
     await collectionToDrag.focus()
@@ -100,16 +104,13 @@ describe('Drag and drop user collections', () => {
       .filter({ hasText: 'Outprocessing Checklists(opens in a new window)' })
       .getByRole('button', { name: 'Drag Handle' })
 
-    const dragTo = page
-      .getByRole('link', {
-        name: 'MyVector (opens in a new window)',
-      })
-      .first()
-
-    await linkToDrag.hover()
-    await page.mouse.down()
-    await dragTo.hover()
-    await page.mouse.up()
+    await linkToDrag.focus()
+    await page.keyboard.press(' ')
+    await page.keyboard.press('ArrowUp')
+    await page.keyboard.press('ArrowUp')
+    await page.keyboard.press('ArrowUp')
+    await page.keyboard.press('ArrowUp')
+    await page.keyboard.press(' ')
 
     // Check that linkToDrag is now the first link in the collection
     await expect(
@@ -132,7 +133,9 @@ describe('Drag and drop user collections', () => {
       page.locator(`text=WELCOME, ${portalUser2.displayName}`)
     ).toBeVisible()
 
-    const collectionToDrag = page.getByRole('button', { name: '+ Add link' }).nth(2)
+    const collectionToDrag = page
+      .getByRole('button', { name: '+ Add link' })
+      .nth(2)
 
     // Drag and drop collection
     await collectionToDrag.focus()
