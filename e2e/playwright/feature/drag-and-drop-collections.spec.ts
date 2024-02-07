@@ -148,11 +148,7 @@ describe('Drag and drop user collections', () => {
     await expect(page.locator('h3').first()).toHaveText('Career')
 
     // Update the title
-    const settingsButton = page
-      .getByRole('button', {
-        name: 'Career Collection Settings Drag Handle MyVector (opens in a new window) remove MyVector from collection Drag Handle SURF (opens in a new window) remove SURF from collection Drag Handle Orders (opens in a new window) remove Orders from collection Drag Handle EPRs/OPRs (opens in a new window) remove EPRs/OPRs from collection Drag Handle PRDA (opens in a new window) remove PRDA from collection Drag Handle MyPers (opens in a new window) remove MyPers from collection + Add link',
-      })
-      .getByRole('button', { name: 'Collection Settings' })
+    const settingsButton = page.getByRole('button', { name: 'Collection Settings' }).first()
 
     await settingsButton.click()
 
