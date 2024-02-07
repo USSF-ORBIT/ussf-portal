@@ -13,7 +13,7 @@ Code for this service lives in the `ussf-portal` repo in the `test-jwt-service` 
 
 * In `ussf-portal-client/scripts`, create a file named `dod_ca_cert_bundle.sha256`. Look in the 1Password Vault under `DoD PKI CA Cert Bundle SHA256 Checksums`. Copy data for the latest version and paste into your new file.
 
-* Look in the 1Password Vault under 'Test JWT Server Certs for Dev'. Copy and paste the (very long) private key into `ussf-portal/e2e/.envrc.local` as the following: `JWT_DEV_CERT=<value>`
+* Look in the 1Password Vault under 'Test JWT Server Certs for Dev'. Copy and paste the (very long) private key into `ussf-portal/e2e/.envrc.local` as the following: `JWT_DEV_CERT="<value>"`
 
 ## Step 1: Set up Postman Collection 
 For easier testing, we have a Postman collections in the 1Password Vault named `USSF Third-Party API local`. This is slightly different than the [collection used for testing with MobileConnect](./generate-jwt-token.md), so make sure you have both.
