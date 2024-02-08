@@ -6,6 +6,7 @@
 - [USSF Portal CMS](https://github.com/USSF-ORBIT/ussf-portal-cms)
 - [USSF Analytics](https://github.com/USSF-ORBIT/analytics)
 - [USSF Personnel API](https://github.com/USSF-ORBIT/ussf-personnel-api)
+- [USSF Third Party API](https://github.com/USSF-ORBIT/ussf-portal/tree/main/test-jwt-service)
 
 ## Development setup
 
@@ -28,7 +29,8 @@
 - [How to delete DocumentDB Snapshots](./how-to/how-to-del-docdb-snapshots.md)
 - [How to grant CMS access](./how-to/Grant-CMS-acess.md)
 - [How to use the SAML groups](./how-to/use-saml-groups.md)
-- [How to generate a JWT token](./how-to/generate-jwt-token.md)
+- [How to Test JWT Auth with MobileConnect](./how-to/generate-jwt-token.md)
+- [How to Test JWT Auth with Test JWT Service](./how-to/generate-jwt-test-service.md)
 
 ## Architectural Decision Records
 
