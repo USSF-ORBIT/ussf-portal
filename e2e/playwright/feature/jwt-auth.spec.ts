@@ -102,4 +102,27 @@ describe('JWT Authorization', () => {
       'User not authenticated'
     )
   })
+
+  test('request with bogus JWT will not work', async () => {
+    // John Doe token pulled from jwt.is
+    const fakeToken = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c`
+    const headers = {
+      Authorization: `Bearer ${fakeToken}`,
+      'Content-Type': 'application/json',
+    }
+    const query = `
+      query getDisplayName {
+        displayName
+      }
+    `
+    const protectedResponse = await axios.post(
+      `http://localhost:3000/api/thirdparty/graphql`,
+      { query },
+      { headers }
+    )
+    expect(protectedResponse.status).toBe(200) // GraphQL always returns 200
+    expect(protectedResponse.data.errors[0].message).toBe(
+      'User not authenticated'
+    )
+  })
 })
