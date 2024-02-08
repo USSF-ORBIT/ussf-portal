@@ -42,9 +42,6 @@ Set these variables for Happo in a `.envrc.local` file (only needed for local de
 - `HAPPO_API_KEY` - specific happo account API key, stored in 1Password valut
 - `HAPPO_API_SECRET` - specific happo account API secret, stored in 1Password valut
 
-Set this variable when testing the third-party api to avoid local cert issues:
-- `NODE_TLS_REJECT_UNAUTHORIZED=0`
-
 These env variables are already set in `.envrc` and only need to be added to your local file if you want to override the defaults:
 
 - `SESSION_SECRET` - must be a string at least 32 chars, must be the same value set in the CMS application
