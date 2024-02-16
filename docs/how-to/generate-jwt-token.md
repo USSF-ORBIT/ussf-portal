@@ -1,4 +1,5 @@
-# How to Test JWT Auth for Mobile Connect <-> USSF Portal
+# How to Test JWT Auth with MobileConnect
+This guide is for using your real credentials with a CAC and MobileConnect. For instructions on testing locally or in e2e tests with fake users, see [How to Test JWT Auth with Test JWT Service](./generate-jwt-test-service.md).
 
 ## Step 0: Grab user info from dev
 
