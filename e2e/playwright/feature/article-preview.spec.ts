@@ -112,7 +112,7 @@ describe('orbit blog', () => {
     expect(defaultResponse.status()).toBe(404)
 
     // logout of portal user
-    await page.locator('[data-testid="header"] [data-testid="button"]').click()
+    await page.locator('[data-testid="nav_logout"]').click()
   })
 
   test('if published banner is not shown', async ({
@@ -251,7 +251,7 @@ describe('internal news', () => {
     expect(defaultResponse.status()).toBe(404)
 
     // logout of portal user
-    await page.locator('[data-testid="header"] [data-testid="button"]').click()
+    await page.locator('[data-testid="nav_logout"]').click()
   })
 
   test('if published banner is not shown', async ({

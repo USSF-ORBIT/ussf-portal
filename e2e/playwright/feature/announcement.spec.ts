@@ -186,7 +186,7 @@ describe.skip('announcment with call to action', () => {
     expect(ctaLinkResponse.status()).toBe(200)
 
     // logout of portal user
-    await page.locator('[data-testid="header"] [data-testid="button"]').click()
+    await page.locator('[data-testid="nav_logout"]').click()
   })
 
   // This is a test I wanted to add but did not because of the issues with the CTA in the above test. It would be similar but would use a custom url instead of an article.
