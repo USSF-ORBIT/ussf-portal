@@ -30,7 +30,7 @@ const config: PlaywrightTestConfig = {
     permissions: ["clipboard-read", "clipboard-write"],
   },
   workers: 1,
-  retries: 3,
+  retries: process.env.GITHUB_ACTIONS ? 3 : 0,
   expect: { timeout: 15000 },
   projects: [
     {
