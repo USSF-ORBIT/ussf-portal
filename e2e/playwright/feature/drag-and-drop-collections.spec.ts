@@ -44,9 +44,9 @@ describe('Drag and drop user collections', () => {
     await page.getByRole('button', { name: 'Save name' }).click()
 
     // Drag and drop the new collection
-    const collectionToDrag = page.getByRole('button', {
-      name: 'My Custom Collection Collection Settings + Add link',
-    })
+    const collectionToDrag = page
+      .getByRole('button', { name: '+ Add link' })
+      .nth(2)
 
     await collectionToDrag.focus()
     await page.keyboard.press(' ')
@@ -82,9 +82,9 @@ describe('Drag and drop user collections', () => {
       .click()
     await page.getByRole('button', { name: 'Add selected' }).click()
 
-    const collectionToDrag = page.getByRole('button', {
-      name: 'Personnel & Administration Collection Settings Drag Handle MyVector (opens in a new window) remove MyVector from collection Drag Handle vMPF (opens in a new window) remove vMPF from collection Drag Handle Alpha Rosters (opens in a new window) remove Alpha Rosters from collection Drag Handle vRED (opens in a new window) remove vRED from collection Drag Handle Outprocessing Checklists (opens in a new window) remove Outprocessing Checklists from collection + Add link',
-    })
+    const collectionToDrag = page
+      .getByRole('button', { name: '+ Add link' })
+      .nth(2)
 
     // Drag and drop
     await collectionToDrag.focus()
@@ -104,16 +104,13 @@ describe('Drag and drop user collections', () => {
       .filter({ hasText: 'Outprocessing Checklists(opens in a new window)' })
       .getByRole('button', { name: 'Drag Handle' })
 
-    const dragTo = page
-      .getByRole('link', {
-        name: 'MyVector (opens in a new window)',
-      })
-      .first()
-
-    await linkToDrag.hover()
-    await page.mouse.down()
-    await dragTo.hover()
-    await page.mouse.up()
+    await linkToDrag.focus()
+    await page.keyboard.press(' ')
+    await page.keyboard.press('ArrowUp')
+    await page.keyboard.press('ArrowUp')
+    await page.keyboard.press('ArrowUp')
+    await page.keyboard.press('ArrowUp')
+    await page.keyboard.press(' ')
 
     // Check that linkToDrag is now the first link in the collection
     await expect(
@@ -136,9 +133,9 @@ describe('Drag and drop user collections', () => {
       page.locator(`text=WELCOME, ${portalUser2.displayName}`)
     ).toBeVisible()
 
-    const collectionToDrag = page.getByRole('button', {
-      name: 'Career Collection Settings Drag Handle MyVector (opens in a new window) remove MyVector from collection Drag Handle SURF (opens in a new window) remove SURF from collection Drag Handle Orders (opens in a new window) remove Orders from collection Drag Handle EPRs/OPRs (opens in a new window) remove EPRs/OPRs from collection Drag Handle PRDA (opens in a new window) remove PRDA from collection Drag Handle MyPers (opens in a new window) remove MyPers from collection + Add link',
-    })
+    const collectionToDrag = page
+      .getByRole('button', { name: '+ Add link' })
+      .nth(2)
 
     // Drag and drop collection
     await collectionToDrag.focus()
@@ -151,11 +148,7 @@ describe('Drag and drop user collections', () => {
     await expect(page.locator('h3').first()).toHaveText('Career')
 
     // Update the title
-    const settingsButton = page
-      .getByRole('button', {
-        name: 'Career Collection Settings Drag Handle MyVector (opens in a new window) remove MyVector from collection Drag Handle SURF (opens in a new window) remove SURF from collection Drag Handle Orders (opens in a new window) remove Orders from collection Drag Handle EPRs/OPRs (opens in a new window) remove EPRs/OPRs from collection Drag Handle PRDA (opens in a new window) remove PRDA from collection Drag Handle MyPers (opens in a new window) remove MyPers from collection + Add link',
-      })
-      .getByRole('button', { name: 'Collection Settings' })
+    const settingsButton = page.getByRole('button', { name: 'Collection Settings' }).first()
 
     await settingsButton.click()
 
