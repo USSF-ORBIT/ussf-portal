@@ -46,6 +46,6 @@ describe('Settings page', () => {
     await expect(page.getByText('Copy To Clipboard')).toBeVisible()
 
     // logout of portal user
-    await page.locator('[data-testid="header"] [data-testid="button"]').click()
+    await page.locator('[data-testid="nav_logout"]').click()
   })
 })

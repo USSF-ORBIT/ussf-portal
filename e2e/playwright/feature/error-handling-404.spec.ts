@@ -156,7 +156,7 @@ describe('article was deleted', () => {
     expect(ctaLinkResponse.status()).toBe(404)
 
     // logout of portal user
-    await page.locator('[data-testid="header"] [data-testid="button"]').click()
+    await page.locator('[data-testid="nav_logout"]').click()
   })
 })
 
@@ -177,7 +177,7 @@ describe('article does not exsist', () => {
     expect(defaultResponse.status()).toBe(404)
 
     // logout of portal user
-    await page.locator('[data-testid="header"] [data-testid="button"]').click()
+    await page.locator('[data-testid="nav_logout"]').click()
   })
 
   // This is here because of article preview logic that caused 500 errors when a CMS user loaded a non-existent article
@@ -194,6 +194,6 @@ describe('article does not exsist', () => {
     expect(defaultResponse.status()).toBe(404)
 
     // logout of portal user
-    await page.locator('[data-testid="header"] [data-testid="button"]').click()
+    await page.locator('[data-testid="nav_logout"]').click()
   })
 })

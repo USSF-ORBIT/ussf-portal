@@ -124,5 +124,5 @@ test('draft landing page cannot be seen by portal user', async ({
   expect(defaultResponse.status()).toBe(404)
 
   // logout of portal user
-  await page.locator('[data-testid="header"] [data-testid="button"]').click()
+  await page.locator('[data-testid="nav_logout"]').click()
 })
