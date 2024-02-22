@@ -86,10 +86,6 @@ describe('Can add, view, and delete a bookmark', () => {
 
     await page.getByRole('link', { name: 'Bookmarks', exact: true }).click()
 
-      // getByRole('link', { name: 'Create Bookmark' })
-      // getByRole('row', { name: 'MilConnect https://milconnect.dmdc.osd.mil/milconnect/ Review personal, health care, and personnel information from one reliable source, the Defense Enrollment Eligibility Reporting System (DEERS)' }).locator('label')
-      // getByRole('button', { name: 'Delete' })
-    
     const url = faker.internet.url()
     const label = faker.lorem.words()
     const description = faker.lorem.sentence()
