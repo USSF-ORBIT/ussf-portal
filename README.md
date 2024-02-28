@@ -2,15 +2,15 @@
 
 # Table of Contents
 
-1. [About the Project](#about-the-project)
-    a. [Our Philosophy](#our-philosophy-and-process)
-    b. [Portal Links](#portal-links)
-    c. [Repository Directory](#repository-directory)
-2. [Developer Resources](#developer-resources)
-    a. [Documentation](#documentation)
-    b. [E2E Testing](#end-to-end-testing)
-3. [USSF Design](#ussf-design)
-4. [Infrastructure](#infrastructure)
+* [About the Project](#about-the-project)
+    * [Our Philosophy](#our-philosophy-and-process)
+    * [Portal Links](#portal-links)
+    * [Repository Directory](#repository-directory)
+* [Developer Resources](#developer-resources)
+    * [Documentation](#documentation)
+    * [E2E Testing](#end-to-end-testing)
+* [USSF Design](#ussf-design)
+* [Infrastructure](#infrastructure)
 
 ## About the Project
 
