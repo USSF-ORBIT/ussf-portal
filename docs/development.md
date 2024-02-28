@@ -13,6 +13,12 @@
 
 ## Environment Setup
 
+For a high-level look of how the system is architected, review the following diagrams. Note: You will need to be a member of the GitHub organization to have access.
+
+<!-- TODO: Update links once diagram PR is merged in -->
+* SAML Auth Flow 🔒
+* App Architecture 🔒
+
 ### Pre-requisites
 
 1. **Set up [direnv](https://direnv.net/docs/hook.html)**
