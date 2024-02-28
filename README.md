@@ -1,6 +1,6 @@
 # USSF Portal
 
-# GitHub Table of Contents
+# Table of Contents
 
 1. [About the Project](#about-the-project)
     a. [Our Philosophy](#our-philosophy-and-process)
