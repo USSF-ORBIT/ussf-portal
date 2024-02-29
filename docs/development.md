@@ -37,33 +37,7 @@
 
 ### Environment variables
 
-Set these variables for Happo in a `.envrc.local` file (only needed for local development when using the `yarn happo` command):
-
-- `HAPPO_API_KEY` - specific happo account API key, stored in 1Password valut
-- `HAPPO_API_SECRET` - specific happo account API secret, stored in 1Password valut
-
-These env variables are already set in `.envrc` and only need to be added to your local file if you want to override the defaults:
-
-- `SESSION_SECRET` - must be a string at least 32 chars, must be the same value set in the CMS application
-- `SESSION_DOMAIN` - the domain used for both the Portal app & CMS apps, must be the same value set in the CMS application
-- `MONGO_URL` - URL to the running MongoDB instance used for the Portal database (only used in local dev)
-- `MONGO_HOST, MONGO_USER, MONGO_PASSWORD` - Only used in deployed environments for constructing the DocDB connection string. Need to be defined in other environments to start the app, but will be overridden by `MONGO_URL`.
-- `MONGODB_DB` - Name of the MongoDB database used for the Portal database
-- `REDIS_URL` - URL to the running Redis instance, used by both CMS & Portal applications for storing sessions
-- `SAML_SSO_CALLBACK_URL` - (_local dev only_) URL to the Portal app login callback endpoint
-- `SAML_IDP_METADATA_URL` - URL to the SAML IdP metadata
-- `SAML_ISSUER` - String identifying the Portal app SAML service provider
-- `MATOMO_URL` - URL to Matomo instance (this is not required for the app to run)
-- `MATOMO_SITE_ID` - ID of the Portal app in Matomo (this is not required for the app to run)
-- `KEYSTONE_URL` - URL to Keystone instance
-
-#### Adding new environment variables
-
-> If you need to add a new environment variable used in the application, make sure to add it in the following places:
->
-> - `.envrc` - Use this to document what the variable is, and set a default value for local development
-> - `docs/development.md` (this file) - Add to the list above & document what the variable is
-> - `startup/index.js` - Add to the `requireVars` array in this file in order to require this variable is set on startup of the app.
+Most environment variables are already set in `.envrc` and only need to be added to your local file if you want to override the defaults. For more information, see [`environment-variables.md`](./development/environment-variables.md)
 
 ### Logging in
 
