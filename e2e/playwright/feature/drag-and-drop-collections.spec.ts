@@ -44,9 +44,9 @@ describe('Drag and drop user collections', () => {
     await page.getByRole('button', { name: 'Save name' }).click()
 
     // Drag and drop the new collection
-    const collectionToDrag = page
-      .getByRole('button', { name: '+ Add link' })
-      .nth(2)
+    const collectionToDrag = page.getByRole('button', {
+      name: 'My Custom Collection Collection Settings + Add link',
+    })
 
     await collectionToDrag.focus()
     await page.keyboard.press(' ')
@@ -148,7 +148,9 @@ describe('Drag and drop user collections', () => {
     await expect(page.locator('h3').first()).toHaveText('Career')
 
     // Update the title
-    const settingsButton = page.getByRole('button', { name: 'Collection Settings' }).first()
+    const settingsButton = page
+      .getByRole('button', { name: 'Collection Settings' })
+      .first()
 
     await settingsButton.click()
 
