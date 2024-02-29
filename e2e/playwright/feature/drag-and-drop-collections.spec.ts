@@ -83,8 +83,10 @@ describe('Drag and drop user collections', () => {
     await page.getByRole('button', { name: 'Add selected' }).click()
 
     const collectionToDrag = page
-      .getByRole('button', { name: '+ Add link' })
-      .nth(2)
+      .getByRole('button', {
+        name: 'Personnel & Administration Collection Settings',
+      })
+      .first()
 
     // Drag and drop
     await collectionToDrag.focus()
@@ -134,8 +136,10 @@ describe('Drag and drop user collections', () => {
     ).toBeVisible()
 
     const collectionToDrag = page
-      .getByRole('button', { name: '+ Add link' })
-      .nth(2)
+      .getByRole('button', {
+        name: 'Career Collection Settings',
+      })
+      .first()
 
     // Drag and drop collection
     await collectionToDrag.focus()
@@ -148,9 +152,7 @@ describe('Drag and drop user collections', () => {
     await expect(page.locator('h3').first()).toHaveText('Career')
 
     // Update the title
-    const settingsButton = page
-      .getByRole('button', { name: 'Collection Settings' })
-      .first()
+    const settingsButton = page.getByTestId('collection-settings-Career')
 
     await settingsButton.click()
 
