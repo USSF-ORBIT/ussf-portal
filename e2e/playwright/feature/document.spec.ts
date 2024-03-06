@@ -210,7 +210,6 @@ describe('Document', () => {
     /* Navigate to the USSF Documentation page */
     await page.goto('http://localhost:3000/ussf-documentation')
 
-    // await expect(page.locator(`h2:has-text("${pageTitle}")`)).toBeVisible()
     await expect(page.locator(`text="${pageTitle}"`)).toBeVisible()
     await expect(page.locator(`text="${sectionTitle}"`)).toBeVisible()
   })
