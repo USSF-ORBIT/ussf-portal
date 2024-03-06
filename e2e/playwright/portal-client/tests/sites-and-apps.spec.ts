@@ -32,14 +32,14 @@ describe('Sites & Applications', () => {
   }) => {
     // Login and check that user is in My Space
     await loginPage.login(portalUser1.username, portalUser1.password)
-    await expect(
-      page.locator(`text=WELCOME, ${portalUser1.displayName}`)
-    ).toBeVisible()
+    await expect(page.getByTestId('personal-data')).toHaveText(
+      `Welcome, ${portalUser1.displayName}`
+    )
 
     // Navigate to /sites-and-applications using the side nav
     await page.locator('text=All sites & applications').click()
     await expect(
-      page.locator('h2:has-text("Sites & Applications")')
+      page.getByRole('heading', { name: 'Sites & Applications By type' })
     ).toBeVisible()
 
     // Check that default collections are displaying
@@ -80,9 +80,10 @@ describe('Sites & Applications', () => {
   }) => {
     // Login and check that user is in My Space
     await loginPage.login(portalUser1.username, portalUser1.password)
-    await expect(
-      page.locator(`text=WELCOME, ${portalUser1.displayName}`)
-    ).toBeVisible()
+    await expect(page.getByTestId('personal-data')).toHaveText(
+      `Welcome, ${portalUser1.displayName}`
+    )
+
     await expect(page.locator('text=Example Collection')).toBeVisible()
 
     // Click 'Add Widget' and navigate to /sites-and-applications
@@ -119,9 +120,9 @@ describe('Sites & Applications', () => {
   }) => {
     // Login and check that user is in My Space
     await loginPage.login(portalUser1.username, portalUser1.password)
-    await expect(
-      page.locator(`text=WELCOME, ${portalUser1.displayName}`)
-    ).toBeVisible()
+    await expect(page.getByTestId('personal-data')).toHaveText(
+      `Welcome, ${portalUser1.displayName}`
+    )
     await expect(page.locator('text=Example Collection')).toBeVisible()
 
     // Navigate to /sites-and-applications
@@ -155,9 +156,9 @@ describe('Sites & Applications', () => {
   }) => {
     // Login and check that user is in My Space
     await loginPage.login(portalUser1.username, portalUser1.password)
-    await expect(
-      page.locator(`text=WELCOME, ${portalUser1.displayName}`)
-    ).toBeVisible()
+    await expect(page.getByTestId('personal-data')).toHaveText(
+      `Welcome, ${portalUser1.displayName}`
+    )
     await expect(page.locator('text=Example Collection')).toBeVisible()
 
     // Navigate to /sites-and-applications
