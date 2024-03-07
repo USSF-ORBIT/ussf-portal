@@ -26,9 +26,9 @@ describe('Hovering over a bookmark in MySpace', () => {
     loginPage,
   }) => {
     await loginPage.login(portalUser1.username, portalUser1.password)
-    await expect(
-      page.locator(`text=WELCOME, ${portalUser1.displayName}`)
-    ).toBeVisible()
+    await expect(page.getByTestId('personal-data')).toHaveText(
+      `Welcome, ${portalUser1.displayName}`
+    )
 
     await page.locator('text=vMPF').first().hover()
     await page.locator('[data-testid="triggerElement"]').hover()
@@ -44,14 +44,14 @@ describe('Hovering over a bookmark in Sites and Applications', () => {
     loginPage,
   }) => {
     await loginPage.login(portalUser1.username, portalUser1.password)
-    await expect(
-      page.locator(`text=WELCOME, ${portalUser1.displayName}`)
-    ).toBeVisible()
+    await expect(page.getByTestId('personal-data')).toHaveText(
+      `Welcome, ${portalUser1.displayName}`
+    )
 
     // Navigate to /sites-and-applications using the side nav
     await page.locator('text=All sites & applications').click()
     await expect(
-      page.locator('h2:has-text("Sites & Applications")')
+      page.getByRole('heading', { name: 'Sites & Applications By type' })
     ).toBeVisible()
 
     await page.locator('text=vMPF').first().hover()

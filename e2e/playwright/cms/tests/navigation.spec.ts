@@ -21,9 +21,9 @@ describe('Navigation', () => {
     loginPage,
   }) => {
     await loginPage.login(defaultUser.username, defaultUser.password)
-    await expect(
-      page.locator(`text=WELCOME, ${defaultUser.name}`)
-    ).toBeVisible()
+    await expect(page.getByTestId('personal-data')).toHaveText(
+      `Welcome, ${defaultUser.name}`
+    )
     await page.goto('/')
 
     await Promise.all([
@@ -56,8 +56,8 @@ describe('Navigation', () => {
         .click(),
     ])
 
-    await expect(
-      page.locator(`h2:has-text("WELCOME, ${defaultUser.name}")`)
-    ).toBeVisible()
+    await expect(page.getByTestId('personal-data')).toHaveText(
+      `Welcome, ${defaultUser.name}`
+    )
   })
 })

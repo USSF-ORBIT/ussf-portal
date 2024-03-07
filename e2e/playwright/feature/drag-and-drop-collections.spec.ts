@@ -32,9 +32,9 @@ describe('Drag and drop user collections', () => {
   }) => {
     // Login and check that user is in My Space
     await loginPage.login(portalUser1.username, portalUser1.password)
-    await expect(
-      page.locator(`text=WELCOME, ${portalUser1.displayName}`)
-    ).toBeVisible()
+    await expect(page.getByTestId('personal-data')).toHaveText(
+      `Welcome, ${portalUser1.displayName}`
+    )
     await expect(page.locator('text=Example Collection')).toBeVisible()
 
     // Add a new collection
@@ -54,8 +54,8 @@ describe('Drag and drop user collections', () => {
     await page.keyboard.press('ArrowLeft')
     await page.keyboard.press(' ')
 
-    // First h3 should be the new collection
-    await expect(page.locator('h3').first()).toHaveText('My Custom Collection')
+    // 'Latest Announcements' is the first h2, so the second h2 is the first collection in My Space
+    await expect(page.locator('h2').nth(1)).toHaveText('My Custom Collection')
   })
 
   test('can drag and drop a collection and immediately drag and drop a bookmark', async ({
@@ -64,9 +64,9 @@ describe('Drag and drop user collections', () => {
   }) => {
     // Login and check that user is in My Space
     await loginPage.login(portalUser2.username, portalUser2.password)
-    await expect(
-      page.locator(`text=WELCOME, ${portalUser2.displayName}`)
-    ).toBeVisible()
+    await expect(page.getByTestId('personal-data')).toHaveText(
+      `Welcome, ${portalUser2.displayName}`
+    )
 
     // Add new collections
     await page.getByRole('button', { name: 'Add widget' }).click()
@@ -95,8 +95,8 @@ describe('Drag and drop user collections', () => {
     await page.keyboard.press('ArrowLeft')
     await page.keyboard.press(' ')
 
-    // First h3 should be Personnel & Administration
-    await expect(page.locator('h3').first()).toHaveText(
+    // 'Latest Announcements' is the first h2, so the second h2 is the first collection in My Space
+    await expect(page.locator('h2').nth(1)).toHaveText(
       'Personnel & Administration'
     )
 
@@ -119,8 +119,9 @@ describe('Drag and drop user collections', () => {
       page.locator('ol > li > div > div > div > a').first()
     ).toHaveText('Outprocessing Checklists(opens in a new window)')
 
-    // Check that Personnel & Administration is still the first collection
-    await expect(page.locator('h3').first()).toHaveText(
+    // 'Latest Announcements' is the first h2, so the second h2 is the first collection in My Space.
+    // Check that the first collection is still 'Personnel & Administration'
+    await expect(page.locator('h2').nth(1)).toHaveText(
       'Personnel & Administration'
     )
   })
@@ -131,9 +132,9 @@ describe('Drag and drop user collections', () => {
   }) => {
     // Login and check that user is in My Space
     await loginPage.login(portalUser2.username, portalUser2.password)
-    await expect(
-      page.locator(`text=WELCOME, ${portalUser2.displayName}`)
-    ).toBeVisible()
+    await expect(page.getByTestId('personal-data')).toHaveText(
+      `Welcome, ${portalUser2.displayName}`
+    )
 
     const collectionToDrag = page
       .getByRole('button', {
@@ -148,8 +149,8 @@ describe('Drag and drop user collections', () => {
     await page.keyboard.press('ArrowLeft')
     await page.keyboard.press(' ')
 
-    // First h3 should be Career
-    await expect(page.locator('h3').first()).toHaveText('Career')
+    // 'Latest Announcements' is the first h2, so the second h2 is the first collection in My Space
+    await expect(page.locator('h2').nth(1)).toHaveText('Career')
 
     // Update the title
     const settingsButton = page.getByTestId('collection-settings-Career')
@@ -165,7 +166,8 @@ describe('Drag and drop user collections', () => {
     await page.getByTestId('textInput').fill('Career Update')
     await page.getByRole('button', { name: 'Save name' }).click()
 
+    // 'Latest Announcements' is the first h2, so the second h2 is the first collection in My Space
     // Check that Career Update is still the first collection
-    await expect(page.locator('h3').first()).toHaveText('Career Update')
+    await expect(page.locator('h2').nth(1)).toHaveText('Career Update')
   })
 })

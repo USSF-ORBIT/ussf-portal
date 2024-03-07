@@ -48,7 +48,9 @@ describe('Document', () => {
     /* Log in as a CMS author */
     await loginPage.login(authorUser.username, authorUser.password)
 
-    await expect(page.locator(`text=WELCOME, ${authorUser.name}`)).toBeVisible()
+    await expect(page.getByTestId('personal-data')).toHaveText(
+      `Welcome, ${authorUser.name}`
+    )
 
     await page.goto('http://localhost:3001')
     await expect(
@@ -103,9 +105,9 @@ describe('Document', () => {
     /* Log in as a CMS manager */
     await loginPage.login(managerUser.username, managerUser.password)
 
-    await expect(
-      page.locator(`text=WELCOME, ${managerUser.name}`)
-    ).toBeVisible()
+    await expect(page.getByTestId('personal-data')).toHaveText(
+      `Welcome, ${managerUser.name}`
+    )
 
     await page.goto('http://localhost:3001')
     await expect(
@@ -155,9 +157,9 @@ describe('Document', () => {
     /* Log in as a CMS manager */
     await loginPage.login(managerUser.username, managerUser.password)
 
-    await expect(
-      page.locator(`text=WELCOME, ${managerUser.name}`)
-    ).toBeVisible()
+    await expect(page.getByTestId('personal-data')).toHaveText(
+      `Welcome, ${managerUser.name}`
+    )
 
     await page.goto('http://localhost:3001')
     await expect(
@@ -200,14 +202,15 @@ describe('Document', () => {
   }) => {
     /* Log in as a portal user */
     await loginPage.login(defaultUser.username, defaultUser.password)
-    await expect(
-      page.locator(`text=WELCOME, ${defaultUser.name}`)
-    ).toBeVisible()
+
+    await expect(page.getByTestId('personal-data')).toHaveText(
+      `Welcome, ${defaultUser.name}`
+    )
 
     /* Navigate to the USSF Documentation page */
     await page.goto('http://localhost:3000/ussf-documentation')
 
-    await expect(page.locator(`h2:has-text("${pageTitle}")`)).toBeVisible()
+    await expect(page.locator(`text="${pageTitle}"`)).toBeVisible()
     await expect(page.locator(`text="${sectionTitle}"`)).toBeVisible()
   })
 
@@ -219,9 +222,9 @@ describe('Document', () => {
     /* Log in as a CMS manager */
     await loginPage.login(managerUser.username, managerUser.password)
 
-    await expect(
-      page.locator(`text=WELCOME, ${managerUser.name}`)
-    ).toBeVisible()
+    await expect(page.getByTestId('personal-data')).toHaveText(
+      `Welcome, ${managerUser.name}`
+    )
 
     await page.goto('http://localhost:3001')
     await expect(
