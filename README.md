@@ -10,7 +10,6 @@
     * [Documentation](#documentation)
     * [E2E Testing](#end-to-end-testing)
 * [USSF Design](#ussf-design)
-* [Infrastructure](#infrastructure)
 
 ## About the Project
 
@@ -63,6 +62,3 @@ End to end (E2E) testing is an important part of our software engineering practi
 Read more about the design process behind the portal: [Design Elements](https://github.com/USSF-ORBIT/ussf-portal/blob/bddc7caa5f2d272d6ade5db9098705ba70a59a7e/design-elements.md).
 
 The USSF Design System can be viewed via Storybook at https://storybook.ussforbit.us/
-
-## Infrastructure
-TK
