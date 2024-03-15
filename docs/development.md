@@ -14,6 +14,10 @@
 ## Environment Setup
 
 The portal environment is composed of multiple repositories in a modular architecture (see [ADR-0002](adr/0002-nextjs.md), [ADR-0006](adr/0006-use-keystone-cms.md), and [ADR-0011](adr/0011-separate-repo-for-e2e-tests.md) for more details). 
+For a high-level look of how the system is architected, review the following diagrams. Note: You will need to be a member of the GitHub organization to have access.
+
+* [SAML Auth Flow](https://github.com/USSF-ORBIT/spacecadets-dev/blob/d728708977d694428ee0d25598efbba706caaf2d/docs/diagrams/app-engineering/auth_flow.png) 🔒
+* [App Architecture](https://github.com/USSF-ORBIT/spacecadets-dev/blob/d728708977d694428ee0d25598efbba706caaf2d/docs/diagrams/app-engineering/app_architecture.png) 🔒
 
 
 ### Pre-requisites
