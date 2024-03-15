@@ -2,6 +2,17 @@
 
 This document describes methodology & tips for DB migrations and what pitfalls to avoid for our Keystone CMS application.
 
+- [Prisma/Postgres DB Migrations](#prismapostgres-db-migrations)
+  - [What are database migrations?](#what-are-database-migrations)
+  - [The Prisma Migrate Command](#the-prisma-migrate-command)
+    - [Local Development Environment](#local-development-environment)
+    - [Dev and Staging/Prod](#dev-and-stagingprod)
+  - [How Prisma Migrate tracks the migration state](#how-prisma-migrate-tracks-the-migration-state)
+  - [Migration History](#migration-history)
+  - [Migration Troubleshooting](#migration-troubleshooting)
+  - [Links:](#links)
+
+
 ## What are database migrations?
 Database migrations are a controlled set of changes that modify and evolve the structure of your database schema. Migrations help you transition your database schema from one state to another. For example, within a migration you can create or remove tables and columns, split fields in a table, or add types and constraints to your database.<sup>[1](https://www.prisma.io/docs/concepts/components/prisma-migrate/mental-model#what-are-database-migrations)
 
