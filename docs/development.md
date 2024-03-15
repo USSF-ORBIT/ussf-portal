@@ -13,64 +13,50 @@
 
 ## Environment Setup
 
+The portal environment is composed of multiple repositories in a modular architecture (see [ADR-0002](adr/0002-nextjs.md), [ADR-0006](adr/0006-use-keystone-cms.md), and [ADR-0011](adr/0011-separate-repo-for-e2e-tests.md) for more details). 
+
+
 ### Pre-requisites
 
-1. **Set up [direnv](https://direnv.net/docs/hook.html)**
+1. **Clone all required repositories into a shared directory on your local machine**
+
+   - Repositories:
+     - (Required) [USSF Portal Client](https://github.com/USSF-ORBIT/ussf-portal-client)
+     - (Required) [USSF Portal CMS](https://github.com/USSF-ORBIT/ussf-portal-cms)
+     - [USSF Analytics](https://github.com/USSF-ORBIT/analytics)
+     - [USSF Personnel API](https://github.com/USSF-ORBIT/ussf-personnel-api)
+     - [USSF Third Party API](https://github.com/USSF-ORBIT/ussf-portal/tree/main/test-jwt-service)
+   - Some scripts rely on the **Client** and **CMS** repos being present. It is assumed that they are checked out at the same level as this `ussf-portal` repo and have the default names `ussf-portal-client` and `ussf-portal-cms`.
+
+2. **Set up [direnv](https://direnv.net/docs/hook.html)**
 
    - We're using direnv to manage environment variables.
    - You'll have to type `direnv allow` in your shell to load environment variables when they change, and when navigating into a project directory.
 
-1. **Install [Docker](https://www.docker.com/products/docker-desktop)**
+3. **Install [Docker](https://www.docker.com/products/docker-desktop)**
 
    - We're using Docker for local development, and to build & run the application in production.
    - Since we are _not_ using Docker as a full development environment, you will still need to check your node version and install packages (in order to do things like run tests, linting, Storybook, etc. on your local machine).
 
-1. **Check your node version: `node -v`**
+4. **Check your node version: `node -v`**
 
    - Make sure you are using the version of node specified in `.node-version`.
    - We recommend using [nodenv](https://github.com/nodenv/nodenv) to install and manage node versions.
 
-1. **Use [yarn v1](https://classic.yarnpkg.com/lang/en/) to manage JS packages**
+5. **Use [yarn v1](https://classic.yarnpkg.com/lang/en/) to manage JS packages**
 
    - [Install yarn](https://classic.yarnpkg.com/en/docs/install) if you do not already have it.
    - Type `yarn` or `yarn install` inside the project directory to install dependencies. You will need to do this once after cloning the project, and continuously if the dependencies in `package.json` change.
+   - 
+6. **(Optional) Postgres**
 
+   - To run Keystone locally, you will also need a [Postgres](https://www.postgresql.org/download/) instance running. 
+     - Alternately, you can run `yarn services:up` which starts all required services in Docker, including Postgres.
+  
 ### Environment variables
 
 Most environment variables are already set in `.envrc` and only need to be added to your local file if you want to override the defaults. For more information, see [`environment-variables.md`](./development/environment-variables.md)
 
-### Logging in
-
-This application uses SAML for its authentication mechanism. SAML relies on the existance of an Identity Provider (IdP). When running the app locally, there are two IdP options:
-
-**1. Test SAML IdP:** this is a service that is included in our docker compose development stack, and will work automatically when running `yarn services:up`. There are several test users of various types that you can log in as, and more can be added to the `users.php` file. These test users have been set up with attributes that mirror the data we should get back from the real-life IdP. All names/IDs/etc. are randomly generated fake data.
-
-| username         | password             | name                | category          | groups          |
-| :--------------- | :------------------- | :------------------ | :---------------- | :-------------- |
-| `user1`          | `user1pass`          | Bernadette Campbell | uniformed service | n/a             |
-| `user2`          | `user2pass`          | Ronald Boyd         | civil             | n/a             |
-| `portaladmin`    | `portaladminpass`    | Lindsey Wilson      | employee          | superadmin      |
-| `cmsadmin`       | `cmsadminpass`       | Floyd King          | contractor        | CMS admin       |
-| `cmsuser`        | `cmsuserpass`        | John Henke          | civil             | CMS user        |
-| `analyticsadmin` | `analyticsadminpass` | Margaret Stivers    | contractor        | analytics admin |
-| `analyticsuser`  | `analyticsuserpass`  | Holly Okane         | employee          | analytics user  |
-| `cmsauthor`      | `cmsauthorpass`      | Ethel Neal          | civil             | CMS user        |
-| `cmsmanager`     | `cmsmanagerpass`     | Christina Haven     | civil             | CMS user        |
-
-**2. Production SSO IdP:** if you want to log in to the actual IdP we will use in all deployed environments (dev, test, and production) you can also do that. You will only be able to log in as your actual user with your CAC (so you won’t be able to test different user types this way). You will need to do some additional configuration:
-
-- Set the following environment variables locally (check in Space Force OnePassword for `Secrets for Setting Up C1 SAML Locally`):
-  - `SAML_IDP_METADATA_URL`
-  - `SAML_ISSUER`
-  - `SAML_SSO_CALLBACK_URL=http://localhost:3000/api/auth/login`
-- Copy the `DoD_Root_CA_3.crt` and save this file to `./certs/DoD_CAs.pem`
-- Set this local environment variable also:
-  - `NODE_EXTRA_CA_CERTS='./certs/DoD_CAs.pem'`
-- Start other services (Redis & Mongo, etc.) in Docker:
-  - `yarn services:up`
-- Run the app locally, either in dev or production modes:
-  - `yarn dev` OR
-  - `yarn build && yarn start`
 
 ## yarn scripts
 
@@ -85,7 +71,8 @@ Most commonly used during development:
   - Builds Client up to `e2e` stage. If you want to build the `runner` stage that is present in Production, you need to have a checksum file for verifying DoD PKI CA Certificates used in C1. Find these in the 1Password vault, create a file `dod_ca_cert_bundle.sha256` in `scripts/`, and paste the checksums there.
 - `yarn dev`: Starts NextJS server in development mode and watches for changed files
 - `yarn storybook`: Starts the Storybook component library on port 6006
-- `yarn test:watch`: Run Jest tests in watch mode
+- `yarn test`: Run Jest unit tests.
+  - Run in watch mode with `yarn test:watch`
 - `yarn services:removeall`: Will force remove all running and stopped containers
 
 To start the app server as it will run in production:
@@ -97,7 +84,6 @@ Other:
 
 - `yarn format`: Autoformat all code using Prettier
 - `yarn lint`: Runs the TypeScript compiler and ESLint and outputs issues
-- `yarn test`: Run Jest tests once
 - `yarn storybook:build`: Build Storybook to a static site that can be deployed
 - `yarn build:analyze`: Builds the asset bundle and generates webpack stats files
 
@@ -196,9 +182,19 @@ Once services are running, start the NextJS app with `yarn dev`.
 
 ### Local Development with Keystone CMS
 
-You can also use Docker Compose to spin up all services plus the external Keystone CMS by running `yarn cms:up`. This will start all above services plus Keystone.
+You can also use Docker Compose to spin up all services plus the external Keystone CMS by running `yarn cms:up`. This will start all above services plus Keystone, which can be accessed at `localhost:3001`.
 
-Read more about the Keystone app at the [ussf-portal-cms repo](https://github.com/USSF-ORBIT/ussf-portal-cms), and access the local instance at `localhost:3001`.
+#### Additional Keystone CMS commands 
+- Run required services (`yarn services:up`)
+- Run Keystone in dev mode (`yarn dev`)
+- Run portal client (`cd ../ussf-portal-client && yarn dev`)
+
+_or_
+
+- Build Keystone Docker image:
+  - `docker build -t keystone .`
+- Run Docker image:
+  - `docker run -p 3000:3000 --env SESSION_SECRET=$SESSION_SECRET --env DATABASE_URL=$DATABASE_URL keystone`
 
 ### MongoDB in Docker
 
@@ -255,33 +251,9 @@ We have a pre-commit hook set up using Husky to run on staged files only. This w
 When your branch is ready, open a PR against `main`, fill out the description and request code reviews. The code must pass the same linting and formatting checks mentioned above, as well as [Jest tests](https://jestjs.io/) in order to merge.
 
 ## Database migrations
+- [MongoDB Migrations for the Portal Client](development/mongo-db-migrations.md)
+- [Postgres Migrations for Keystone CMS](development/postgres-migrations.md)
 
-The portal application uses MongoDB (AWS DocDB in deployed environments) as a data store for _non-sensitive_ user data. If you need to make a change that requires a database migration, follow these steps:
-
-- As much as possible, consider how to scope the migration to its own branch / PR so it can be deployed independently of application code changes, and reinforce backwards compatibility to minimize the risk of errors in production.
-  - This may require making code changes so the application can handle both the existing & changed data model _before_ running migrations.
-  - Resource: [The pedantic checklist for changing your data model in a web application](https://rtpg.co/2021/06/07/changes-checklist.html)
-- On your migration branch, run the following command to create a new migration:
-  - `yarn migrate:create <migration name here>`
-  - Example: `yarn migrate:create add-type-to-collections`
-  - This will generate a new migration file with a timestamp under the `./migrations` directory
-  - Give your migration an explicit & descriptive name
-- Create a corresponding test file for migration under `./test/migrations`
-  - Example: `./test/migrations/add-type-to-collections.test.js`
-- Write your migration `up` and `down` code, and corresponding tests
-  - The `up, down` functions are passed into the `runMigration` utility function, which will handle connecting to MongoDB, pass the `db` context into the migration, and close the connection afterwards.
-- Test your migration in Jest
-  - We use the [jest-mongodb preset](https://github.com/shelfio/jest-mongodb) so unit tests will run against a shared in-memory MongoDB instance
-- Test your migration in MongoDB
-  - If you connect to your local MongoDB instance (for example, using [mongo-express](http://localhost:8888/)) you can verify the data changes as expected when you run & rollback migrations
-  - To run new migrations: `yarn migrate` or `yarn migrate up <migration name>`
-  - To rollback: `yarn migrate down` or `yarn migrate down <migration name>`
-  - To view the status of all migrations: `yarn migrate list`
-  - Resources: [Documentation for node-migrate](https://github.com/tj/node-migrate)
-- Test your migration in the application
-  - The migrate script is run automatically when the application server starts (in all environments: development, production, and in Docker) as part of the startup script.
-  - Start up the application in these environments to make sure the migration runs successfully and does not cause an error.
-  - This will also be tested in the Cypress CI workflow, which builds & starts the application in Docker.
 
 ## PR linting
 
@@ -337,6 +309,9 @@ Closes #123
 The footer should also include `BREAKING CHANGE:` if the commit includes any breaking changes. This will make sure the major version is automatically bumped when this commit is released.
 
 ## Testing
+
+### User Testing
+  - [Logging in to the portal](./development/logging-in.md)
 
 ### Unit Tests (Jest)
 
@@ -398,30 +373,10 @@ We use wiremock to avoid making 3rd party API calls during e2e testing. For exam
 
 Mappings are defined in [the mappings folder](../e2e/mappings). For more details see the [wiremock documentation](https://wiremock.org/docs/)
 
-## Launch Darkly
+## Feature Flagging
+- [Using and testing feature flags in the portal environment](development/feature-flags.md)
 
-We are using the [FedRAMPed version of Launch Darkly](https://docs.launchdarkly.com/home/advanced/federal) for feature flags in the portal. If you need an invite to our group ask. There are 4 environments setup (localhost, dev, staging, and production) that correspond with our main environments. The feature flags are defined in our account and should exist at the project level so they can be configured per environment.
-
-### Local setup
-
-To see things with features turned on locally there should be no additional setup. The `localhost` environment client side id is already in `.envrc`. This is okay because it does not need to be kept secret. See [Lauch Darkly documentation for details](https://docs.launchdarkly.com/sdk/concepts/client-side-server-side?site=federal#client-side-id). Note localhost enviroment feature flags are shared with anyone using the same client side id, but the expectation is that pretty much all flags are on in this environment for local development and testing.
-
-**Relavant quote from [docs](https://docs.launchdarkly.com/sdk/concepts/client-side-server-side?site=federal#client-side-id):**
-
-> Unlike a mobile key, the client-side ID for an environment never changes. The client-side ID does not need to be kept a secret.
 
 ## Releasing
 
-We are using a tool called [standard-version](https://github.com/conventional-changelog/standard-version) to facilitate version bumps and releases in order to maintain a clear history of this project. In order to tag a new release:
-
-- Check out the `main` branch and make sure to pull down the latest changes
-- Run `yarn release` -- this will add new entries to the changelog, and increase the version number based on the types of changes.
-  - You can run `yarn release --dry-run` to preview the new version number and changelog.
-  - You can also choose to release a specific version increment. See the [standard-version docs](https://github.com/conventional-changelog/standard-version#release-as-a-target-type-imperatively-npm-version-like) for more options.
-- Commit these changes to a new branch called `release-x.y.z.` (where `x.y.z` is the new version number generated by the release script).
-  - The commit message should follow the format: `chore(release): <VERSION NUMBER>`
-  - Example: `chore(release): 1.2.0`
-- Open a PR into `main` and merge once required checks have passed.
-  - The PR body should include the new changelog entries.
-- After merging the PR, [create a new release](https://github.com/USSF-ORBIT/ussf-portal-client/releases/new), tagging with the new version number and paste the new changelog entries into the description.
-  - At this point, the tag is ready to deploy to production.
+[Guide to releasing updates to the portal](how-to/releasing.md)
