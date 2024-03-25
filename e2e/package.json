@@ -4,7 +4,7 @@
   "repository": "git@github.com:USSF-ORBIT/ussf-portal.git",
   "private": true,
   "engines": {
-    "node": "^18.14.2"
+    "node": "^20.11.1"
   },
   "scripts": {
     "lint": "tsc --noEmit && eslint .",
