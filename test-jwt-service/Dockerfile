@@ -1,5 +1,5 @@
 # Uses the node base image with the latest LTS version
-FROM node:18.16.0-bullseye-slim
+FROM node:18.20.0-bullseye-slim
 # Informs Docker that the container listens on the 
 # specified network ports at runtime
 EXPOSE 5001
