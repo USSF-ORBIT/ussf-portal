@@ -42,7 +42,7 @@ describe('Filter search results', () => {
     await page.getByRole('link', { name: 'Create Label' }).click()
     await page.getByLabel('Name').click()
     await page.getByLabel('Name').fill(label)
-    await page.locator('.css-ackcql').click()
+    await page.locator('.css-19bb58m').click()
     await page.getByText('Audience', { exact: true }).click()
     await page.getByRole('button', { name: 'Create Label' }).click()
 

@@ -48,7 +48,7 @@ describe('SAML flow (with test IdP)', () => {
           body: 'Logged out',
         })
       ),
-      page.locator('li:has-text("Log out")').click(),
+      page.locator('button:has-text("Log out")').click(),
     ])
 
     await page.goto('/')
