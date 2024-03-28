@@ -35,19 +35,16 @@ export class KeystoneAnnouncementPage {
       // not handling dates in the past since that's not the happy path but we may need to at somepoint
       if (
         await this.page
-          .locator(`h2:has-text("${publishedDate.toFormat('MMMM yyyy')}")`)
+          .locator(`div.rdp-month:has-text("${publishedDate.toFormat('MMMM yyyy')}")`)
           .isHidden()
       ) {
         await this.page.locator('[aria-label="Go to next month"]').click()
       }
       // Keystone labels the calendar buttons 1010th February for some reason
       // So using `nth=0` guarantees we find 4th February instead of 4th, 14th, and 24th.
-      const dateFormat = `d'${this.nthNumber(publishedDate.day)}' MMMM ('${
-        publishedDate.weekdayLong
-      }')`
       await this.page
         .locator(
-          `button:has-text("${publishedDate.toFormat(dateFormat)}") >> nth=0`
+          `button:has-text("${publishedDate.day}") >> nth=0`
         )
         .click()
       // Wait for the dialog to disappear, otherwise you might not set the time

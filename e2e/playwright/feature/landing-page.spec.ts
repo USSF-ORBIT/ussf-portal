@@ -48,7 +48,7 @@ test('can create a landing page in the CMS and view it in the portal', async ({
 
   // Create Article
   await page.getByRole('link', { name: 'Create Article' }).click()
-  await page.locator('.css-ackcql').first().click()
+  await page.locator('.css-19bb58m').first().click()
   await page.getByText('LandingPage', { exact: true }).click()
   await page.getByLabel('Slug').click()
   await page.getByLabel('Slug').fill(articleSlug)
